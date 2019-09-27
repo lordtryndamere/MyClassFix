@@ -12,24 +12,23 @@ const styles = StyleSheet.create({
       
     },
     inputContainer: {
-        borderBottomColor: '#F5FCFF',
-        borderRadius:10,
-        borderBottomWidth: 1,
-        width:250,
+        borderRadius: 30,
+        borderWidth: 2,
+        borderColor: '#fff',
+        width:290,
         height:45,
         marginBottom:20,
         flexDirection: 'row',
-        alignItems:'center',
-        
-        
-        
+        alignItems:'center',        
     },
     inputs:{
         height:45,
         marginLeft:16,
         borderBottomColor: '#FFFFFF',
         flex:1,
-        color: '#FFFFFF',
+        color:"#f0ffff",
+        textShadowColor:'#75827d',
+        position:'absolute'
       
     },
     inputIcon:{
@@ -44,15 +43,19 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom:20,
-      width:250,
+      width:260,
       borderRadius:30,
     },
     loginButton: {
       backgroundColor: "white",
+      height:35,
+      width:180,
     },
     registerbutton: {
       backgroundColor: "white",
       marginTop:100,
+      height:35,
+      width:180,
      
     },
     loginText: {
@@ -73,13 +76,33 @@ const styles = StyleSheet.create({
     },
     ico:{
         marginBottom:40,
-        color:"#f0ffff"
+        color:"#f0ffff",
+        
     },
     menuIcon:{
       zIndex:9,
       position:'absolute',
       top:40,
       left:20
+  
+    },
+    estudiantebutton:{
+      backgroundColor: "white",
+      marginTop:100,
+      marginRight:140,
+      height:35,
+      width:180,
+
+
+    },
+    docentebutton:{
+      backgroundColor: "white",
+      marginTop:200,
+      height:35,
+      width:180,
+      position:'relative',
+
+
     }
     
   

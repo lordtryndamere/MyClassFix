@@ -5,11 +5,18 @@ import {
 
   Text,
   View,
-  ImageBackground
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 
 export default class Home extends Component {
 
+
+
+  logOut = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Home');
+}
 
   render() {
     return (
@@ -17,6 +24,13 @@ export default class Home extends Component {
       <View       style={styles.container}>
   <Text
   >Hi</Text>
+
+
+
+<TouchableHighlight style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.logOut()}>
+          <Text style={styles.loginText}>Logout</Text>
+</TouchableHighlight>      
+
       </View>
 
     );
