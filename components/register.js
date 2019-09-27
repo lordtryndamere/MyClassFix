@@ -7,10 +7,12 @@ import {
   View,
   TextInput,
   TouchableHighlight,
+  ImageBackground,
+  KeyboardAvoidingView,
 
-  ImageBackground
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
 
 export default class LoginView extends Component {
 
@@ -28,21 +30,33 @@ export default class LoginView extends Component {
   
   render() {
     return (
-      <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} > 
-      <View       style={styles.container}>
-            <Icon size={80}  style={styles.ico} >perm_identity</Icon>
-            {this.state.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.state.errorMessage}
-          </Text>}
-          <TouchableHighlight style={[styles.buttonContainer, styles.estudiantebutton]} onPress={() => this.navigation.navigate('Register')}>
-          <Text style={styles.loginText}>ESTUDIANTE</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={[styles.buttonContainer, styles.docentebutton]} onPress={() => this.navigation.navigate('Register')}>
-          <Text style={styles.loginText}>DOCENTE</Text>
-        </TouchableHighlight>
+          
 
-        <View style={styles.inputContainer}>
+
+            <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
+            <KeyboardAvoidingView style={styles.container2}  behavior="position" enabled>
+            
+                <View       style={styles.container}>
+                  
+          
+      
+
+                        <Icon size={80}  style={styles.ico} >perm_identity</Icon>
+                        {this.state.errorMessage &&
+                      <Text style={{ color: 'red' }}>
+                        {this.state.errorMessage}
+                      </Text>}
+                    <View  style={styles.acomodar} >       
+                            <TouchableHighlight style={[styles.buttonestudiante, styles.estudiantebutton]} onPress={() => this.navigation.navigate('Register')}>
+                            <Text style={styles.loginText}>ESTUDIANTE</Text>
+                          </TouchableHighlight>
+                          
+                          <TouchableHighlight style={[styles.buttondocente, styles.docentebutton]} onPress={() => this.navigation.navigate('Register')}>
+                            <Text style={styles.loginText}>DOCENTE</Text>
+                          </TouchableHighlight>
+                    </View>
+          
+              <View style={styles.inputContainer}>
 
           <TextInput style={styles.inputs}
               placeholder="Nombres"
@@ -94,8 +108,13 @@ export default class LoginView extends Component {
         <TouchableHighlight style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.navigation.navigate('Register')}>
           <Text style={styles.loginText}>REGISTRARME</Text>
         </TouchableHighlight>
-      </View>
-    </ImageBackground>
+       
+              </View>
+                          
+              </KeyboardAvoidingView>
+          </ImageBackground>
+      
+
     );
   }
 }

@@ -6,11 +6,14 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    
-   
-     
+          
+},
+container2: {
+  flex: 2,
+  justifyContent: 'center',
+  alignItems: 'center',
       
-    },
+},
     inputContainer: {
         borderRadius: 30,
         borderWidth: 2,
@@ -87,22 +90,55 @@ const styles = StyleSheet.create({
   
     },
     estudiantebutton:{
+      position:'relative',
       backgroundColor: "white",
+      flexDirection:'row',
+      marginRight:150,
       marginTop:100,
-      marginRight:140,
       height:35,
-      width:180,
+      width:130,
 
 
     },
     docentebutton:{
-      backgroundColor: "white",
-      marginTop:200,
-      height:35,
-      width:180,
       position:'relative',
+      flexDirection:'row',
+      backgroundColor: "white",
+      marginLeft:150,
+      marginBottom:150,
+      height:35,
+      width:130,
 
 
+
+
+    },
+    buttonestudiante:{
+      position:'relative',
+      height:45,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius:30,
+      marginTop:60
+    },
+
+    buttondocente:{
+      position:'relative',
+      height:45,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius:30,
+      marginBottom:150
+      
+
+    },
+    acomodar:{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignContent:'center'
     }
     
   
