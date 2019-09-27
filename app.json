@@ -1,11 +1,8 @@
 {
   "expo": {
     "name": "MyClassFix",
-<<<<<<< HEAD
-    "slug": "MyClassCompo",
-=======
+
     "slug": "MyClassFix",
->>>>>>> 17bcfab61e1106881e15a4bf09ea9266ebe5ec89
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
