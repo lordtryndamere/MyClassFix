@@ -19,7 +19,13 @@
     "react-native-screens": "^1.0.0-alpha.23",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
+<<<<<<< HEAD
     "react-navigation-stack": "^1.9.0"
+=======
+    "react-navigation-drawer": "^2.2.2",
+    "react-navigation-stack": "^1.9.0",
+    "tcomb-form-native": "^0.6.20"
+>>>>>>> 17bcfab61e1106881e15a4bf09ea9266ebe5ec89
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0"

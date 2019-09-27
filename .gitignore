@@ -9,3 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+<<<<<<< HEAD
+=======
+ node_modules
+>>>>>>> 17bcfab61e1106881e15a4bf09ea9266ebe5ec89
