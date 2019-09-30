@@ -1,12 +1,9 @@
-
-
-
-    typeStudent  = (value) =>{
+typeStudent  = (value) =>{
     if (value) {
 
       var d = new Date()
 
-        firebase.list(this.types).update(value.user.uid + '/personalData', {
+      this.db.list(this.types).update(value.user.uid + '/personalData', {
 
         name: this._parse.ParseText(this.name, "Registro"),
 
@@ -35,16 +32,6 @@
       }).then(() => {
 
         firebase.list('/roleByUser').update(value.user.uid, { type: "student" })
-
-        if (this.acudiente) {
-
-          firebase.list(this.types).update(value.user.uid + '/personalData', {
-
-            parent: { typeDocument: this.typeAcudiante, document: this.documentAcudiente, name: this.nameAcudiente, email: this.correoAcudiente, phone: this.celularAcudiente }
-
-          })
-
-        }
 
         firebase.list(this.types + '/' + value.user.uid + '/personalData').push({ hashLogin: "hashLogin" })
 
