@@ -19,7 +19,8 @@ export default class LoginView extends Component {
     this.state = {
       email   : '',
       password: '',
-      errorMessage:null
+      errorMessage:null,
+      loggedIn: null
     }
   }
 
@@ -47,6 +48,13 @@ export default class LoginView extends Component {
       };
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+      // firebase.auth().onAuthStateChanged((user)=>{
+      //   if(user){
+      //     this.setState({loggedIn:true})
+      //   }else {
+      //     this.setState({loggedIn:false})
+      //   }
+      // });
   }
 
   render() {

@@ -12,6 +12,7 @@ container2: {
   flex: 2,
   justifyContent: 'center',
   alignItems: 'center',
+  marginTop:40
       
 },
     inputContainer: {
@@ -82,6 +83,12 @@ container2: {
         color:"#f0ffff",
         
     },
+    ico1:{
+      marginTop:40,
+      marginBottom:40,
+      color:"#f0ffff",
+      
+  },
     menuIcon:{
       zIndex:9,
       position:'absolute',
@@ -90,22 +97,18 @@ container2: {
   
     },
     estudiantebutton:{
+      flexDirection:'row',
       position:'relative',
       backgroundColor: "white",
-      flexDirection:'row',
-      marginRight:150,
-      marginTop:100,
       height:35,
       width:130,
 
 
     },
     docentebutton:{
-      position:'relative',
       flexDirection:'row',
+      position:'relative',
       backgroundColor: "white",
-      marginLeft:150,
-      marginBottom:150,
       height:35,
       width:130,
 
@@ -116,29 +119,43 @@ container2: {
     buttonestudiante:{
       position:'relative',
       height:45,
-      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius:30,
-      marginTop:60
+      width:50,
+      marginRight:5
+   
     },
 
     buttondocente:{
       position:'relative',
       height:45,
-      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius:30,
-      marginBottom:150
-      
+      width:50,
+      marginLeft:5
+
+    
 
     },
     acomodar:{
       flex: 1,
+      flexDirection:'row',
       justifyContent: 'center',
       alignItems: 'center',
-      alignContent:'center'
+      alignContent:'center',
+      display:'flex',
+      width:100,
+      marginBottom:40
+      
+    },
+    registerbutton2:{
+      backgroundColor: "white",
+      marginBottom:80,
+      height:35,
+      width:180,
+     
     }
     
   

@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   ImageBackground,
   KeyboardAvoidingView,
+  ScrollView
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -107,7 +108,7 @@ export default class LoginView extends Component {
           firebase.database(this.HandleTypes()+ '/'  +usuario.uid + '/personalData').push({hashLogin:'hashLogin'})
           .then((hash)=>{
             firebase.database(this.HandleTypes()+'/'+usuario.uid+'/personalData/').update(hash.key,{hashLogin:hash.key})
-            firebase.auth().signOut()
+            // firebase.auth().signOut()
             .then(()=>{
               this.props.navigation.navigate('Login')
             })
@@ -187,10 +188,10 @@ export default class LoginView extends Component {
           ipCreation:this.HandleIp()
         }).then(()=>{
           firebase.database('/roleByUser').update(usuario.uid,{type : 'teacher'})
-          firebase.list(this.HandleTypes() + '/' + usuario.uid + '/personalData').push({ hashLogin: "hashLogin" })
+          firebase.database(this.HandleTypes() + '/' + usuario.uid + '/personalData').push({ hashLogin: "hashLogin" })
           .then((hash) => {
             firebase.database(this.HandleTypes() + ' /' + usuario.uid + '/personalData/').update(hash.key,{hashLogin : hash.key})
-            firebase.auth().signOut()
+            // firebase.auth().signOut()
             .then(()=>{
               this.props.navigation.navigate('Login')
             })
@@ -302,11 +303,11 @@ export default class LoginView extends Component {
           
 
             <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
-            <KeyboardAvoidingView style={styles.container2}  behavior='position' >
-            
+            <KeyboardAvoidingView style={styles.container2}  behavior='padding' enabled >
+           
                 <View style={styles.container}>
       
-                        <Icon size={80}  style={styles.ico} >perm_identity</Icon>
+                        <Icon size={80}  style={styles.ico1} >perm_identity</Icon>
                         {this.state.errorMessage &&
                       <Text style={{ color: 'red' }}> 
                         {this.state.errorMessage}
@@ -348,7 +349,7 @@ export default class LoginView extends Component {
          
          <TextInput style={styles.inputs}
              keyboardType='number-pad'
-             placeholder="Phone"
+             placeholder="Celular"
              underlineColorAndroid='transparent'
              onChangeText={(Phone) => this.setState({Phone})}/>
        </View>
@@ -378,12 +379,12 @@ export default class LoginView extends Component {
 
    
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.HandleRegister()}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegister()}>
           <Text style={styles.loginText}>REGISTRARME</Text>
         </TouchableHighlight>
                           
               </View>
-                          
+                  
       </KeyboardAvoidingView>
           </ImageBackground>
       
