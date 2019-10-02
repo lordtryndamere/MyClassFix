@@ -13,7 +13,7 @@ import Register from './components/register';
 
 // CONST
 
-const HomeScreen = createStackNavigator({ Home: Home });
+// const HomeScreen = createStackNavigator({ Home: Home });
 
 
 export default createAppContainer(
@@ -21,7 +21,7 @@ export default createAppContainer(
     {
       Login: Login,
       Register:Register,
-      HomeScreen:HomeScreen,
+      HomeScreen:Home,
  
     },
     {

@@ -16,14 +16,14 @@ container2: {
       
 },
     inputContainer: {
-        borderRadius: 30,
-        borderWidth: 2,
-        borderColor: '#fff',
-        width:290,
-        height:45,
-        marginBottom:20,
-        flexDirection: 'row',
-        alignItems:'center',        
+          borderRadius: 30,
+          borderWidth: 2,
+          borderColor: '#fff',
+          width:290,
+          height:45,
+          marginBottom:20,
+          flexDirection: 'row',
+          alignItems:'center',        
     },
     inputs:{
         height:45,
@@ -72,6 +72,11 @@ container2: {
         textShadowColor:'#75827d',
         fontSize:16
     },
+    textload:{
+      color:"#9E9E9E",
+      textShadowColor:'#75827d',
+      fontSize:16
+  },
     text2:{
       color:"#f0ffff",
       textShadowColor:'#75827d',
