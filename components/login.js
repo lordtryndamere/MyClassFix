@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,PureComponent } from 'react';
 import firebase from 'firebase';
 import styles from  './styles'
 import Icon from'react-native-vector-icons/MaterialIcons'
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 
-export default class LoginView extends Component {
+export default class LoginView extends PureComponent {
 
   constructor(props) {
     super(props);

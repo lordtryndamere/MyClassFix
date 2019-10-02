@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,PureComponent } from 'react';
 
 import firebase from 'firebase';
 import styles from './styles'
@@ -9,13 +9,13 @@ import {
 
   Text,
   View,
-  
   FlatList,
+  
 } from 'react-native';
 
 
 
-export default class Home extends Component {
+export default class Home extends PureComponent {
 
 state={
   items:[],

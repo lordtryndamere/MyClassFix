@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,PureComponent } from 'react';
 import firebase from 'firebase';
 import styles from './/styles';
 import {
@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import publicIP from 'react-native-public-ip';
 import axios from 'axios';
 
-export default class LoginView extends Component {
+export default class LoginView extends PureComponent {
 
   constructor(props) {
     super(props);
