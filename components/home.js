@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import firebase from 'firebase';
 import styles from './styles'
-import {ListItem} from 'react-native-elements'
+import {ListItem,Avatar} from 'react-native-elements'
 import {
 
   Text,
@@ -48,13 +48,15 @@ componentDidMount(){
 
 
 renderItem = ({ item }) => (
+  
   <ListItem
+  key={item.uid}
+  
   title={item.name}
   subtitle={item.email}
   leftAvatar={{ source: { uri: item.linkPhoto } }}
   bottomDivider
   chevron
-
    
   />
 )
@@ -62,26 +64,14 @@ renderItem = ({ item }) => (
   render() {
     return (
     
-      <View       style={styles.container}>
+      <View >
+            <FlatList
+              keyExtractor={(item, index) => 'key'+index}
+              data={this.state.render}
+              renderItem={this.renderItem}
+              
 
-
-  <Text>Hi   {firebase.auth().currentUser.email} </Text>
-{
-  this.state.render.length>0
-  ?<FlatList
-    keyExtractor={(item, index) => 'key'+index}
-    data={this.state.render}
-    renderItem={this.renderItem}
-
-  />
-  :<Text>No Items</Text>
-}
-
-
-
-
-
-      
+            />
 
       </View>
 

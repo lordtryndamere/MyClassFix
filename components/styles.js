@@ -50,6 +50,7 @@ container2: {
       width:260,
       borderRadius:30,
     },
+    
     loginButton: {
       backgroundColor: "white",
       height:35,
@@ -71,6 +72,12 @@ container2: {
         textShadowColor:'#75827d',
         fontSize:16
     },
+    text2:{
+      color:"#f0ffff",
+      textShadowColor:'#75827d',
+      fontSize:16,
+      marginTop:100
+  },
     textregistry:{
   
       marginTop:150,

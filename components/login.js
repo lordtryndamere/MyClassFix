@@ -93,9 +93,9 @@ export default class LoginView extends Component {
           <Text style={styles.loginText}>INGRESAR</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text  style={styles.textregistry}>Registrate aqui</Text>
-        </TouchableHighlight>
+        
+            <Text style={styles.text2}>Puedes registrarte aqui abajo </Text>
+       
 
         <TouchableHighlight style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.NavigateRegister()}>
           <Text style={styles.loginText}>REGISTRATE</Text>
