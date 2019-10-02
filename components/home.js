@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import styles from './styles'
 import {ListItem,Avatar} from 'react-native-elements'
+import TouchableScale from 'react-native-touchable-scale';
+import LinearGradient from 'react-native-linear-gradient';
 import {
 
   Text,
@@ -50,13 +52,24 @@ componentDidMount(){
 renderItem = ({ item }) => (
   
   <ListItem
+  Component={TouchableScale}
+  friction={90} 
+  tension={100} 
+  activeScale={0.95} 
+  linearGradientProps={{
+    colors: ['#424242', '#212121'],
+    start: [1, 0],
+    end: [0.2, 0],
+  }}
+
   key={item.uid}
-  
   title={item.name}
+  titleStyle={{ color: 'white', fontWeight: 'bold' }}
   subtitle={item.email}
+  subtitleStyle={{ color: 'white' }}
   leftAvatar={{ source: { uri: item.linkPhoto } }}
+  chevron={{ color: 'white' }}
   bottomDivider
-  chevron
    
   />
 )
@@ -69,6 +82,8 @@ renderItem = ({ item }) => (
               keyExtractor={(item, index) => 'key'+index}
               data={this.state.render}
               renderItem={this.renderItem}
+              initialNumToRender={8}
+             
               
 
             />
