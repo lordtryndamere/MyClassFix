@@ -17,7 +17,7 @@ import {
 
 
 
-export default class Home extends PureComponent {
+export default class UserView extends PureComponent {
 
 state={
   search:'',
@@ -33,19 +33,16 @@ state={
 updateSearch = search => {
   this.setState({ search });
 };
-
+showContainer = (index) => {
+  console.log(index); 
+}
 
 eliminarDiacriticos= (texto)=>{
   texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 }
 
-elementsNoRepeat = (arreglo=Array)=>{
-  return arreglo.filter((item, index, array) => {
-    return array.findIndex(valArray => JSON.stringify(valArray) === JSON.stringify(item)) === index;
 
-  });
-}
-componentDidMount(){
+componentWillMount(){
   
   firebase.database().ref(`/approveds`).on('value',(snapshot)=>{
     const teachers = snapshot.val();
@@ -68,6 +65,7 @@ componentDidMount(){
       }).then(()=>{
         firebase.database().ref('teachers/'+key+'/personalData/surname').once('value',value=>{
           surname=value.val()
+    
         })
 
       }).then(()=>{
@@ -192,7 +190,7 @@ componentDidMount(){
 
           }
 
-          mobj[0]['idiomas'] = this.elementsNoRepeat(mobj[0]['idiomas']);
+          mobj[0]['idiomas'] = mobj[0]['idiomas'];
           
 
         })
@@ -253,7 +251,7 @@ componentDidMount(){
             return this.setState({render:renderizar})
            
 
-        })      
+        })
     }                
   
                    
@@ -262,7 +260,7 @@ componentDidMount(){
 }
 
 
-renderItem = ({ item }) => (
+renderItem = ({ item,index }) => (
 <Card containerStyle={{padding: 0,borderRadius:20,shadowColor: "#000",
 shadowOffset: {
 	width: 0,
@@ -298,11 +296,12 @@ elevation: 10,}}>
   // key={this.state.render[item].key}
   title={item.name}
   titleStyle={{ color: 'black', fontWeight: 'bold' }}
-  subtitle={this.state.nuevo.sk[item]}
+  subtitle={item.surname}
   subtitleStyle={{ color: '#bdbdbd' }}
   leftAvatar={{ size:60, source: { uri: item.linkPhoto } }}
-  // chevron={{ color: 'black' } }
+  chevron={{ color: 'black',icon:'add_circle_outline' } }
   bottomDivider
+  onPress={() => {this.showContainer(index)}}
    
   />
   </Card> 
@@ -321,7 +320,7 @@ elevation: 10,}}>
     onChangeText={this.updateSearch}
     value={search}
     containerStyle={{ borderRadius: 30,
-      fontSize:10,
+    
       borderColor: '#fff',
       backgroundColor:'#F5F5F5',
       borderWidth:0,

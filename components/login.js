@@ -30,13 +30,13 @@ export default class LoginView extends PureComponent {
     .auth()
     .signInWithEmailAndPassword(email,password)
     .then( () => this.props.navigation.navigate('HomeScreen'))
-    .catch(error => this.setState({errorMessage:"Passowrd Or User Don't Exist Here"}))
+    .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos"}))
   }
   NavigateRegister = () =>{
     this.props.navigation.navigate('Register');
   }
 
-  componentDidMount(){
+  componentWillMount(){
     var firebaseConfig = {
         apiKey: "AIzaSyDD8IvY_nMvjYzuA5QGzcndDovfbqGF-vo",
         authDomain: "myclassflix-dev.firebaseapp.com",

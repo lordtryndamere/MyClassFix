@@ -7,8 +7,11 @@ import {createStackNavigator} from 'react-navigation-stack'
 //IMPORTS EXTERNS
 
 import Login from './components/login';
-import Home from './components/home';
+import UserView from './components/UsersView';
 import Register from './components/register';
+import HomeScreen from './components/HomeView';
+import Drawer from './components/Drawer'
+
 
 
 // CONST
@@ -21,7 +24,9 @@ export default createAppContainer(
     {
       Login: Login,
       Register:Register,
-      HomeScreen:Home,
+      UserView:UserView,
+      HomeScreen:Drawer,
+      
  
     },
     {
