@@ -5,7 +5,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer'
 import {createAppContainer} from 'react-navigation'
 import UsersView from './UsersView';
 import Settings from './SettinsView';
-import  HomeView from './HomeView';
+import HomeView from './HomeView';
 
 
 export default class Drawer extends PureComponent{

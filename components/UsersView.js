@@ -1,5 +1,5 @@
 import React, { Component,PureComponent } from 'react';
-import {} from 'native-base';
+import {Left,Icon} from 'native-base';
 import firebase from 'firebase';
 import styles from './styles'
 import {ListItem,Avatar,Card,Header,SearchBar} from 'react-native-elements'
@@ -11,15 +11,18 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  TouchableHighlight
+
+  
   
 } from 'react-native';
+
 
 
 
 export default class UserView extends PureComponent {
 
 state={
+  timepassed:false, 
   search:'',
   nuevo:[],
   items:[],
@@ -43,6 +46,10 @@ eliminarDiacriticos= (texto)=>{
 
 
 componentWillMount(){
+  setTimeout( () => {
+    this.setTimePassed();
+ },100);
+
   
   firebase.database().ref(`/approveds`).on('value',(snapshot)=>{
     const teachers = snapshot.val();
@@ -258,6 +265,9 @@ componentWillMount(){
     this.setState({items:teachers})
   } )
 }
+setTimePassed(){
+  this.setState({timePassed: true});
+}
 
 
 renderItem = ({ item,index }) => (
@@ -313,7 +323,7 @@ elevation: 10,}}>
 
       <View >
   <Header
-  leftComponent={{ icon: 'menu', color: '#9E9E9E' }}
+  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.navigate('DrawerOpen')} />}
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
   centerComponent={ <SearchBar
     placeholder="¿Que quieres aprender?"
@@ -366,17 +376,16 @@ elevation: 10,}}>
       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
 </View>
         {
-          this.state.render.length>40
+          this.state.timepassed
             ?<FlatList
-              keyExtractor={(item, index) => 'key'+index}
-              data={this.state.render}
-              renderItem={this.renderItem}
-            />
-: <View  style={{  justifyContent:'center',alignItems:'center',alignContent:'center',height:'100%',width:'100%'}}>
- <ActivityIndicator size="large"  color="blue"    />
-            <Text style={styles.textload}>Cargando profesores ....</Text>
-
- </View>
+            keyExtractor={(item, index) => 'key'+index}
+            data={this.state.render}
+            renderItem={this.renderItem}
+            />   
+         :<View  style={{  flex:1,justifyContent:'center',alignItems:'center',alignContent:'center',height:'100%',width:'100%'}}>
+         <ActivityIndicator size="large"  color="blue"    />
+       <Text style={styles.textload}>Cargando profesores ....</Text>
+         </View>
         }       
       </View>
           
@@ -385,4 +394,3 @@ elevation: 10,}}>
 }
 
 
- 
