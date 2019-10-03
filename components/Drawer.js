@@ -1,34 +1,69 @@
 import React,{PureComponent} from 'react';
-import {View,Text} from 'react-native';
-import {  } from 'native-base';
-import {createDrawerNavigator} from 'react-navigation-drawer'
-import {createAppContainer} from 'react-navigation'
+import {View,Text,Image} from 'react-native';
+import { Container, Content, Icon, Header, Body } from 'native-base'
+import {createDrawerNavigator,DrawerNavigatorItems} from 'react-navigation-drawer'
+import {SafeAreaView,StyleSheet} from 'react-native'
+import {createAppContainer,createSwitchNavigator} from 'react-navigation'
 import UsersView from './UsersView';
 import Settings from './SettinsView';
 import HomeView from './HomeView';
+import UserView from './UsersView';
+import menu from '../assets/menu2.png';
+import ContenCompo from './ContenCompo';
 
 
-export default class Drawer extends PureComponent{
-    render (){
-    
-        return(
-        <App/>
-        
-     
-        )
+
+const Stack = createSwitchNavigator (   {
+    UserView:UserView,
+    Settings:Settings,
+    HomeScreen:HomeView
+},{
+   navigationOptions:()=>({
+       headerLeft:<Image source={menu} ></Image>
+   })
     }
-}
+)
 
+
+  
 const MyApp = createDrawerNavigator({
-HomeView:{
-screen:HomeView
+
+Home:{
+    screen:Stack
 },
-Users:{
+BuscarDocentes:{
     screen:UsersView
 },
-Settings:{
+Soporte:{
     screen:Settings
-}
+    
+},
+
+
+
+},{initialRouteName:'Home',
+contentComponent: ContenCompo,
+drawerPosition:'left'
 })
 
-const App = createAppContainer(MyApp)
+
+//   const styles = StyleSheet.create({
+
+//     container: {
+//       flex: 1,
+//       justifyContent: 'center',
+//       alignItems: 'center'
+//     },
+//     drawerHeader: {
+//       height: 200,
+//       backgroundColor: 'white'
+//     },
+//     drawerImage: {
+//       height: 150,
+//       width: 150,
+//       borderRadius: 75
+//     }
+  
+//   })
+  
+export default MyApp;

@@ -1,9 +1,10 @@
 import React, { Component,PureComponent } from 'react';
-import {Left,Icon} from 'native-base';
+import {} from 'native-base';
 import firebase from 'firebase';
 import styles from './styles'
-import {ListItem,Avatar,Card,Header,SearchBar} from 'react-native-elements'
+import {ListItem,Avatar,Card,Header,SearchBar,Icon} from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
+import {DrawerActions} from 'react-navigation-drawer'
 
 import {
   
@@ -17,7 +18,8 @@ import {
 } from 'react-native';
 
 
-
+const initialData = [123]; 
+const ITEMS_PER_PAGE = 8; 
 
 export default class UserView extends PureComponent {
 
@@ -29,7 +31,8 @@ state={
   teachersAproveds:[],
   render:'',
   idiomasAcentos:["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
-  refreshing:false
+  page:1,
+  data:[9]
 
 
 }
@@ -37,7 +40,7 @@ updateSearch = search => {
   this.setState({ search });
 };
 showContainer = (index) => {
-  console.log(index); 
+  console.log(index.name); 
 }
 
 eliminarDiacriticos= (texto)=>{
@@ -46,199 +49,195 @@ eliminarDiacriticos= (texto)=>{
 
 
 componentWillMount(){
-  setTimeout( () => {
-    this.setTimePassed();
- },100);
-
   
   firebase.database().ref(`/approveds`).on('value',(snapshot)=>{
     const teachers = snapshot.val();
-    for (const key in teachers){
+    // for (const key in teachers){
       
-      var name = ""
-      var surname = ""
-      var ranking = ""
-      var country = ""
-      var foto = ""
-      var myCalendar = []
-      var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
-      var tags = []
-      var skill = []
-      var type = []
-      var skl = []
+    //   var name = ""
+    //   var surname = ""
+    //   var ranking = ""
+    //   var country = ""
+    //   var foto = ""
+    //   var myCalendar = []
+    //   var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
+    //   var tags = []
+    //   var skill = []
+    //   var type = []
+    //   var skl = []
 
-      firebase.database().ref('teachers/'+key+'/personalData/name').once('value',value=>{
-        name=value.val()
-      }).then(()=>{
-        firebase.database().ref('teachers/'+key+'/personalData/surname').once('value',value=>{
-          surname=value.val()
+    //   firebase.database().ref('teachers/'+key+'/personalData/name').once('value',value=>{
+    //     name=value.val()
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers/'+key+'/personalData/surname').once('value',value=>{
+    //       surname=value.val()
     
-        })
+    //     })
 
-      }).then(()=>{
-        firebase.database().ref('teachers/'+key+'/personalData/ranking').once('value',value=>{
-          ranking=value.val()
-        })
-      }).then(()=>{
-        firebase.database().ref('teachers/'+key+'/personalData/country').once('value',value=>{
-          country=value.val()
-        })
-      }).then(()=>{
-        firebase.database().ref('teachers/'+key+'/personalData/linkPhoto').once('value',value=>{
-          foto = value.val()
-        })
-      }).then(()=>{
-        firebase.database().ref('teachers'+key+'/newCalendar/week').once('value',value=>{
-          myCalendar=value.val()
-        })
-      }).then(()=>{
-        firebase.database().ref('teachers'+key+'/personalData/tags').once('value',value=>{
-          const snapshot= value.val()
-          for (const i in snapshot) {
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers/'+key+'/personalData/ranking').once('value',value=>{
+    //       ranking=value.val()
+    //     })
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers/'+key+'/personalData/country').once('value',value=>{
+    //       country=value.val()
+    //     })
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers/'+key+'/personalData/linkPhoto').once('value',value=>{
+    //       foto = value.val()
+    //     })
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers'+key+'/newCalendar/week').once('value',value=>{
+    //       myCalendar=value.val()
+    //     })
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers'+key+'/personalData/tags').once('value',value=>{
+    //       const snapshot= value.val()
+    //       for (const i in snapshot) {
 
-            for (const j in snapshot[i]) {
+    //         for (const j in snapshot[i]) {
 
-              for (const k in snapshot[i][j]) {
+    //           for (const k in snapshot[i][j]) {
 
-                tags.push(this.eliminarDiacriticos(snapshot[i][j][k].value))
+    //             tags.push(this.eliminarDiacriticos(snapshot[i][j][k].value))
 
-              }
+    //           }
 
-            }
+    //         }
 
-          }
-
-
-        })
-      }).then(()=>{
-        firebase.database().ref('teachers/'+key+'/newSkill').once('value',value=>{
-          const snapshot = value.val()
-          for (const i in snapshot) {
-
-            type.push(this.eliminarDiacriticos(i))
-
-            for (const j in snapshot[i]) {
-
-              for (const k in snapshot[i][j]) {
-
-                // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //       }
 
 
+    //     })
+    //   }).then(()=>{
+    //     firebase.database().ref('teachers/'+key+'/newSkill').once('value',value=>{
+    //       const snapshot = value.val()
+    //       for (const i in snapshot) {
 
-                if (i == 'Idiomas') {
+    //         type.push(this.eliminarDiacriticos(i))
 
-                  this.state.idiomasAcentos.forEach(val => {
+    //         for (const j in snapshot[i]) {
 
-                    if (this.eliminarDiacriticos(val) == j) {
+    //           for (const k in snapshot[i][j]) {
 
-                      mobj[0]['idiomas'].push(val);
+    //             // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
 
-                      skill.push(this.eliminarDiacriticos(val))
 
-                      skl.push(val)
 
-                    }
+    //             if (i == 'Idiomas') {
 
-                  })
+    //               this.state.idiomasAcentos.forEach(val => {
 
-                } else if (i == 'Musica') {
+    //                 if (this.eliminarDiacriticos(val) == j) {
 
-                  mobj[1]['musica'].push(snapshot[i][j][k].skill)
+    //                   mobj[0]['idiomas'].push(val);
 
-                  skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //                   skill.push(this.eliminarDiacriticos(val))
 
-                  skl.push(snapshot[i][j][k].skill)
+    //                   skl.push(val)
 
-                } else if (i == 'Tecnologia') {
+    //                 }
 
-                  mobj[2]['tecnologia'].push(snapshot[i][j][k].skill)
+    //               })
 
-                  skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //             } else if (i == 'Musica') {
 
-                  skl.push(snapshot[i][j][k].skill)
+    //               mobj[1]['musica'].push(snapshot[i][j][k].skill)
 
-                } else if (i == 'Universidad') {
+    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
 
-                  mobj[3]['universidad'].push(snapshot[i][j][k].skill)
+    //               skl.push(snapshot[i][j][k].skill)
 
-                  skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //             } else if (i == 'Tecnologia') {
 
-                  skl.push(snapshot[i][j][k].skill)
+    //               mobj[2]['tecnologia'].push(snapshot[i][j][k].skill)
 
-                } else if (i == 'Secundaria') {
+    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
 
-                  mobj[4]['secundaria'].push(snapshot[i][j][k].skill)
+    //               skl.push(snapshot[i][j][k].skill)
 
-                  skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //             } else if (i == 'Universidad') {
 
-                  skl.push(snapshot[i][j][k].skill)
+    //               mobj[3]['universidad'].push(snapshot[i][j][k].skill)
 
-                } else if (i == 'Primaria') {
+    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
 
-                  mobj[5]['primaria'].push(snapshot[i][j][k].skill)
+    //               skl.push(snapshot[i][j][k].skill)
 
-                  skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //             } else if (i == 'Secundaria') {
 
-                  skl.push(snapshot[i][j][k].skill)
+    //               mobj[4]['secundaria'].push(snapshot[i][j][k].skill)
 
-                } else if (i == 'Otros') {
+    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
 
-                  mobj[6]['otros'].push(snapshot[i][j][k].skill)
+    //               skl.push(snapshot[i][j][k].skill)
 
-                  skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+    //             } else if (i == 'Primaria') {
 
-                  skl.push(snapshot[i][j][k].skill)
+    //               mobj[5]['primaria'].push(snapshot[i][j][k].skill)
 
-                }
+    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
 
-              }
+    //               skl.push(snapshot[i][j][k].skill)
 
-            }
+    //             } else if (i == 'Otros') {
 
-          }
+    //               mobj[6]['otros'].push(snapshot[i][j][k].skill)
 
-          mobj[0]['idiomas'] = mobj[0]['idiomas'];
+    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+    //               skl.push(snapshot[i][j][k].skill)
+
+    //             }
+
+    //           }
+
+    //         }
+
+    //       }
+
+    //       mobj[0]['idiomas'] = mobj[0]['idiomas'];
           
 
-        })
-      }).then(()=>{
-        var obj = {
+    //     })
+    //   }).then(()=>{
+    //     var obj = {
 
-          id: key,
+    //       id: key,
 
-          name: name,
+    //       name: name,
 
-          surname: surname,
+    //       surname: surname,
 
-          ranking: ranking,
+    //       ranking: ranking,
 
-          country: country,
+    //       country: country,
 
-          photo: foto,
+    //       photo: foto,
 
-          progress: true,
+    //       progress: true,
 
-          approved: true,
+    //       approved: true,
 
-          myCalendar: myCalendar,
+    //       myCalendar: myCalendar,
 
-          tags: tags,
+    //       tags: tags,
 
-          skill: skill,
+    //       skill: skill,
 
-          type: type,
+    //       type: type,
 
-          sk: mobj,
+    //       sk: mobj,
 
-          acentSkill: skl
+    //       acentSkill: skl
 
-        }
-        var renderizado= obj
-        this.setState({nuevo:renderizado})
+    //     }
+    //     var renderizado= obj
+    //     this.setState({nuevo:Object.values(renderizado)})
 
-      })
+    //   })
      
-    }
+    // }
     
     
     
@@ -265,9 +264,7 @@ componentWillMount(){
     this.setState({items:teachers})
   } )
 }
-setTimePassed(){
-  this.setState({timePassed: true});
-}
+
 
 
 renderItem = ({ item,index }) => (
@@ -308,7 +305,7 @@ elevation: 10,}}>
   titleStyle={{ color: 'black', fontWeight: 'bold' }}
   subtitle={item.surname}
   subtitleStyle={{ color: '#bdbdbd' }}
-  leftAvatar={{ size:60, source: { uri: item.linkPhoto } }}
+  leftAvatar={{ size:60, source: { uri:item.linkPhoto} }}
   chevron={{ color: 'black',icon:'add_circle_outline' } }
   bottomDivider
   onPress={() => {this.showContainer(index)}}
@@ -316,6 +313,16 @@ elevation: 10,}}>
   />
   </Card> 
 )
+loadMore() {
+
+  const page = this.state.page
+  const data = this.state.data
+  const start = page*ITEMS_PER_PAGE;
+  const end = (page+1)*ITEMS_PER_PAGE-1;
+
+  const newData = initialData.slice(start, end); 
+  this.setState({data: [...data, ...newData]}); 
+}
 
   render() {
     const { search } = this.state;
@@ -323,7 +330,7 @@ elevation: 10,}}>
 
       <View >
   <Header
-  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.navigate('DrawerOpen')} />}
+  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.dispatch(DrawerActions.openDrawer())} />}
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
   centerComponent={ <SearchBar
     placeholder="¿Que quieres aprender?"
@@ -375,22 +382,23 @@ elevation: 10,}}>
       fontSize:18,
       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
 </View>
-        {
-          this.state.timepassed
-            ?<FlatList
-            keyExtractor={(item, index) => 'key'+index}
-            data={this.state.render}
-            renderItem={this.renderItem}
-            />   
-         :<View  style={{  flex:1,justifyContent:'center',alignItems:'center',alignContent:'center',height:'100%',width:'100%'}}>
-         <ActivityIndicator size="large"  color="blue"    />
-       <Text style={styles.textload}>Cargando profesores ....</Text>
-         </View>
+        {   console.log(this.state.nuevo),
+            this.state.render.length<20
+            
+            ?<View  style={{  flex:1,justifyContent:'center',alignItems:'center',alignContent:'center',height:'100%',width:'100%'}}>
+            <ActivityIndicator size="large"  color="blue"    />
+          <Text style={styles.textload}>Cargando profesores ....</Text>
+            </View>
+         :<FlatList
+         keyExtractor={(item, index) => 'key'+index}
+         data={this.state.render}
+         renderItem={this.renderItem}
+         onEndReached={this.loadMore}
+         />   
         }       
       </View>
           
     );
   }
 }
-
 

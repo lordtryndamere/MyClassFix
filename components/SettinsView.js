@@ -3,6 +3,7 @@ import {View,Text} from 'react-native';
 import {createDrawerNavigator} from 'react-navigation-drawer'
 import {Left,Icon} from 'native-base';
 import {ListItem,Avatar,Card,Header,SearchBar} from 'react-native-elements'
+import {DrawerActions} from 'react-navigation-drawer'
 
 
 export default class SettinsView extends PureComponent{
@@ -10,7 +11,7 @@ export default class SettinsView extends PureComponent{
         return(
         <View>
               <Header
-  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.navigate('DrawerOpen')} />}
+  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.dispatch(DrawerActions.openDrawer())} />}
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
 
   containerStyle={{

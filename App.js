@@ -1,37 +1,17 @@
 
-import React, { Component } from "react";
-import {createAppContainer,createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack'
+import React, { Component,PureComponent } from "react";
+import {createAppContainer} from 'react-navigation';
+import AppNavigator from './components/AppNavigator';
 
 
-//IMPORTS EXTERNS
+const AppContainer = createAppContainer(AppNavigator);
 
-import Login from './components/login';
-import UserView from './components/UsersView';
-import Register from './components/register';
-import HomeScreen from './components/HomeView';
-import Drawer from './components/Drawer'
+export default class App extends PureComponent{
+  render(){
+    return(
+      <AppContainer/>
+    )
+  }
+}
 
-
-
-// CONST
-
-// const HomeScreen = createStackNavigator({ Home: Home });
-
-
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Login: Login,
-      Register:Register,
-      UserView:UserView,
-      HomeScreen:Drawer,
-      
- 
-    },
-    {
-      initialRouteName: 'Login',
-    }
-  )
-);
 
