@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import publicIP from 'react-native-public-ip';
 import axios from 'axios';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class LoginView extends PureComponent {
 
@@ -45,7 +46,7 @@ export default class LoginView extends PureComponent {
 
 
     }
-    console.log("Aqui estoy")
+    
   }
   HandleIp = ()=>  {
   publicIP()
@@ -379,9 +380,9 @@ export default class LoginView extends PureComponent {
 
    
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegister()}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegister()}>
           <Text style={styles.loginText}>REGISTRARME</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
                           
               </View>
                   

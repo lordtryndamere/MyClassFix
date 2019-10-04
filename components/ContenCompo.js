@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {StyleSheet,Text,View,TouchableHighlight,Image,TouchableOpacity,ScrollView} from 'react-native'
+import firebase from 'firebase'
 
 
 export default class ContentCompo extends Component{
@@ -11,16 +12,32 @@ export default class ContentCompo extends Component{
                 <ScrollView>
 
                 <View style={styles.header} >
-                    <Image source={require('../assets/menu.png')} style={styles.headerImage} />
-                    <Text     style={styles.text,{color:'white'}}> My Profile</Text>
+                    <Image source={require('../assets/user.png')} style={styles.headerImage} />
+                    <Text     style={styles.text,{color:'white'}}>Bienvenido {firebase.auth().currentUser.email}  </Text>
                 </View>
 
-                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('UsersView')} >
+                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                 <View  style={styles.row}>
-                    <Image source={require('../assets/menu2.png')} style={styles.headerImage}  />
-                    <Text style={styles.text} > Contacts</Text>
+                    <Image source={require('../assets/home.png')} style={styles.headerImage}  />
+                    <Text style={styles.text} >Inicio</Text>
                 </View>
-                </TouchableHighlight >
+                </TouchableHighlight>
+
+                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('UserView')} >
+                <View  style={styles.row}>
+                    <Image source={require('../assets/buscar.png')} style={styles.headerImage}  />
+                    <Text style={styles.text} > Buscar Docentes</Text>
+                </View>
+                </TouchableHighlight>
+
+                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
+                <View  style={styles.row}>
+                    <Image source={require('../assets/soporte.png')} style={styles.headerImage}  />
+                    <Text style={styles.text} > Soporte</Text>
+                </View>
+                </TouchableHighlight>
+
+       
 
                 </ScrollView>
             </TouchableOpacity>
@@ -50,6 +67,7 @@ const styles = StyleSheet.create({
     },
     headerImage:{
         borderRadius:100,
+        
 
     },
     row:{

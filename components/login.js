@@ -8,7 +8,8 @@ import {
   View,
   TextInput,
   TouchableHighlight,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity
 } from 'react-native';
 
 
@@ -89,17 +90,17 @@ export default class LoginView extends PureComponent {
             <Text style={styles.text}>¿Haz olvidado tu contraseña?</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
+        <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
         
             <Text style={styles.text2}>Puedes registrarte aqui abajo </Text>
        
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.NavigateRegister()}>
+        <TouchableOpacity  style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.NavigateRegister()}>
           <Text style={styles.loginText}>REGISTRATE</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
     );
