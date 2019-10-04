@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     },
     headerImage:{
         borderRadius:100,
+        marginRight:40,
         marginRight:40
         
 
