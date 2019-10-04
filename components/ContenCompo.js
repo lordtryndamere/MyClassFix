@@ -12,7 +12,7 @@ export default class ContentCompo extends Component{
                 <ScrollView>
 
                 <ImageBackground   source={require('../assets/ImageBack.png')}  style={styles.header} >
-                    <Image source={require('../assets/user2.png')} style={styles.headerImage} />
+                    <Image source={require('../assets/user.png')} style={styles.headerImage} />
                     <Text     style={styles.text,{color:'white'}}>Mi Perfil {firebase.auth().currentUser.email}  </Text>
                 </ImageBackground>
 
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         borderBottomColor:'#bdbdbd',
         borderBottomWidth:7,
         borderRightColor:'#bdbdbd',
+   
  
         
     },

@@ -181,7 +181,62 @@ container2: {
      
       position:'relative'
   
-    }
+    },
+    header3:{
+        
+      alignItems:'center',
+      justifyContent:'center',
+      borderBottomColor:'#bdbdbd',
+      borderBottomWidth:1,
+      borderRightColor:'#bdbdbd',
+      backgroundColor:'white',
+      borderRightWidth:1,
+      width:'50%'
+ 
+
+      
+  },
+  header4:{
+        
+    alignItems:'center',
+    justifyContent:'center',
+    borderBottomColor:'#bdbdbd',
+    borderRightWidth:1,
+    borderRightColor:'#bdbdbd',
+    backgroundColor:'white',
+    width:'50%'
+
+
+    
+},
+header5:{
+        
+  alignItems:'center',
+  justifyContent:'center',
+  borderBottomColor:'#bdbdbd',
+  borderRightColor:'#bdbdbd',
+  backgroundColor:'white',
+  borderBottomWidth:1,
+  width:'50%'
+
+
+  
+},
+header6:{
+        
+  alignItems:'center',
+  justifyContent:'center',
+  borderBottomColor:'#bdbdbd',
+  borderRightColor:'#bdbdbd',
+  backgroundColor:'white',
+  width:'50%'
+
+
+  
+},
+
+ 
+   
     
   
   });
