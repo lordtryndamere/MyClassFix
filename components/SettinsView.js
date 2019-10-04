@@ -1,17 +1,21 @@
 import React,{PureComponent} from 'react';
-import {View,Text} from 'react-native';
+import {View,Text,TouchableOpacity,StyleSheet,Image} from 'react-native';
 import {createDrawerNavigator} from 'react-navigation-drawer'
 import {Left,Icon} from 'native-base';
 import {ListItem,Avatar,Card,Header,SearchBar} from 'react-native-elements'
 import {DrawerActions} from 'react-navigation-drawer'
-
+import styles from './styles'
 
 export default class SettinsView extends PureComponent{
     render (){
         return(
         <View>
               <Header
-  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.dispatch(DrawerActions.openDrawer())} />}
+  leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
+  <View  style={styles.row}>
+      <Image source={require('../assets/menu2.png')} style={styles.headerImage2}  />
+  </View>
+  </TouchableOpacity>}
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
 
   containerStyle={{

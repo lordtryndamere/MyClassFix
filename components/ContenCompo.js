@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {StyleSheet,Text,View,TouchableHighlight,Image,TouchableOpacity,ScrollView} from 'react-native'
+import {StyleSheet,Text,View,TouchableHighlight,Image,TouchableOpacity,ScrollView,ImageBackground} from 'react-native'
 import firebase from 'firebase'
 
 
@@ -11,29 +11,29 @@ export default class ContentCompo extends Component{
             <TouchableOpacity activeOpacity={1}  style={styles.drawer} disabled={false} >
                 <ScrollView>
 
-                <View style={styles.header} >
-                    <Image source={require('../assets/user.png')} style={styles.headerImage} />
-                    <Text     style={styles.text,{color:'white'}}>Bienvenido {firebase.auth().currentUser.email}  </Text>
-                </View>
+                <ImageBackground   source={require('../assets/ImageBack.png')}  style={styles.header} >
+                    <Image source={require('../assets/user2.png')} style={styles.headerImage} />
+                    <Text     style={styles.text,{color:'white'}}>Mi Perfil {firebase.auth().currentUser.email}  </Text>
+                </ImageBackground>
 
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                 <View  style={styles.row}>
-                    <Image source={require('../assets/home.png')} style={styles.headerImage}  />
-                    <Text style={styles.text} >Inicio</Text>
+                    <Image source={require('../assets/classlive.png')} style={styles.headerImage2}  />
+                    <Text style={styles.text} >INICIO</Text>
                 </View>
                 </TouchableHighlight>
 
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('UserView')} >
                 <View  style={styles.row}>
-                    <Image source={require('../assets/buscar.png')} style={styles.headerImage}  />
-                    <Text style={styles.text} > Buscar Docentes</Text>
+                    <Image source={require('../assets/buscar.png')} style={styles.headerImage2}  />
+                    <Text style={styles.text} > BUSCAR DOCENTES</Text>
                 </View>
                 </TouchableHighlight>
 
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
                 <View  style={styles.row}>
-                    <Image source={require('../assets/soporte.png')} style={styles.headerImage}  />
-                    <Text style={styles.text} > Soporte</Text>
+                    <Image source={require('../assets/soporte.png')} style={styles.headerImage2}  />
+                    <Text style={styles.text} > SOPORTE</Text>
                 </View>
                 </TouchableHighlight>
 
@@ -50,30 +50,45 @@ export default class ContentCompo extends Component{
 const styles = StyleSheet.create({
     drawerTransparent:{
         flex:1,
-        backgroundColor:'transparent'
+        backgroundColor:'transparent',
+        borderRightColor:'#bdbdbd',
+        borderRightWidth:7,
+     
     },
     drawer:{
         flex:1,
         width:280,
-        backgroundColor:'white'
+        backgroundColor:'white',
+        borderRightColor:'#bdbdbd',
+        borderRightWidth:7,
+        
     },
     header:{
-        width:'100%',
-        height:200,
-        backgroundColor:'#009688',
+        
         alignItems:'center',
-        justifyContent:'center' 
+        justifyContent:'center',
+        borderBottomColor:'#bdbdbd',
+        borderBottomWidth:7,
+        borderRightColor:'#bdbdbd',
+ 
         
     },
     headerImage:{
         borderRadius:100,
+        marginRight:40
+        
+
+    },
+    headerImage2:{
+        marginLeft:40,
+        position:'relative'
         
 
     },
     row:{
         flexDirection:'row',
         paddingVertical:15,
-        paddingLeft:10
+       
     },
     menu:{
         width:10,
@@ -83,10 +98,15 @@ const styles = StyleSheet.create({
         alignSelf:'center',
     },
     text:{
-        fontSize:20,
+        paddingRight:5,
+        fontSize:13,
         fontWeight:'bold',
-        marginLeft:15,
-        color:'#111'
+        flex:1,
+       justifyContent:'center',
+       alignItems:'center',
+       marginLeft:20,
+        color:'#111',
+        position:'relative'
     },
     line:{
         width:'90%',

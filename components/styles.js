@@ -168,6 +168,19 @@ container2: {
       height:35,
       width:180,
      
+    },
+    row:{
+      flexDirection:'row',
+      marginLeft:10,
+      paddingVertical:15,
+      
+      
+  
+    },
+    headerImage2:{
+     
+      position:'relative'
+  
     }
     
   

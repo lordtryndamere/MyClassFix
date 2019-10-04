@@ -1,8 +1,7 @@
 import React, { Component,PureComponent } from 'react';
-import {} from 'native-base';
 import firebase from 'firebase';
 import styles from './styles'
-import {ListItem,Avatar,Card,Header,SearchBar,Icon} from 'react-native-elements'
+import {ListItem,Avatar,Card,Header,Icon} from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
 import {DrawerActions} from 'react-navigation-drawer'
 
@@ -12,6 +11,9 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  Image
 
   
   
@@ -25,7 +27,7 @@ export default class UserView extends PureComponent {
 
 state={
   timepassed:false, 
-  search:'',
+ 
   nuevo:[],
   items:[],
   teachersAproveds:[],
@@ -36,9 +38,7 @@ state={
 
 
 }
-updateSearch = search => {
-  this.setState({ search });
-};
+
 showContainer = (index) => {
   console.log(index.name); 
 }
@@ -325,43 +325,18 @@ loadMore() {
 }
 
   render() {
-    const { search } = this.state;
+    
     return (
 
       <View >
   <Header
-  leftComponent={<Icon name="menu"  onPress ={ ()=> this.props.navigation.dispatch(DrawerActions.openDrawer())} />}
+  leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
+  <View  style={styles.row}>
+      <Image source={require('../assets/menu2.png')} style={styles.headerImage2}  />
+  </View>
+  </TouchableOpacity> }
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
-  centerComponent={ <SearchBar
-    placeholder="¿Que quieres aprender?"
-    onChangeText={this.updateSearch}
-    value={search}
-    containerStyle={{ borderRadius: 30,
-    
-      borderColor: '#fff',
-      backgroundColor:'#F5F5F5',
-      borderWidth:0,
-      width:290,
-      height:45,
-      flexDirection: 'row',
-      alignItems:'center',
-      marginRight:10,
-      shadowColor: "#000",
-
-    
-          }}
-    inputContainerStyle={{
-      backgroundColor:'#F5F5F5',
-      borderRadius: 30,
-      borderWidth: 0,
-      borderColor: '#fff',
-      width:290,
-      height:45,
-      flexDirection: 'row',
-      alignItems:'center',  
-      
-    }}
-  />}
+  // centerComponent={ }
   containerStyle={{
     backgroundColor:'#fff',
     borderBottomColor:'#9E9E9E',
@@ -401,4 +376,3 @@ loadMore() {
     );
   }
 }
-
