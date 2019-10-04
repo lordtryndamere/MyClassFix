@@ -55,7 +55,7 @@ export default class HomeView extends Component{
                                       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
                   </View>  
                 
-            <ScrollView horizontal={true} disableIntervalMomentum={true} >
+            <ScrollView   horizontal={true} pagingEnabled showsHorizontalScrollIndicator={false} >
               <Card
               title='MYCLASSFLIX RECURSOS'
               image={require('../assets/ImageBack.png')}
