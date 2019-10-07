@@ -10,13 +10,14 @@ import HomeView from './HomeView';
 import UserView from './UsersView';
 import menu from '../assets/menu2.png';
 import ContenCompo from './ContenCompo';
-
+import ProfileView from './ProfileView'
 
 
 const Stack = createSwitchNavigator (   {
     UserView:UserView,
     Settings:Settings,
-    HomeScreen:HomeView
+    HomeScreen:HomeView,
+    ProfileView:ProfileView
 },{
    navigationOptions:()=>({
        headerLeft:<Image source={menu} ></Image>

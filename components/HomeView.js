@@ -1,8 +1,9 @@
-import React,{PureComponent,Component} from 'react'
-import {View,Image,TouchableOpacity,Text, ScrollView ,Linking } from 'react-native'
+import React,{PureComponent} from 'react'
+import {View,Image,TouchableOpacity,Text } from 'react-native'
 import firebase from 'firebase'
-import { Card, ListItem, Button, Icon,Header } from 'react-native-elements'
+import {Header } from 'react-native-elements'
 import {DrawerActions} from 'react-navigation-drawer'
+import Carousel from './Carousel'
 import styles from './styles'
 
 
@@ -13,8 +14,6 @@ export default class HomeView extends PureComponent{
     showDrawer=()=>{
         this.props.navigation.dispatch(DrawerActions.openDrawer())
     }
-
-
 
 
 
@@ -56,94 +55,52 @@ export default class HomeView extends PureComponent{
                                       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
                   </View>  
                 
-            <ScrollView   horizontal={true}  showsHorizontalScrollIndicator={false} automaticallyAdjustContentInsets={true} >
-              <Card
-              title='MYCLASSFLIX RECURSOS'
-              image={require('../assets/ImageBack.png')}
-              containerStyle={{borderRadius:30}}>
-              <Text style={{marginBottom: 10}}>
-                Bienvenido a MYCLASSFLIX , aqui encontraras todo lo que quieras aprender
-              </Text>
-              <Button
-                icon={<Icon name='code' color='#ffffff' />}
-                onPress={()=> Linking.openURL('https://www.myclassflix.com/resources')}
-                buttonStyle={{borderRadius: 30, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                title='VER AHORA' />
-            </Card>
 
-            <Card
-              title='MYCLASSFLIX PROFESORES'
-              image={require('../assets/ImageBack.png')}
-              containerStyle={{borderRadius:30,}}>
-              <Text style={{marginBottom: 10}}>
-                Bienvenido a MYCLASSFLIX , aqui encontraras todo lo que quieras aprender
-              </Text>
-              <Button
-                icon={<Icon name='code' color='#ffffff' />}
-                onPress={()=> Linking.openURL('https://www.myclassflix.com/teachers')}
-                buttonStyle={{borderRadius: 30, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                title='VER AHORA' />
-            </Card>
-            <Card
-              title='MYCLASSFLIX PLANES'
-              image={require('../assets/ImageBack.png')}
-              containerStyle={{borderRadius:30}}>
-              <Text style={{marginBottom: 10}}>
-                Bienvenido a MYCLASSFLIX , aqui encontraras todo lo que quieras aprender
-              </Text>
-              <Button
-                icon={<Icon name='code' color='#ffffff' />}
-                onPress={()=>Linking.openURL('https://www.myclassflix.com/prices')}
-                buttonStyle={{borderRadius: 30, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                title='VER AHORA' />
-            </Card>
-            </ScrollView>
-          
+           <Carousel/>
             <View style={{padding: 5,justifyContent:'center',alignItems:'center'}}>
                                   <Text style={{ color:"#424242",
                                       textShadowColor:'#424242',
                                       fontSize:18,
-                                      fontWeight:'900'}}> Bienvenido {firebase.auth().currentUser.email}  </Text>
+                                      fontWeight:'900'}}> Bienvenido {firebase.auth().currentUser.phoneNumber}  </Text>
             </View>
 
-            <View style={{width:'100%'}}  >  
+            <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40}}>  
             
                     <View style={{width: '100%', ustifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex'}} >
                             
 
-                    <TouchableOpacity  style={styles.header3} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
+                    <TouchableOpacity  style={styles.header3} onPress={()=>this.props.navigation.navigate('UserView')} >
                         <View  style={styles.row}>
-                            <Image source={require('../assets/reservadas.png')} style={styles.headerImage2}  />
-                            <Text style={styles.text} >INICIO</Text>
+                            <Image source={require('../assets/DOCENTES.png')} style={styles.headerImage2}  />
+                        
                         </View>
                       </TouchableOpacity>
 
                         
                         <TouchableOpacity style={styles.header5} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                         <View  style={styles.row}>
-                            <Image source={require('../assets/classlive.png')} style={styles.headerImage2}  />
-                            <Text style={styles.text} >INICIO</Text>
+                            <Image source={require('../assets/MISRESERVAS.png')} style={styles.headerImage2}  />
+                         
                         </View>
                         </TouchableOpacity>
 
 
 
                     </View>
-                      <View style={{justifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex',width:'100%'}} >
+                      <View style={{width:'100%',justifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex'}} >
                               
 
                               <TouchableOpacity  style={styles.header4} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                                   <View  style={styles.row}>
-                                      <Image source={require('../assets/reservadas.png')} style={styles.headerImage2}  />
-                                      <Text style={styles.text} >INICIO</Text>
+                                      <Image source={require('../assets/CLASESGRUPALES.png')} style={styles.headerImage2}  />
                                   </View>
                                 </TouchableOpacity>
                   
                                   
                                   <TouchableOpacity style={styles.header6} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                                   <View  style={styles.row}>
-                                      <Image source={require('../assets/classlive.png')} style={styles.headerImage2}  />
-                                      <Text style={styles.text} >INICIO</Text>
+                                      <Image source={require('../assets/MISCREDITOS.png')} style={styles.headerImage2}  />
+
                                   </View>
                                   </TouchableOpacity>
                         </View>

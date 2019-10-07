@@ -1,9 +1,11 @@
 import React, { Component,PureComponent } from 'react';
 import firebase from 'firebase';
 import styles from './styles'
-import {ListItem,Avatar,Card,Header,Icon} from 'react-native-elements'
+import {ListItem,Card,Header,Tooltip,SearchBar} from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
 import {DrawerActions} from 'react-navigation-drawer'
+import _  from 'lodash'
+
 
 import {
   
@@ -11,9 +13,11 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  StyleSheet,
+  VirtualizedList,
   TouchableOpacity,
-  Image
+  Image,
+  TextInput
+
 
   
   
@@ -34,7 +38,10 @@ state={
   render:'',
   idiomasAcentos:["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
   page:1,
-  data:[9]
+  data:[9],
+  fullData  :[],
+  query:""
+  
 
 
 }
@@ -52,201 +59,7 @@ componentWillMount(){
   
   firebase.database().ref(`/approveds`).on('value',(snapshot)=>{
     const teachers = snapshot.val();
-    // for (const key in teachers){
-      
-    //   var name = ""
-    //   var surname = ""
-    //   var ranking = ""
-    //   var country = ""
-    //   var foto = ""
-    //   var myCalendar = []
-    //   var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
-    //   var tags = []
-    //   var skill = []
-    //   var type = []
-    //   var skl = []
 
-    //   firebase.database().ref('teachers/'+key+'/personalData/name').once('value',value=>{
-    //     name=value.val()
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers/'+key+'/personalData/surname').once('value',value=>{
-    //       surname=value.val()
-    
-    //     })
-
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers/'+key+'/personalData/ranking').once('value',value=>{
-    //       ranking=value.val()
-    //     })
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers/'+key+'/personalData/country').once('value',value=>{
-    //       country=value.val()
-    //     })
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers/'+key+'/personalData/linkPhoto').once('value',value=>{
-    //       foto = value.val()
-    //     })
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers'+key+'/newCalendar/week').once('value',value=>{
-    //       myCalendar=value.val()
-    //     })
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers'+key+'/personalData/tags').once('value',value=>{
-    //       const snapshot= value.val()
-    //       for (const i in snapshot) {
-
-    //         for (const j in snapshot[i]) {
-
-    //           for (const k in snapshot[i][j]) {
-
-    //             tags.push(this.eliminarDiacriticos(snapshot[i][j][k].value))
-
-    //           }
-
-    //         }
-
-    //       }
-
-
-    //     })
-    //   }).then(()=>{
-    //     firebase.database().ref('teachers/'+key+'/newSkill').once('value',value=>{
-    //       const snapshot = value.val()
-    //       for (const i in snapshot) {
-
-    //         type.push(this.eliminarDiacriticos(i))
-
-    //         for (const j in snapshot[i]) {
-
-    //           for (const k in snapshot[i][j]) {
-
-    //             // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-
-
-    //             if (i == 'Idiomas') {
-
-    //               this.state.idiomasAcentos.forEach(val => {
-
-    //                 if (this.eliminarDiacriticos(val) == j) {
-
-    //                   mobj[0]['idiomas'].push(val);
-
-    //                   skill.push(this.eliminarDiacriticos(val))
-
-    //                   skl.push(val)
-
-    //                 }
-
-    //               })
-
-    //             } else if (i == 'Musica') {
-
-    //               mobj[1]['musica'].push(snapshot[i][j][k].skill)
-
-    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-    //               skl.push(snapshot[i][j][k].skill)
-
-    //             } else if (i == 'Tecnologia') {
-
-    //               mobj[2]['tecnologia'].push(snapshot[i][j][k].skill)
-
-    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-    //               skl.push(snapshot[i][j][k].skill)
-
-    //             } else if (i == 'Universidad') {
-
-    //               mobj[3]['universidad'].push(snapshot[i][j][k].skill)
-
-    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-    //               skl.push(snapshot[i][j][k].skill)
-
-    //             } else if (i == 'Secundaria') {
-
-    //               mobj[4]['secundaria'].push(snapshot[i][j][k].skill)
-
-    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-    //               skl.push(snapshot[i][j][k].skill)
-
-    //             } else if (i == 'Primaria') {
-
-    //               mobj[5]['primaria'].push(snapshot[i][j][k].skill)
-
-    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-    //               skl.push(snapshot[i][j][k].skill)
-
-    //             } else if (i == 'Otros') {
-
-    //               mobj[6]['otros'].push(snapshot[i][j][k].skill)
-
-    //               skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
-
-    //               skl.push(snapshot[i][j][k].skill)
-
-    //             }
-
-    //           }
-
-    //         }
-
-    //       }
-
-    //       mobj[0]['idiomas'] = mobj[0]['idiomas'];
-          
-
-    //     })
-    //   }).then(()=>{
-    //     var obj = {
-
-    //       id: key,
-
-    //       name: name,
-
-    //       surname: surname,
-
-    //       ranking: ranking,
-
-    //       country: country,
-
-    //       photo: foto,
-
-    //       progress: true,
-
-    //       approved: true,
-
-    //       myCalendar: myCalendar,
-
-    //       tags: tags,
-
-    //       skill: skill,
-
-    //       type: type,
-
-    //       sk: mobj,
-
-    //       acentSkill: skl
-
-    //     }
-    //     var renderizado= obj
-    //     this.setState({nuevo:Object.values(renderizado)})
-
-    //   })
-     
-    // }
-    
-    
-    
-    
-    // MI FORMA DE HACERLO 
-
-    // var approveds = snapshot.val()
-
-    // var Items = Object.values(data)
     for (var key in teachers) {
         firebase.database().ref(`/teachers/${key}/personalData`).on('value',snapshot=>{
             this.state.teacher = snapshot.val()
@@ -264,7 +77,6 @@ componentWillMount(){
     this.setState({items:teachers})
   } )
 }
-
 
 
 renderItem = ({ item,index }) => (
@@ -306,9 +118,13 @@ elevation: 10,}}>
   subtitle={item.surname}
   subtitleStyle={{ color: '#bdbdbd' }}
   leftAvatar={{ size:60, source: { uri:item.linkPhoto} }}
-  chevron={{ color: 'black',icon:'add_circle_outline' } }
+  chevron={<Tooltip popover={<Text>Info here</Text>}>
+          <Image source={require('../assets/additem.png') }style={{height:40,width:40,borderRadius:100}}  />
+</Tooltip>
+
+}
   bottomDivider
-  onPress={() => {this.showContainer(index)}}
+  onPress={() => {this.props.navigation.navigate('ProfileView')}}
    
   />
   </Card> 
@@ -324,12 +140,35 @@ loadMore() {
   this.setState({data: [...data, ...newData]}); 
 }
 
+HadleSearch = (text)=>{
+  const formatQuery = text.toLowerCase();
+  const data = _.filter(this.state.render, user=>{
+    return contains(user,formatQuery);
+  });
+  this.setState({query:formatQuery,data})
+}
+
+
   render() {
     
     return (
 
       <View >
   <Header
+  rightComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
+  <View  style={styles.row}>
+      <Image source={require('../assets/ajustes.png')} style={styles.headerImage2}  />
+  </View>
+  </TouchableOpacity>}
+  centerComponent={       
+<View style={styles.inputContainer2}>
+
+<TextInput style={styles.inputs2}
+    placeholder="¿Que quieres aprender?"
+    underlineColorAndroid='transparent'
+    onChangeText={this.HadleSearch}/>
+</View>
+}
   leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
   <View  style={styles.row}>
       <Image source={require('../assets/menu2.png')} style={styles.headerImage2}  />
@@ -350,8 +189,9 @@ loadMore() {
     
     
   }}
+  
 />
-<View style={{padding: 50,justifyContent:'center',alignItems:'center'}}>
+<View style={{padding: 30,justifyContent:'center',alignItems:'center'}}>
   <Text style={{ color:"#424242",
       textShadowColor:'#424242',
       fontSize:18,
@@ -366,9 +206,15 @@ loadMore() {
             </View>
          :<FlatList
          keyExtractor={(item, index) => 'key'+index}
+         initialNumToRender={8}
+         maxToRenderPerBatch={2}
+
          data={this.state.render}
          renderItem={this.renderItem}
-         onEndReached={this.loadMore}
+        //  onEndReached={this.loadMore}
+         onEndReachedThreshold={0.5}
+         ListFooterComponent={<ActivityIndicator size="large"color="blue" />}
+        
          />   
         }       
       </View>

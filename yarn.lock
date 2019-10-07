@@ -3117,11 +3117,6 @@ grpc@1.23.3:
     node-pre-gyp "^0.13.0"
     protobufjs "^5.0.3"
 
-hammerjs@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
-  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
-
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
@@ -3251,6 +3246,11 @@ immediate@^3.2.2:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.2.3.tgz#d140fa8f614659bd6541233097ddaac25cdd991c"
   integrity sha1-0UD6j2FGWb1lQSMwl92qwlzdmRw=
+
+immutable@>=3.8:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
+  integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
 
 import-fresh@^2.0.0:
   version "2.0.0"
@@ -5134,6 +5134,14 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-addons-shallow-compare@15.6.2:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-addons-shallow-compare/-/react-addons-shallow-compare-15.6.2.tgz#198a00b91fc37623db64a28fd17b596ba362702f"
+  integrity sha1-GYoAuR/DdiPbZKKP0XtZa6NicC8=
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
 react-clone-referenced-element@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.0.tgz#9cdda7f2aeb54fea791f3ab8c6ab96c7a77d0158"
@@ -5161,6 +5169,11 @@ react-dom@^16.10.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.16.1"
+
+react-fast-compare@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
 react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
   version "16.10.1"
@@ -5206,15 +5219,27 @@ react-native-elements@^1.2.3:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
-react-native-gesture-handler@^1.3.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.4.1.tgz#c38d9e57637b95e221722a79f2bafac62e3aeb21"
-  integrity sha512-Ffcs+SbEbkGaal0CClYL+v7A9y4OA5G5lW01qrzjxaqASp5C8BfnWSKuqYKE00s6bLwE5L4xnlHkG0yIxAtbrQ==
+react-native-gesture-handler@~1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.3.0.tgz#d0386f565928ccc1849537f03f2e37fd5f6ad43f"
+  integrity sha512-ASRFIXBuKRvqlmwkWJhV8yP2dTpvcqVrLNpd7FKVBFHYWr6SAxjGyO9Ik8w1lAxDhMlRP2IcJ9p9eq5X2WWeLQ==
   dependencies:
-    hammerjs "^2.0.8"
     hoist-non-react-statics "^2.3.1"
-    invariant "^2.2.4"
-    prop-types "^15.7.2"
+    invariant "^2.2.2"
+    prop-types "^15.5.10"
+
+react-native-image-slider-box@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-image-slider-box/-/react-native-image-slider-box-1.0.5.tgz#11dfcd0c19167c0c2bac1a96ca1c5eaa9dcf05a3"
+  integrity sha512-NLZanwQPGEy6CdIEALM8XFkgmyDKLQnl5qtUj6cNGaoe5Zzf8ePImZbwEcihPsQObCuHGPdpMJvwwma23VG8/A==
+
+react-native-immutable-list-view@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-immutable-list-view/-/react-native-immutable-list-view-1.0.1.tgz#ce683b12b6e493c923f37fc371aa2545187b4393"
+  integrity sha512-LEHc7Tmqz/AzBUl93eWO+9MsivUlVtB6Jj2IFpVdv0N4mST19K6KvrB7JLJgZNJe9xst0nqvL2jqdueuQSo2tw==
+  dependencies:
+    immutable ">=3.8"
+    prop-types "^15.5.10"
 
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.1"
@@ -5271,6 +5296,14 @@ react-native-safe-area-view@^0.14.1, react-native-safe-area-view@^0.14.6:
   dependencies:
     debounce "^1.2.0"
 
+react-native-snap-carousel@^3.8.1:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.8.1.tgz#8b1f6835027ec88bce91335571022f5448dfd230"
+  integrity sha512-zxfk7TYfWMnOc4UAK/FCZ1H63f/D3ND6Jy3FASVnHNfhRkP2T119iHMXAjYUia/gVztH57kNpuhEXuWRAuz9iQ==
+  dependencies:
+    prop-types "^15.6.1"
+    react-addons-shallow-compare "15.6.2"
+
 react-native-status-bar-height@^2.2.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.4.0.tgz#de8cee4bb733a196167210d2d0bc1fa10acba3e3"
@@ -5301,6 +5334,14 @@ react-native-view-shot@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"
   integrity sha512-yO9vWi/11m2hEJl8FrW1SMeVzFfPtMKh20MUInGqlsL0H8Ya2JGGlFfrBzx1KiFR2hFb5OdsTLYNtcVZtJ6pLQ==
+
+react-native-walkthrough-tooltip@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.1.1.tgz#249657f8099218f069397b4eaed31a2450c02f15"
+  integrity sha512-VtVlVujBcdtdWJVnlejWfSp0jvyfyPyetNyC2QsNy1vsFyY/DmiK5P1MsNjC3HyJaNTGGHzF8wCzj+FgB8Vp0Q==
+  dependencies:
+    prop-types "^15.6.1"
+    react-fast-compare "^2.0.4"
 
 react-native-web@^0.11.7:
   version "0.11.7"

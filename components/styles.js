@@ -35,6 +35,26 @@ container2: {
         position:'absolute'
       
     },
+
+    inputContainer2: {
+      borderRadius: 30,
+      borderWidth: 1,
+      borderColor: '#BDBDBD',
+      width:290,
+      height:45,
+      flexDirection: 'row',
+      alignItems:'center',          
+},
+inputs2:{
+ 
+  marginLeft:16,
+  borderBottomColor: '#FFFFFF',
+  flex:1,
+  color:"#757575",
+  textShadowColor:'#75827d',
+  position:'absolute'
+  
+},
     inputIcon:{
       width:30,
       height:30,
