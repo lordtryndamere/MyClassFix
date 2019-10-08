@@ -1,5 +1,6 @@
 import React, { Component,PureComponent } from 'react';
 import firebase from 'firebase';
+import {Toast} from 'react-native-elements'
 import styles from  './styles'
 import Icon from'react-native-vector-icons/MaterialIcons'
 import {
@@ -31,7 +32,7 @@ export default class LoginView extends PureComponent {
     .auth()
     .signInWithEmailAndPassword(email,password)
     .then( () => this.props.navigation.navigate('HomeScreen'))
-    .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos"}))
+    .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
   }
   NavigateRegister = () =>{
     this.props.navigation.navigate('Register');

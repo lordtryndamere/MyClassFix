@@ -202,6 +202,12 @@ inputs2:{
       position:'relative'
   
     },
+    headerImage3:{
+      height:25,
+      width:25,
+      position:'relative'
+  
+    },
     header3:{
         
       alignItems:'center',

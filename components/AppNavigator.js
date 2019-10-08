@@ -7,12 +7,18 @@ import LoginView from './login'
 import RegisterView from './register'
 import Drawer from './Drawer';
 
+
+const stack = createStackNavigator({
+  Login:LoginView,
+  Register:RegisterView
+})
 const AppNavigator = 
     createSwitchNavigator(
       {
         Login: LoginView,
         Register:RegisterView,
-        Drawer:Drawer
+        Drawer:Drawer,
+        stack:stack
         
       },
       {

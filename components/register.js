@@ -1,5 +1,6 @@
+
 import React, { Component,PureComponent } from 'react';
-import firebase from 'firebase';
+import firebase, { app } from 'firebase';
 import styles from './/styles';
 import {
 
@@ -9,7 +10,8 @@ import {
   TouchableHighlight,
   ImageBackground,
   KeyboardAvoidingView,
-  ScrollView
+  BackHandler
+
 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -17,10 +19,12 @@ import publicIP from 'react-native-public-ip';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+
 export default class LoginView extends PureComponent {
 
   constructor(props) {
     super(props);
+    this.onBackPress=this.onBackPress.bind(this)
     this.state = {
       name:'',
       lastname :'',
@@ -42,12 +46,24 @@ export default class LoginView extends PureComponent {
       resume:'',
       terminos:'',
       types:'',
+      typeteacher:''
 
 
 
     }
     
   }
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+ 
+  onBackPress = () => {
+    this.props.navigation.goBack()
+  };
+
   HandleIp = ()=>  {
   publicIP()
   .then(ip => {
@@ -60,18 +76,18 @@ export default class LoginView extends PureComponent {
   });
 }
   
-
+ñ
 
  HandleTypes = (type) => {
   this.state.types =type
 
   this.state.terminos = false
 
-  // if (type == "teachers") {
+  if (type == "teachers") {
 
   //   this.acudiente = false
 
-  // }
+   }
  }
  
   sendEmailStudent= (idStudent) => {
@@ -89,11 +105,21 @@ export default class LoginView extends PureComponent {
   
 
   HandleRegister = () =>{
+    
+
+
+
+
+
+
+    
     typeStudent = () =>{
+      this.setState({types:"students"})
       var d = new Date();
-      var usuario = firebase.auth().currentUser
+  
       
-        firebase.database().update(usuario.uid   + '/personalData',{
+
+        firebase.database().ref(this.state.types).update(usuario.uid   + '/personalData',{
           name:this.state.name,
           surname:this.state.lastname,
           email:this.state.email,
@@ -105,15 +131,12 @@ export default class LoginView extends PureComponent {
           tel:this.state.Phone
           
         }).then(()=>{
-          firebase.database('/roleByUser').update(usuario.uid,{type:"student"})
-          firebase.database(this.HandleTypes()+ '/'  +usuario.uid + '/personalData').push({hashLogin:'hashLogin'})
-          .then((hash)=>{
-            firebase.database(this.HandleTypes()+'/'+usuario.uid+'/personalData/').update(hash.key,{hashLogin:hash.key})
-            // firebase.auth().signOut()
+          firebase.database().ref('/roleByUser').update(usuario.uid,{type:"student"})
+
             .then(()=>{
               this.props.navigation.navigate('Login')
             })
-          })
+      
         
         })
 
@@ -121,7 +144,7 @@ export default class LoginView extends PureComponent {
     }
     
     typeTeacher = () =>{
-      var usuario = firebase.auth().currentUser
+    this.setState({typeteacher:'teachers'})
         var branch = {
           myStudies: {
             basicStudies: {
@@ -159,7 +182,7 @@ export default class LoginView extends PureComponent {
         }
         //INSERT DATES
         var c = new Date();
-        firebase.database().update(usuario.uid  + '/personalData',{
+        firebase.database().ref(this.state.typeteacher).update(usuario.uid  + '/personalData',{
           typeDocument :this.state.TypesDocument,
           document:this.state.document,
           tel:this.state.Phone,
@@ -189,19 +212,15 @@ export default class LoginView extends PureComponent {
           ipCreation:this.HandleIp()
         }).then(()=>{
           firebase.database('/roleByUser').update(usuario.uid,{type : 'teacher'})
-          firebase.database(this.HandleTypes() + '/' + usuario.uid + '/personalData').push({ hashLogin: "hashLogin" })
-          .then((hash) => {
-            firebase.database(this.HandleTypes() + ' /' + usuario.uid + '/personalData/').update(hash.key,{hashLogin : hash.key})
-            // firebase.auth().signOut()
             .then(()=>{
               this.props.navigation.navigate('Login')
             })
-          })
+          
     
         })
       
     }
-    if (this.HandleTypes('students')) { 
+    if (this.state.types=='students') { 
       if (this.state.Phone != ""   && this.state.Phone.toString().length == 10 ){
         if ( this.state.password == this.state.repeatPassword){
 
@@ -230,7 +249,7 @@ export default class LoginView extends PureComponent {
 
    
     
-    }else if(this.HandleTypes('teachers'))  {    
+    }else if(this.state.typeteacher=='teachers')  {    
     
       if (this.document != "") {
   
@@ -299,6 +318,7 @@ export default class LoginView extends PureComponent {
   
 }
 }
+
   render() {
     return (
           
@@ -314,11 +334,11 @@ export default class LoginView extends PureComponent {
                         {this.state.errorMessage}
                       </Text>}
                     <View  style={styles.acomodar} >       
-                            <TouchableHighlight    style={[styles.buttonestudiante, styles.estudiantebutton]}  onPress={()=> this.HandleTypes('students')} >
+                            <TouchableHighlight    style={[styles.buttonestudiante, styles.estudiantebutton]}  onPress={()=> this.state.types} >
                             <Text style={styles.loginText}>ESTUDIANTE</Text>
                           </TouchableHighlight>
                           
-                          <TouchableHighlight style={[styles.buttondocente, styles.docentebutton]}  onPress={()=> this.HandleTypes('teachers')} >
+                          <TouchableHighlight style={[styles.buttondocente, styles.docentebutton]}  onPress={()=> this.state.typeteacher} >
                             <Text style={styles.loginText}>DOCENTE</Text>
                           </TouchableHighlight>
                     </View>
