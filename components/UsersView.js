@@ -57,7 +57,7 @@ eliminarDiacriticos= (texto)=>{
 
 componentWillMount(){
   
-  firebase.database().ref(`/approveds`).on('value',(snapshot)=>{
+  firebase.database().ref(`/approveds`).limitToLast(20).on('value',(snapshot)=>{
     const teachers = snapshot.val();
 
     for (var key in teachers) {
@@ -120,7 +120,7 @@ elevation: 10,}}>
   leftAvatar={{ size:60, source: { uri:item.linkPhoto} }}
   chevron={<Tooltip popover={<Text>Info here</Text>}>
           <Image source={require('../assets/additem.png') }style={{height:40,width:40,borderRadius:100}}  />
-</Tooltip>
+        </Tooltip>
 
 }
   bottomDivider
@@ -157,7 +157,7 @@ HadleSearch = (text)=>{
   <Header
   rightComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
   <View  style={styles.row}>
-      <Image source={require('../assets/ajustes.png')} style={styles.headerImage2}  />
+      <Image source={require('../assets/ajustes.png')} style={styles.headerImage3}  />
   </View>
   </TouchableOpacity>}
   centerComponent={       
@@ -171,7 +171,7 @@ HadleSearch = (text)=>{
 }
   leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
   <View  style={styles.row}>
-      <Image source={require('../assets/menu2.png')} style={styles.headerImage2}  />
+      <Image source={require('../assets/menu2.png')} style={styles.headerImage3}  />
   </View>
   </TouchableOpacity> }
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
@@ -198,7 +198,7 @@ HadleSearch = (text)=>{
       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
 </View>
         {   console.log(this.state.nuevo),
-            this.state.render.length<20
+            this.state.render.length<7
             
             ?<View  style={{  flex:1,justifyContent:'center',alignItems:'center',alignContent:'center',height:'100%',width:'100%'}}>
             <ActivityIndicator size="large"  color="blue"    />
