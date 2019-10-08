@@ -93,7 +93,7 @@ export default class LoginView extends PureComponent {
       var d = new Date();
       var usuario = firebase.auth().currentUser
       
-        firebase.database(this.HandleTypes()).update(usuario.uid   + '/personalData',{
+        firebase.database().update(usuario.uid   + '/personalData',{
           name:this.state.name,
           surname:this.state.lastname,
           email:this.state.email,
