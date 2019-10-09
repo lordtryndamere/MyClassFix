@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react'
-import {View,Image,TouchableOpacity,Text } from 'react-native'
+import {View,Image,TouchableOpacity,Text,BackHandler,Alert } from 'react-native'
 import firebase from 'firebase'
 import {Header } from 'react-native-elements'
 import {DrawerActions} from 'react-navigation-drawer'
@@ -9,15 +9,21 @@ import styles from './styles'
 
 
 
+
 export default class HomeView extends PureComponent{
 
+  
+
+ 
     showDrawer=()=>{
         this.props.navigation.dispatch(DrawerActions.openDrawer())
     }
 
 
 
+
     render(){
+      
         return(
 
   <View>  
@@ -66,7 +72,7 @@ export default class HomeView extends PureComponent{
 
             <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40}}>  
             
-                    <View style={{width: '100%', ustifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex'}} >
+                    <View style={{width: '100%', ustifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex',marginTop:6}} >
                             
 
                     <TouchableOpacity  style={styles.header3} onPress={()=>this.props.navigation.navigate('UserView')} >

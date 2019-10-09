@@ -199,7 +199,7 @@ inputs2:{
   
     },
     headerImage2:{
-     
+     marginTop:5,
       position:'relative'
   
     },
@@ -241,20 +241,22 @@ header5:{
   alignItems:'center',
   justifyContent:'center',
   borderBottomColor:'#bdbdbd',
-  borderRightColor:'#bdbdbd',
-  backgroundColor:'white',
   borderBottomWidth:1,
+ 
+  backgroundColor:'white',
+
   width:'50%'
+
 
 
   
 },
 header6:{
-        
   alignItems:'center',
   justifyContent:'center',
   borderBottomColor:'#bdbdbd',
-  borderRightColor:'#bdbdbd',
+ 
+ 
   backgroundColor:'white',
   width:'50%'
 

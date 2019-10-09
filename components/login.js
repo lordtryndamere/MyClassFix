@@ -67,7 +67,7 @@ export default class LoginView extends PureComponent {
   render() {
     return (
 <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
-     <KeyboardAvoidingView keyboardVerticalOffset={-170} behavior='padding' > 
+     <KeyboardAvoidingView   keyboardVerticalOffset={-170} behavior='padding' > 
       <SafeAreaView      style={styles.container}>
            <Image  style={{marginBottom:20,height:120,width:200}} source={require('../assets/LOGO2.png')}  />
             {this.state.errorMessage &&
