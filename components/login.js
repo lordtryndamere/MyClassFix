@@ -35,7 +35,7 @@ export default class LoginView extends PureComponent {
     .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
   }
   NavigateRegister = () =>{
-    this.props.navigation.navigate('Register');
+    this.props.navigation.navigate('RegisterView');
   }
 
   componentWillMount(){

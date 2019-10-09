@@ -11,17 +11,16 @@ import UserView from './UsersView';
 import menu from '../assets/menu2.png';
 import ContenCompo from './ContenCompo';
 import ProfileView from './ProfileView'
+import { createStackNavigator } from 'react-navigation-stack';
 
 
-const Stack = createSwitchNavigator (   {
+const Stack = createStackNavigator (   {
     UserView:UserView,
     Settings:Settings,
     HomeScreen:HomeView,
     ProfileView:ProfileView
 },{
-   navigationOptions:()=>({
-       headerLeft:<Image source={menu} ></Image>
-   })
+    headerMode:'none'
     }
 )
 

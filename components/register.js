@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import publicIP from 'react-native-public-ip';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { NavigationActions} from 'react-navigation'
+
 
 
 export default class LoginView extends PureComponent {
@@ -61,6 +63,7 @@ export default class LoginView extends PureComponent {
   }
  
   onBackPress = () => {
+    // this.props.navigation.dispatch(NavigationActions.back())
     this.props.navigation.goBack()
   };
 
