@@ -1,8 +1,10 @@
 import React, { Component,PureComponent } from 'react';
-import firebase from 'firebase';
+import firebase, { auth } from 'firebase';
 import {Toast} from 'react-native-elements'
 import styles from  './styles'
-import Icon from'react-native-vector-icons/MaterialIcons'
+
+
+
 import {
 
   Text,
@@ -14,7 +16,9 @@ import {
   Image,
   Linking,
   KeyboardAvoidingView,
-  SafeAreaView
+  SafeAreaView,
+  Alert,
+  Modal
 } from 'react-native';
 
 
@@ -27,7 +31,9 @@ export default class LoginView extends PureComponent {
       email   : '',
       password: '',
       errorMessage:null,
-      loggedIn: null
+      loggedIn: null,
+      emailAddress:'',
+      modalvisible:false
     }
   }
 
@@ -63,8 +69,11 @@ export default class LoginView extends PureComponent {
       //   }
       // });
   }
-
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
   render() {
+    
     return (
 <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
      <KeyboardAvoidingView   keyboardVerticalOffset={-170} behavior='padding' > 
@@ -74,7 +83,7 @@ export default class LoginView extends PureComponent {
           <Text style={{ color: 'white' }}>
             {this.state.errorMessage}
           </Text>}
-
+  
         <View style={styles.inputContainer}>
 
           <TextInput style={styles.inputs}
@@ -93,7 +102,7 @@ export default class LoginView extends PureComponent {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.setModalVisible(true)}>
             <Text style={styles.text}>¿Haz olvidado tu contraseña?</Text>
         </TouchableHighlight>
 
@@ -111,6 +120,7 @@ export default class LoginView extends PureComponent {
       </SafeAreaView>
       </KeyboardAvoidingView>
 </ImageBackground>
+
     );
   }
 }

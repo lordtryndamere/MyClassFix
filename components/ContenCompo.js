@@ -14,7 +14,7 @@ export default class ContentCompo extends Component{
 
                 <ImageBackground   source={require('../assets/ImageBack.png')}  style={styles.header} >
                     <Image source={require('../assets/user.png')} style={styles.headerImage} />
-                    <Text     style={styles.text,{color:'white'}}>Mi Perfil {firebase.auth().currentUser.email}  </Text>
+                    <Text     style={styles.text,{color:'white'}}>Mi Perfil {firebase.auth().currentUser.displayName}  </Text>
                 </ImageBackground>
 
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('UserView')} >

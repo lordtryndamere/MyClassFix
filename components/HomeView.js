@@ -12,7 +12,15 @@ import styles from './styles'
 
 export default class HomeView extends PureComponent{
 
-  
+  constructor(props){
+    super(props)
+    this.state={
+      name:'',
+      email:'',
+      photoUrl:'',
+      emailverified:''
+    }
+  }
 
  
     showDrawer=()=>{
@@ -20,10 +28,11 @@ export default class HomeView extends PureComponent{
     }
 
 
-
+    
 
     render(){
-      
+      const user = firebase.auth().currentUser;
+      var name = this.setState({name:user.displayName})
         return(
 
   <View>  
@@ -67,7 +76,7 @@ export default class HomeView extends PureComponent{
                                   <Text style={{ color:"#424242",
                                       textShadowColor:'#424242',
                                       fontSize:18,
-                                      fontWeight:'900'}}> Bienvenido {firebase.auth().currentUser.phoneNumber}  </Text>
+                                      fontWeight:'900'}}> Bienvenido {name}  </Text>
             </View>
 
             <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40}}>  
