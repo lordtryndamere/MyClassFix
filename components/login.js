@@ -11,8 +11,12 @@ import {
   TouchableHighlight,
   ImageBackground,
   TouchableOpacity,
-  Image
+  Image,
+  Linking,
+  KeyboardAvoidingView,
+  SafeAreaView
 } from 'react-native';
+
 
 
 export default class LoginView extends PureComponent {
@@ -36,7 +40,7 @@ export default class LoginView extends PureComponent {
     .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
   }
   NavigateRegister = () =>{
-    this.props.navigation.navigate('RegisterView');
+    Linking.openURL('https://www.myclassflix.com/login')
   }
 
   componentWillMount(){
@@ -62,8 +66,9 @@ export default class LoginView extends PureComponent {
 
   render() {
     return (
-      <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} > 
-      <View       style={styles.container}>
+<ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
+     <KeyboardAvoidingView keyboardVerticalOffset={-170} behavior='padding' > 
+      <SafeAreaView      style={styles.container}>
            <Image  style={{marginBottom:20,height:120,width:200}} source={require('../assets/LOGO2.png')}  />
             {this.state.errorMessage &&
           <Text style={{ color: 'white' }}>
@@ -103,8 +108,9 @@ export default class LoginView extends PureComponent {
         <TouchableOpacity  style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.NavigateRegister()}>
           <Text style={styles.loginText}>REGISTRATE</Text>
         </TouchableOpacity>
-      </View>
-    </ImageBackground>
+      </SafeAreaView>
+      </KeyboardAvoidingView>
+</ImageBackground>
     );
   }
 }
