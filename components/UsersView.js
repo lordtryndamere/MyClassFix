@@ -170,7 +170,7 @@ HadleSearch = (text)=>{
 </View>
 }
   leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
-  <View  style={styles.row}>
+  <View  >
       <Image source={require('../assets/menu2.png')} style={styles.headerImage3}  />
   </View>
   </TouchableOpacity> }

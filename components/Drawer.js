@@ -15,9 +15,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 const Stack = createStackNavigator (   {
-    UserView:UserView,
-    Settings:Settings,
     HomeScreen:HomeView,
+    Settings:Settings,
+    UserView:UserView,
     ProfileView:ProfileView
 },{
     headerMode:'none'

@@ -10,7 +10,8 @@ import {
   TextInput,
   TouchableHighlight,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 
 
@@ -63,7 +64,7 @@ export default class LoginView extends PureComponent {
     return (
       <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} > 
       <View       style={styles.container}>
-            <Icon size={80}  style={styles.ico} >perm_identity</Icon>
+           <Image  style={{marginBottom:20,height:120,width:200}} source={require('../assets/LOGO2.png')}  />
             {this.state.errorMessage &&
           <Text style={{ color: 'white' }}>
             {this.state.errorMessage}
@@ -95,9 +96,9 @@ export default class LoginView extends PureComponent {
           <Text style={styles.loginText}>INGRESAR</Text>
         </TouchableOpacity>
 
-        
-            <Text style={styles.text2}>Puedes registrarte aqui abajo </Text>
-       
+     <TouchableHighlight style={styles.buttonContainer} >
+            <Text style={styles.text2}>Puedes registrarte aqui abajo</Text>
+        </TouchableHighlight>
 
         <TouchableOpacity  style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.NavigateRegister()}>
           <Text style={styles.loginText}>REGISTRATE</Text>

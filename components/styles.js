@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      paddingTop:40
           
 },
 container2: {
@@ -101,7 +102,7 @@ inputs2:{
       color:"#f0ffff",
       textShadowColor:'#75827d',
       fontSize:16,
-      marginTop:100
+      marginTop:190
   },
     textregistry:{
   

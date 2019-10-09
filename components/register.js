@@ -10,7 +10,8 @@ import {
   TouchableHighlight,
   ImageBackground,
   KeyboardAvoidingView,
-  BackHandler
+  BackHandler,
+  Image
 
 
 } from 'react-native';
@@ -331,7 +332,7 @@ export default class LoginView extends PureComponent {
            
                 <View style={styles.container}>
       
-                        <Icon size={80}  style={styles.ico1} >perm_identity</Icon>
+                <Image  style={{marginBottom:20}} source={require('../assets/LOGO2.png')}  />
                         {this.state.errorMessage &&
                       <Text style={{ color: 'red' }}> 
                         {this.state.errorMessage}
