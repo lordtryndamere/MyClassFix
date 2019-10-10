@@ -6,7 +6,7 @@ export default class ProfileView extends Component{
 render(){
     return(
         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <Text>Profile View {firebase.auth().useDeviceLanguage()}  </Text>
+            <Text>Profile View {}  </Text>
         </View>
     )
 }

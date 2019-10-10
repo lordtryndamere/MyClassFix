@@ -1,7 +1,8 @@
 import React, { Component,PureComponent } from 'react';
 import firebase, { auth } from 'firebase';
-import {Toast} from 'react-native-elements'
+import {Overlay,Card,Button} from 'react-native-elements'
 import styles from  './styles'
+import {NavigationActions} from 'react-navigation'
 
 
 
@@ -18,7 +19,7 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   Alert,
-  Modal
+  ActivityIndicator
 } from 'react-native';
 
 
@@ -28,12 +29,14 @@ export default class LoginView extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      email   : '',
+       email  : '',
+       email2:'',
       password: '',
       errorMessage:null,
       loggedIn: null,
       emailAddress:'',
-      modalvisible:false
+      isVisible:false,
+      correoenviado:null
     }
   }
 
@@ -45,6 +48,9 @@ export default class LoginView extends PureComponent {
     .then( () => this.props.navigation.navigate('HomeScreen'))
     .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
   }
+
+
+  
   NavigateRegister = () =>{
     Linking.openURL('https://www.myclassflix.com/login')
   }
@@ -61,16 +67,37 @@ export default class LoginView extends PureComponent {
       };
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
-      // firebase.auth().onAuthStateChanged((user)=>{
-      //   if(user){
-      //     this.setState({loggedIn:true})
-      //   }else {
-      //     this.setState({loggedIn:false})
-      //   }
-      // });
+       firebase.auth().onAuthStateChanged((user)=>{
+       if(user){
+          this.setState({loggedIn:true})
+       }else {
+          this.setState({loggedIn:false})
+        }
+       });
   }
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+  isVisible(visible) {
+    this.setState({isVisible: visible});
+   
+  }
+
+  ResetPassword(){
+    var auth = firebase.auth()
+    const email = this.state.email2
+
+
+    auth.sendPasswordResetEmail(email).then(()=>{
+      this.setState({correoenviado:"Por favor verifica tu correo electronico"})
+    }).then(()=>{
+      setTimeout(()=>{
+        this.isVisible(false)
+      },6000)
+     
+    })
+    .catch((e)=>{
+  
+      this.setState({correoenviado:"Algo ocurrio no se pudo enviar el correo de restablecimiento"})
+    })
+
   }
   render() {
     
@@ -84,10 +111,45 @@ export default class LoginView extends PureComponent {
             {this.state.errorMessage}
           </Text>}
   
+
+
+          
+
+    <Overlay   overlayStyle={{height:'40%',width:'80%',borderRadius:30}}   isVisible={this.state.isVisible} >
+    {this.state.correoenviado &&
+          <Text style={{ color: '#0097A7' }}>
+            {this.state.correoenviado}
+          </Text>} 
+       <View style={{justifyContent:'center',alignContent:'center'   }}  >
+                <Card title="Restablecimiento de contraseña" containerStyle={{borderRadius:30}} >
+              <View style={styles.inputContainer3} >
+                <TextInput
+                placeholderTextColor="#0097A7"
+                style={styles.inputs5}
+                placeholder="Escribe tu email"
+                underlineColorAndroid='transparent'
+                onChangeText={(email2) => this.setState({email2})}/>
+              </View>
+              </Card>
+          <View style={{justifyContent:'center',alignContent:'center',paddingTop:30}} >
+        <Button  title="Enviar"   type="solid"      buttonStyle={{ width:'35%',position:'relative',marginLeft:100,borderRadius:10}} onPress={()=> this.ResetPassword()} ></Button>
+          </View>
+
+          <View style={{justifyContent:'center',alignContent:'center',marginLeft:20}} >
+          <TouchableOpacity onPress={()=>this.isVisible(false)} style={styles.buttonContainer} >
+              <Text style={styles.text3}>Salir</Text>
+          </TouchableOpacity>
+          </View>
+      </View>   
+    </Overlay>
+  
+
+
+
         <View style={styles.inputContainer}>
 
           <TextInput style={styles.inputs}
-              placeholder="Email"
+              placeholder="C o r r e o    e l e c t r o n i c o"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
@@ -96,16 +158,16 @@ export default class LoginView extends PureComponent {
         <View style={styles.inputContainer}>
          
           <TextInput style={styles.inputs}
-              placeholder="Password"
+              placeholder="C o n t r a s e ñ a "
               secureTextEntry={true}
               underlineColorAndroid='transparent'
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.setModalVisible(true)}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.isVisible(true)}>
             <Text style={styles.text}>¿Haz olvidado tu contraseña?</Text>
         </TouchableHighlight>
-
+          
         <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>
         </TouchableOpacity>

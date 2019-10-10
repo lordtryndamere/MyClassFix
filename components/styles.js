@@ -17,25 +17,33 @@ container2: {
       
 },
     inputContainer: {
-          borderRadius: 30,
-          borderWidth: 2,
-          borderColor: '#fff',
-          width:290,
-          height:45,
-          marginBottom:20,
-          flexDirection: 'row',
-          alignItems:'center',        
+            borderRadius: 30,
+            borderWidth: 2,
+            borderColor: '#fff',
+            width:290,
+            height:45,
+            marginBottom:20,
+            flexDirection: 'row',
+            alignItems:'center',        
     },
     inputs:{
         height:45,
         marginLeft:16,
         borderBottomColor: '#FFFFFF',
-        flex:1,
         color:"#f0ffff",
         textShadowColor:'#75827d',
-        position:'absolute'
+        position:'relative'
       
     },
+    inputs5:{
+      height:45,
+      marginLeft:16,
+      color:"#0097A7",
+      textShadowColor:'#0097A7',
+      position:'relative',
+    
+  },
+
 
     inputContainer2: {
       borderRadius: 30,
@@ -46,11 +54,18 @@ container2: {
       flexDirection: 'row',
       alignItems:'center',          
 },
+inputContainer3: {
+  borderRadius: 30,
+  borderWidth: 1,
+  borderColor: '#0097A7',
+  width:240,
+  height:38,  
+          
+},
 inputs2:{
  
   marginLeft:16,
   borderBottomColor: '#FFFFFF',
-  flex:1,
   color:"#757575",
   textShadowColor:'#75827d',
   position:'absolute'
@@ -104,6 +119,13 @@ inputs2:{
       fontSize:16,
       marginTop:190
   },
+  text3:{
+    color:"#009688",
+    textShadowColor:'#212121',
+    fontSize:14,
+    marginLeft:10
+   
+},
     textregistry:{
   
       marginTop:150,

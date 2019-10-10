@@ -40,7 +40,8 @@ state={
   page:1,
   data:[9],
   fullData  :[],
-  query:""
+  query:"",
+  habil:''
   
 
 
@@ -57,26 +58,272 @@ eliminarDiacriticos= (texto)=>{
 
 componentWillMount(){
   
-  firebase.database().ref(`/approveds`).limitToLast(20).on('value',(snapshot)=>{
-    const teachers = snapshot.val();
+  // firebase.database().ref(`/approveds`).limitToLast(20).on('value',(snapshot)=>{
+  //   const teachers = snapshot.val();
 
-    for (var key in teachers) {
-        firebase.database().ref(`/teachers/${key}/personalData`).on('value',snapshot=>{
-            this.state.teacher = snapshot.val()
-            this.state.teacher.uid = key
-            this.state.teachersAproveds.push(this.state.teacher)
-            var renderizar = Object.values(this.state.teachersAproveds)
-            // console.log(this.state.render) 
-            return this.setState({render:renderizar})
-           
+  firebase.database().ref(`/approveds`).limitToLast(20).on('value', data => {
+
+      const teachers = data.val();
+      for (const key in teachers) {
+
+        var name = ""
+
+        var surname = ""
+
+        var ranking = ""
+
+        var country = ""
+
+        var photo = ""
+
+        var myCalendar = []
+
+        var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
+
+        var tags = []
+
+        var skill = []
+
+        var type = []
+
+        var skl = []
+
+ 
+
+        firebase.database().ref('teachers/' + key + '/personalData/name').once('value', value => {
+
+          name = value.val()
+
+        }).then(() => {
+
+          firebase.database().ref('teachers/' + key + '/personalData/surname').once('value', value => {
+
+            surname = value.val()
+
+          }).then(() => {
+
+            firebase.database().ref('teachers/' + key + '/personalData/ranking').once('value', value => {
+
+              ranking = value.val()
+
+            }).then(() => {
+
+              firebase.database().ref('teachers/' + key + '/personalData/country').once('value', value => {
+
+                country = value.val()
+
+              }).then(() => {
+
+                firebase.database().ref('teachers/' + key + '/personalData/linkPhoto').once('value', value => {
+
+                  photo = value.val()
+
+                }).then(() => {
+
+                  firebase.database().ref('teachers/' + key + '/newCalendar/week').once('value', value => {
+
+                    myCalendar = value.val()
+
+                  }).then(() => {
+
+                    firebase.database().ref('teachers/' + key + '/personalData/tags').once('value', value => {
+
+                      const snapshot = value.val()
+
+                      for (const i in snapshot) {
+
+                        for (const j in snapshot[i]) {
+
+                          for (const k in snapshot[i][j]) {
+
+                            tags.push(this.eliminarDiacriticos(snapshot[i][j][k].value))
+
+                          }
+
+                        }
+
+                      }
+
+                    }).then(() => {
+
+                      firebase.database().ref('teachers/' + key + '/newSkill').once('value', value => {
+
+                        const snapshot = value.val()
+
+                        for (const i in snapshot) {
+
+                          type.push(this.eliminarDiacriticos(i))
+
+                          for (const j in snapshot[i]) {
+
+                            for (const k in snapshot[i][j]) {
+
+                              // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+ 
+
+                              if (i == 'Idiomas') {
+
+                                this.state.idiomasAcentos.forEach(val => {
+
+                                  if (this.eliminarDiacriticos(val) == j) {
+
+                                    mobj[0]['idiomas'].push(val);
+
+                                    skill.push(this.eliminarDiacriticos(val))
+
+                                    skl.push(val)
+
+                                  }
+
+                                })
+
+                              } else if (i == 'Musica') {
+
+                                mobj[1]['musica'].push(snapshot[i][j][k].skill)
+
+                                skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+                                skl.push(snapshot[i][j][k].skill)
+
+                              } else if (i == 'Tecnologia') {
+
+                                mobj[2]['tecnologia'].push(snapshot[i][j][k].skill)
+
+                                skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+                                skl.push(snapshot[i][j][k].skill)
+
+                              } else if (i == 'Universidad') {
+
+                                mobj[3]['universidad'].push(snapshot[i][j][k].skill)
+
+                                skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+                                skl.push(snapshot[i][j][k].skill)
+
+                              } else if (i == 'Secundaria') {
+
+                                mobj[4]['secundaria'].push(snapshot[i][j][k].skill)
+
+                                skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+                                skl.push(snapshot[i][j][k].skill)
+
+                              } else if (i == 'Primaria') {
+
+                                mobj[5]['primaria'].push(snapshot[i][j][k].skill)
+
+                                skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+                                skl.push(snapshot[i][j][k].skill)
+
+                              } else if (i == 'Otros') {
+
+                                mobj[6]['otros'].push(snapshot[i][j][k].skill)
+
+                                skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+                                skl.push(snapshot[i][j][k].skill)
+
+                              }
+
+                            }
+
+                          }
+
+                        }
+
+                        mobj[0]['idiomas'] = mobj[0]['idiomas'];
+             
+
+                      }).then(() => {
+
+                        var obj = {
+
+                          id: key,
+
+                          name: name.trim(),
+
+                          surname: surname.trim(),
+
+                          ranking: ranking,
+
+                          country: country.trim(),
+
+                          photo: photo,
+
+                          progress: true,
+
+                          approved: true,
+
+                          myCalendar: myCalendar,
+
+                          tags: tags,
+
+                          skill: skill,
+
+                          type: type,
+
+                          sk: mobj,
+
+                          acentSkill: skl
+
+                        }
+
+                        
+
+                        var renderizar  = obj
+                         this.setState({fullData:renderizar})
+                       this.state.fullData.sk.forEach(pro=>{
+                          // for (let index = 0; index < pro.primaria; index++) {
+                          //   const element = pro.primaria[index];
+                          //   console.log(element)
+                            
+                          // }
+                        this.setState({habil:pro.primaria})
+                       })
+                         
+
+                      })
+
+                    })
+
+                  })
+
+                })
+
+              })
+
+            })
+
+          })
 
         })
-    }                
+
+      }
+
+    })
+
+    // for (var key in teachers) {
+    //     firebase.database().ref(`/teachers/${key}/personalData`).on('value',snapshot=>{
+    //         this.state.teacher = snapshot.val()
+    //         this.state.teacher.uid = key
+    //         this.state.teachersAproveds.push(this.state.teacher)
+    //         var renderizar = Object.values(this.state.teachersAproveds)
+    //         // console.log(this.state.render) 
+    //         return this.setState({render:renderizar})
+           
+
+    //     })
+    // }                
   
                    
-    this.setState({items:teachers})
-  } )
+    // this.setState({items:teachers})
+  // } )
 }
+
+
 
 
 renderItem = ({ item,index }) => (
@@ -89,6 +336,7 @@ shadowOpacity: 0.34,
 shadowRadius: 6.27,
 
 elevation: 10,}}>
+  
   <ListItem
   containerStyle={{borderRadius:20,shadowColor: "#000",
   shadowOffset: {
@@ -101,7 +349,7 @@ elevation: 10,}}>
   elevation: 22,
   height:105,
   elevation: 10,}}
-  key={item.uid}
+  key={item.id}
   Component={TouchableScale}
   friction={90} 
   tension={100} 
@@ -113,11 +361,11 @@ elevation: 10,}}>
   }}
 
   // key={this.state.render[item].key}
-  title={item.name}
+  title={this.state.fullData.name}
   titleStyle={{ color: 'black', fontWeight: 'bold' }}
-  subtitle={item.surname}
+  subtitle={this.state.habil[index]}
   subtitleStyle={{ color: '#bdbdbd' }}
-  leftAvatar={{ size:60, source: { uri:item.linkPhoto} }}
+  leftAvatar={{ size:60, source: { uri:this.state.fullData.photo} }}
   chevron={<Tooltip popover={<Text>Info here</Text>}>
           <Image source={require('../assets/additem.png') }style={{height:40,width:40,borderRadius:100}}  />
         </Tooltip>
@@ -197,8 +445,8 @@ HadleSearch = (text)=>{
       fontSize:18,
       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
 </View>
-        {   console.log(this.state.nuevo),
-            this.state.render.length<7
+        {   console.log(this.state.fullData),
+            this.state.fullData.length<5
             
             ?<View  style={{  flex:1,justifyContent:'center',alignItems:'center',alignContent:'center',height:'100%',width:'100%'}}>
             <ActivityIndicator size="large"  color="blue"    />
@@ -209,7 +457,7 @@ HadleSearch = (text)=>{
          initialNumToRender={8}
          maxToRenderPerBatch={2}
 
-         data={this.state.render}
+         data={Object.keys (this.state.fullData)}
          renderItem={this.renderItem}
         //  onEndReached={this.loadMore}
          onEndReachedThreshold={0.5}
