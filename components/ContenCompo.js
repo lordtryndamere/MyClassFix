@@ -59,9 +59,7 @@ export default class ContentCompo extends Component{
                 </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=> firebase.auth().signOut().then(()=>{
-                    this.props.navigation.navigate('LoginView')
-                })} >
+                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=> firebase.auth().signOut() } >
                 <View  style={styles.row}>
                     <Image source={require('../assets/sesion.png')} style={styles.headerImage2}  />
                     <Text style={styles.text} > CERRAR SESION</Text>
