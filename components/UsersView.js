@@ -31,7 +31,7 @@ export default class UserView extends PureComponent {
 
   state = {
     timepassed: false,
-
+    fullTeachers: '',
     nuevo: [],
     items: [],
     teachersAproveds: [],
@@ -39,7 +39,6 @@ export default class UserView extends PureComponent {
     idiomasAcentos: ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
     page: 1,
     data: [9],
-    fullData: [],
     query: "",
     habil: ''
 
@@ -62,27 +61,48 @@ export default class UserView extends PureComponent {
     //   const teachers = snapshot.val();
 
     firebase.database().ref(`/approveds`).limitToLast(20).on('value', data => {
-
+      let fullData = []
       const teachers = data.val();
       for (const key in teachers) {
+        firebase.database().ref(`/teachers/${key}/personalData`).on('value', snapshot => {
 
-         firebase.database().ref(`/teachers/${key}/personalData`).on('value',snapshot=>{
-             this.state.teacher = snapshot.val()
-             this.state.teacher.uid = key
-             this.state.teachersAproveds.push(this.state.teacher)
-             var renderizar = Object.values(this.state.teachersAproveds)
-             // console.log(this.state.render) 
-             return this.setState({render:renderizar})
+          var OBJETO = snapshot.val()
+          var uid= key
+          var nombre = OBJETO.name
+          var surname = OBJETO.surname
+          var ranking = OBJETO.ranking
+          var country = OBJETO.country
+          var photo = OBJETO.linkPhoto
+          var tags = OBJETO.tags
 
-         })
-                 
 
-     this.setState({items:teachers})
-     
+          var ojc = {
+            key:uid,
+            name: nombre,
+            lastname: surname,
+            rank: ranking,
+            pais: country,
+            foto: photo,
+            tag: tags
+          }
+          fullData.push(ojc)
+          // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
+          // this.setState({fullTeachers:render})
+          //  this.state.teacher = snapshot.val()
+          //  this.state.teacher.uid = key
+          //  this.state.teachersAproveds.push(this.state.teacher)
+          //  var renderizar = Object.values(this.state.teachersAproveds)
+          //  // console.log(this.state.render) 
+          //  return this.setState({render:renderizar})
+        })
+      }
+      // console.log(fullData)
+      this.setState({fullTeachers:fullData})
+      // console.log(this.state.fullTeachers)
+      // this.setState({ items: teachers })
+    });
   }
-});
-}
-  
+
 
 
   renderItem = ({ item, index }) => (
@@ -112,7 +132,7 @@ export default class UserView extends PureComponent {
           height: 105,
           elevation: 10,
         }}
-        key={item.id}
+        // key={item.key}
         Component={TouchableScale}
         friction={90}
         tension={100}
@@ -124,11 +144,11 @@ export default class UserView extends PureComponent {
         }}
 
         // key={this.state.render[item].key}
-        title={this.state.fullData.name}
+        title={item[index]}
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
-        subtitle={this.state.habil}
+        subtitle={item[index]}
         subtitleStyle={{ color: '#bdbdbd' }}
-        leftAvatar={{ size: 60, source: { uri: this.state.fullData.photo } }}
+        leftAvatar={{ size: 60, source: { uri: this.state.fullTeachers.foto} }}
         chevron={<Tooltip popover={<Text>Info here</Text>}>
           <Image source={require('../assets/additem.png')} style={{ height: 40, width: 40, borderRadius: 100 }} />
         </Tooltip>
@@ -210,9 +230,9 @@ export default class UserView extends PureComponent {
             fontWeight: '900'
           }}> APRENDE CON LOS MEJORES  </Text>
         </View>
-        {
-          this.state.fullData.length < 5
-
+        { console.log(this.state.fullTeachers),
+          this.state.fullTeachers.length < 5
+            
             ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%', width: '100%' }}>
               <ActivityIndicator size="large" color="blue" />
               <Text style={styles.textload}>Cargando profesores ....</Text>
@@ -221,15 +241,20 @@ export default class UserView extends PureComponent {
               keyExtractor={(item, index) => 'key' + index}
               initialNumToRender={8}
               maxToRenderPerBatch={2}
-
-              data={Object.keys(this.state.fullData)}
+              data={this.state.fullTeachers}
               renderItem={this.renderItem}
               //  onEndReached={this.loadMore}
               onEndReachedThreshold={0.5}
               ListFooterComponent={<ActivityIndicator size="large" color="blue" />}
-
+              
+         
+             
+              
             />
+        
         }
+
+
       </View>
 
     );
