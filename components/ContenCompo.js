@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {StyleSheet,Text,View,TouchableHighlight,Image,TouchableOpacity,ScrollView,ImageBackground} from 'react-native'
-import firebase from 'firebase'
-
+import * as firebase from 'firebase'
+import {NavigationActions} from 'react-navigation'
 
 export default class ContentCompo extends Component{
 
@@ -59,7 +59,9 @@ export default class ContentCompo extends Component{
                 </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=> firebase.auth().signOut() } >
+                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=> firebase.auth().signOut().then(()=>{
+                    this.props.navigation.navigate('LoginView')
+                })}>
                 <View  style={styles.row}>
                     <Image source={require('../assets/sesion.png')} style={styles.headerImage2}  />
                     <Text style={styles.text} > CERRAR SESION</Text>

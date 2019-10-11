@@ -5,12 +5,13 @@ import {createAppContainer,createSwitchNavigator} from 'react-navigation'
 import LoginView from './login'
 // import RegisterView from './register'
 import Drawer from './Drawer';
-
+import Preoloader from './Preloader'
 
 
 const AuthStack = createStackNavigator({
 // RegisterView:RegisterView,
 LoginView:LoginView,
+Preoloader:Preoloader
 
 },{
   initialRouteName:'LoginView',

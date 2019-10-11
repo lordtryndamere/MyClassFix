@@ -1,9 +1,9 @@
 import React, { Component,PureComponent } from 'react';
-import firebase, { auth } from 'firebase';
+import * as firebase from 'firebase';
 import {Overlay,Card,Button} from 'react-native-elements'
 import styles from  './styles'
 import {NavigationActions} from 'react-navigation'
-
+import Preloader from './Preloader'
 
 
 import {
@@ -19,9 +19,11 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   Alert,
-  ActivityIndicator
-} from 'react-native';
+  ActivityIndicator,
 
+  
+} from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 
 export default class LoginView extends PureComponent {
@@ -38,7 +40,8 @@ export default class LoginView extends PureComponent {
       isVisible:false,
       correoenviado:null,
       modalvisible:false,
-      messagelogin:''
+      messagelogin:'',
+      loader:false
 
     }
   }
@@ -61,34 +64,39 @@ export default class LoginView extends PureComponent {
   }
 
   }
+    // componentWillMount(){
+    //   var firebaseConfig = {
+    //       apiKey: "AIzaSyDD8IvY_nMvjYzuA5QGzcndDovfbqGF-vo",
+    //       authDomain: "myclassflix-dev.firebaseapp.com",
+    //       databaseURL: "https://myclassflix-dev.firebaseio.com",
+    //       projectId: "myclassflix-dev",
+    //       storageBucket: "myclassflix-dev.appspot.com",
+    //       messagingSenderId: "1055855079259",
+    //       appId: "1:1055855079259:web:ab973b7a8f4c4d3963f47e"
+    //     };
+    //     // Initialize Firebase
+    //     firebase.initializeApp(firebaseConfig);
+    //     firebase.auth().onAuthStateChanged((user)=>{
+    //     if(user){
+    //         this.setState({loggedIn:true})
+    //     }else {
+    //         this.setState({loggedIn:false})
+    //       }
+    //     });
+    // }
 
-
+componentDidMount(){
+  setTimeout(() => {
+    this.setState({loader:true})
+  }, 2000);
+}
 
 
   NavigateRegister = () =>{
     Linking.openURL('https://www.myclassflix.com/login')
   }
 
-  componentWillMount(){
-    var firebaseConfig = {
-        apiKey: "AIzaSyDD8IvY_nMvjYzuA5QGzcndDovfbqGF-vo",
-        authDomain: "myclassflix-dev.firebaseapp.com",
-        databaseURL: "https://myclassflix-dev.firebaseio.com",
-        projectId: "myclassflix-dev",
-        storageBucket: "myclassflix-dev.appspot.com",
-        messagingSenderId: "1055855079259",
-        appId: "1:1055855079259:web:ab973b7a8f4c4d3963f47e"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-       firebase.auth().onAuthStateChanged((user)=>{
-       if(user){
-          this.setState({loggedIn:true})
-       }else {
-          this.setState({loggedIn:false})
-        }
-       });
-  }
+
   isVisible(visible) {
     this.setState({isVisible: visible});
    
@@ -114,9 +122,13 @@ export default class LoginView extends PureComponent {
 
   }
   render() {
-    
+    const {loader} = this.state
+    if(loader==false){
+      return <Preloader/>
+    } else {  
     return (
 <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
+  
      <KeyboardAvoidingView   keyboardVerticalOffset={-170} behavior='padding' > 
       <SafeAreaView      style={styles.container}>
            <Image  style={{marginBottom:20,height:120,width:200}} source={require('../assets/LOGO2.png')}  />
@@ -182,9 +194,9 @@ export default class LoginView extends PureComponent {
             <Text style={styles.text}>¿Haz olvidado tu contraseña?</Text>
         </TouchableHighlight>
           
-        <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
+        <TouchableNativeFeedback  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
               <Text style={{color:"white",fontSize:14}} > {this.state.messagelogin} </Text>
      <TouchableHighlight style={styles.buttonContainer} >
             <Text style={styles.text2}>Puedes registrarte aqui abajo</Text>
@@ -198,6 +210,7 @@ export default class LoginView extends PureComponent {
 </ImageBackground>
 
     );
+    }
   }
 }
 

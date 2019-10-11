@@ -11,6 +11,7 @@ import UserView from './UsersView';
 import menu from '../assets/menu2.png';
 import ContenCompo from './ContenCompo';
 import ProfileView from './ProfileView'
+import Preoloader from './Preloader'
 import { createStackNavigator } from 'react-navigation-stack';
 
 
@@ -18,7 +19,8 @@ const Stack = createStackNavigator (   {
     HomeScreen:HomeView,
     Settings:Settings,
     UserView:UserView,
-    ProfileView:ProfileView
+    ProfileView:ProfileView,
+    Preoloader:Preoloader
 },{
     headerMode:'none'
     }
