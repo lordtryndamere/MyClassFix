@@ -18,7 +18,8 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   Alert,
-  Modal
+  Modal,
+  ActivityIndicator
 } from 'react-native';
 
 
@@ -33,18 +34,31 @@ export default class LoginView extends PureComponent {
       errorMessage:null,
       loggedIn: null,
       emailAddress:'',
-      modalvisible:false
+      modalvisible:false,
+      messagelogin:''
     }
   }
 
   handleLogin = () => {
     const {email,password} = this.state
+    if(!email&&password){
+      this.setState({errorMessage:"Verifica los datos ingresados"})
+    }else {  
     firebase
     .auth()
     .signInWithEmailAndPassword(email,password)
-    .then( () => this.props.navigation.navigate('HomeScreen'))
+    .then(()=>{
+      this.setState({messagelogin:"iniciando..."})
+      setTimeout(()=>{
+        this.props.navigation.navigate('HomeScreen') 
+      },2000) 
+    })
     .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
   }
+  }
+
+
+
   NavigateRegister = () =>{
     Linking.openURL('https://www.myclassflix.com/login')
   }
@@ -109,7 +123,7 @@ export default class LoginView extends PureComponent {
         <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>
         </TouchableOpacity>
-
+              <Text style={{color:"white",fontSize:14}} > {this.state.messagelogin} </Text>
      <TouchableHighlight style={styles.buttonContainer} >
             <Text style={styles.text2}>Puedes registrarte aqui abajo</Text>
         </TouchableHighlight>
