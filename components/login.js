@@ -19,10 +19,6 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   Alert,
-<<<<<<< HEAD
-=======
-  Modal,
->>>>>>> a6d083dfa78e28ee055c7bf44f8986c099bdfd7f
   ActivityIndicator
 } from 'react-native';
 
@@ -39,13 +35,11 @@ export default class LoginView extends PureComponent {
       errorMessage:null,
       loggedIn: null,
       emailAddress:'',
-<<<<<<< HEAD
       isVisible:false,
-      correoenviado:null
-=======
+      correoenviado:null,
       modalvisible:false,
       messagelogin:''
->>>>>>> a6d083dfa78e28ee055c7bf44f8986c099bdfd7f
+
     }
   }
 
@@ -65,16 +59,12 @@ export default class LoginView extends PureComponent {
     })
     .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
   }
-<<<<<<< HEAD
 
-
-  
-=======
   }
 
 
 
->>>>>>> a6d083dfa78e28ee055c7bf44f8986c099bdfd7f
+
   NavigateRegister = () =>{
     Linking.openURL('https://www.myclassflix.com/login')
   }
