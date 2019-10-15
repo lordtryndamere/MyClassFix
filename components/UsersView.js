@@ -1,7 +1,8 @@
 import React, { Component, PureComponent } from 'react';
+import PopoverTooltip from  'react-native-popover-tooltip'
 import firebase from 'firebase';
 import styles from './styles'
-import { ListItem, Card, Header, Tooltip, SearchBar } from 'react-native-elements'
+import { ListItem, Card, Header,SearchBar } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
 import _ from 'lodash'
@@ -40,7 +41,8 @@ export default class UserView extends PureComponent {
     page: 1,
     data: [9],
     query: "",
-    habil: ''
+    habil: '',
+    toolTipVisible:false
   }
 
   showContainer = (index) => {
@@ -52,16 +54,43 @@ export default class UserView extends PureComponent {
   }
 
   loadTeachers() {
+    var DataFull;
+    var skl=[];
     var teachers;
     var OBJETO;
     firebase.database().ref(`/approveds`).once('value', (snapshot) => {
       teachers = snapshot.val();
     })
       .then(() => {
-        fullData = [];
+        fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
         for (const key in teachers) {
+          skl=[];
           firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
             OBJETO = snapshot.val()
+          }).then(()=>{
+            firebase.database().ref(`/teachers/${key}/newSkill`).once('value',data=>{
+
+              DataFull = data.val()
+            
+              for (const i in DataFull) {
+
+                for (const j in DataFull[i]) {
+
+                  for (const k in DataFull[i][j]) {
+
+                    skl.push(DataFull[i][j][k].skill)
+
+                  }
+
+                }
+
+              }
+
+       
+              console.log(DataFull)
+            })
+
+
           })
             .then(() => {
               var uid = key
@@ -79,7 +108,8 @@ export default class UserView extends PureComponent {
                 rank: ranking,
                 pais: country,
                 foto: photo,
-                tag: tags
+                tag: tags,
+                skl:skl
               }
               fullData.push(ojc)
               // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
@@ -141,13 +171,31 @@ export default class UserView extends PureComponent {
 
         // key={this.state.render[item].key}
         title={item.name}
+        
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
-        subtitle={item.lastname}
+        subtitle={item.skl[0]}
         subtitleStyle={{ color: '#bdbdbd' }}
-        leftAvatar={{ size: 60, source: { uri: item.foto } }}
-        chevron={<Tooltip popover={<Text>Info here</Text>}>
+        leftAvatar={{ size: 60,     source: { uri: item.foto==null ? require('../assets/AVATAR.png') :item.foto   } }}
+        chevron={  <PopoverTooltip
+          ref='tooltip1'
+          buttonComponent={
+
           <Image source={require('../assets/additem.png')} style={{ height: 40, width: 40, borderRadius: 100 }} />
-        </Tooltip>
+        
+          }
+          items={[
+            {
+              label: item.name,
+              onPress: () => {}
+            },
+            {
+              label: 'Item 2',
+              onPress: () => {}
+            }
+          ]}
+          animationType='spring' // spring-damper animation
+          springConfig={{tension: 100, friction: 3}}
+          />
 
         }
         bottomDivider
