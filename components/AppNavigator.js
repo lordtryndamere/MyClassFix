@@ -6,7 +6,7 @@ import LoginView from './login'
 // import RegisterView from './register'
 import Drawer from './Drawer';
 import Preoloader from './Preloader'
-
+import UserView from './UsersView'
 
 const AuthStack = createStackNavigator({
 // RegisterView:RegisterView,

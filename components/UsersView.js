@@ -50,9 +50,6 @@ export default class UserView extends PureComponent {
     console.log(index.name);
   }
 
-  eliminarDiacriticos = (texto) => {
-    texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-  }
 
 
   componentWillMount() {
@@ -61,7 +58,7 @@ export default class UserView extends PureComponent {
     //   const teachers = snapshot.val();
 
     firebase.database().ref(`/approveds`).limitToLast(20).on('value', data => {
-      let fullData = []
+      var fullData = []
       const teachers = data.val();
       for (const key in teachers) {
         firebase.database().ref(`/teachers/${key}/personalData`).on('value', snapshot => {
@@ -132,7 +129,7 @@ export default class UserView extends PureComponent {
           height: 105,
           elevation: 10,
         }}
-        // key={item.key}
+        key={item.key}
         Component={TouchableScale}
         friction={90}
         tension={100}
@@ -144,11 +141,11 @@ export default class UserView extends PureComponent {
         }}
 
         // key={this.state.render[item].key}
-        title={item[index]}
+        title={item.name}
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
-        subtitle={item[index]}
+        subtitle={item.lastname}
         subtitleStyle={{ color: '#bdbdbd' }}
-        leftAvatar={{ size: 60, source: { uri: this.state.fullTeachers.foto} }}
+        leftAvatar={{ size: 60, source: { uri: item.foto} }}
         chevron={<Tooltip popover={<Text>Info here</Text>}>
           <Image source={require('../assets/additem.png')} style={{ height: 40, width: 40, borderRadius: 100 }} />
         </Tooltip>
