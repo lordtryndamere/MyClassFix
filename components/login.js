@@ -190,9 +190,9 @@ componentDidMount(){
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.isVisible(true)}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => this.isVisible(true)}>
             <Text style={styles.text}>¿Haz olvidado tu contraseña?</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
           
         <TouchableNativeFeedback  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>

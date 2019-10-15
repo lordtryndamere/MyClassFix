@@ -109,6 +109,7 @@ inputs2:{
         fontSize:16
     },
     textload:{
+      paddingTop:15,
       color:"#9E9E9E",
       textShadowColor:'#75827d',
       fontSize:16

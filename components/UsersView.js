@@ -233,8 +233,8 @@ export default class UserView extends PureComponent {
         { console.log(this.state.fullTeachers),
           this.state.fullTeachers.length < 5
             
-            ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%', width: '100%' }}>
-              <ActivityIndicator size="large" color="blue" />
+            ? <View style={{ paddingTop:20,flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%', width: '100%' }}>
+              <ActivityIndicator size="large" color="#00BEB1" />
               <Text style={styles.textload}>Cargando profesores ....</Text>
             </View>
             : <FlatList

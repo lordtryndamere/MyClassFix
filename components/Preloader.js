@@ -1,5 +1,5 @@
 import React ,{PureComponent} from 'react'
-import { StyleSheet,View,ActivityIndicator,SafeAreaView, ImageBackground} from 'react-native'
+import { StyleSheet,View,ActivityIndicator,SafeAreaView, ImageBackground,Image} from 'react-native'
 
 
 import firebaseConfig from '../utils/FireBase'
@@ -15,7 +15,10 @@ export default class extends PureComponent{
         return(
             <ImageBackground style={styles.preloaderView2} source={require('../assets/chica.jpg')} >
             <SafeAreaView styles={styles.preloaderView} >
-               <ActivityIndicator style={{alignContent:'center',alignItems:'center',justifyContent:'center',paddingTop:350}}   color="white" size="large" /> 
+                <View style={styles.Image} >
+                    <Image  source={require('../assets/logo.png')} />
+                </View>
+               <ActivityIndicator style={{alignContent:'center',alignItems:'center',justifyContent:'center',paddingTop:40}}   color="white" size="large" /> 
             </SafeAreaView>
             </ImageBackground>
         )
@@ -24,7 +27,6 @@ export default class extends PureComponent{
 
 const styles = StyleSheet.create({
         preloaderView:{
-        flexDirection:'row',
         justifyContent:'center',
         alignContent:'center',
         alignItems:'center'
@@ -32,5 +34,11 @@ const styles = StyleSheet.create({
     preloaderView2:{    
         height:"100%",
         width:'100%'
+    },
+    Image:{
+        paddingTop:200,
+        justifyContent:'center',
+        alignContent:'center',
+        alignItems:'center'
     }
 })
