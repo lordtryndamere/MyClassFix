@@ -8,7 +8,7 @@ export default class ContentCompo extends Component{
     render (){
         return(
 
-        <TouchableOpacity activeOpacity={1} style={styles.drawerTransparent} onPress={()=>this.props.navigation.goBack()}  >
+        <TouchableOpacity activeOpacity={1} style={styles.drawerTransparent}  >
             <TouchableOpacity activeOpacity={1}  style={styles.drawer} disabled={false} >
                 <ScrollView>
 
@@ -17,6 +17,7 @@ export default class ContentCompo extends Component{
                     <Text     style={styles.text,{color:'white'}}>Mi Perfil {firebase.auth().currentUser.displayName}  </Text>
                 </ImageBackground>
 
+                    
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('UserView')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/buscar.png')} style={styles.headerImage2}  />

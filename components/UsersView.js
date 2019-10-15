@@ -13,7 +13,6 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  VirtualizedList,
   TouchableOpacity,
   Image,
   TextInput
@@ -26,6 +25,7 @@ import {
 
 const initialData = [123];
 const ITEMS_PER_PAGE = 8;
+var fullData = [];
 
 export default class UserView extends PureComponent {
 
@@ -41,66 +41,65 @@ export default class UserView extends PureComponent {
     data: [9],
     query: "",
     habil: ''
-
-
-
   }
 
   showContainer = (index) => {
     console.log(index.name);
   }
 
-
-
   componentWillMount() {
-
-    // firebase.database().ref(`/approveds`).limitToLast(20).on('value',(snapshot)=>{
-    //   const teachers = snapshot.val();
-
-    firebase.database().ref(`/approveds`).limitToLast(20).on('value', data => {
-      var fullData = []
-      const teachers = data.val();
-      for (const key in teachers) {
-        firebase.database().ref(`/teachers/${key}/personalData`).on('value', snapshot => {
-
-          var OBJETO = snapshot.val()
-          var uid= key
-          var nombre = OBJETO.name
-          var surname = OBJETO.surname
-          var ranking = OBJETO.ranking
-          var country = OBJETO.country
-          var photo = OBJETO.linkPhoto
-          var tags = OBJETO.tags
-
-
-          var ojc = {
-            key:uid,
-            name: nombre,
-            lastname: surname,
-            rank: ranking,
-            pais: country,
-            foto: photo,
-            tag: tags
-          }
-          fullData.push(ojc)
-          // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
-          // this.setState({fullTeachers:render})
-          //  this.state.teacher = snapshot.val()
-          //  this.state.teacher.uid = key
-          //  this.state.teachersAproveds.push(this.state.teacher)
-          //  var renderizar = Object.values(this.state.teachersAproveds)
-          //  // console.log(this.state.render) 
-          //  return this.setState({render:renderizar})
-        })
-      }
-      // console.log(fullData)
-      this.setState({fullTeachers:fullData})
-      // console.log(this.state.fullTeachers)
-      // this.setState({ items: teachers })
-    });
+    this.loadTeachers()
   }
 
+  loadTeachers() {
+    var teachers;
+    var OBJETO;
+    firebase.database().ref(`/approveds`).once('value', (snapshot) => {
+      teachers = snapshot.val();
+    })
+      .then(() => {
+        fullData = [];
+        for (const key in teachers) {
+          firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
+            OBJETO = snapshot.val()
+          })
+            .then(() => {
+              var uid = key
+              var nombre = OBJETO.name
+              var surname = OBJETO.surname
+              var ranking = OBJETO.ranking
+              var country = OBJETO.country
+              var photo = OBJETO.linkPhoto
+              var tags = OBJETO.tags
 
+              var ojc = {
+                key: uid,
+                name: nombre,
+                lastname: surname,
+                rank: ranking,
+                pais: country,
+                foto: photo,
+                tag: tags
+              }
+              fullData.push(ojc)
+              // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
+              // this.setState({fullTeachers:render})
+              //  this.state.teacher = snapshot.val()
+              //  this.state.teacher.uid = key
+              //  this.state.teachersAproveds.push(this.state.teacher)
+              //  var renderizar = Object.values(this.state.teachersAproveds)
+              //  // console.log(this.state.render) 
+              //  return this.setState({render:renderizar})
+            })
+        }
+        // console.log(fullData)
+        // console.log(this.state.fullTeachers)
+        // this.setState({ items: teachers })
+      })
+    setTimeout(() => {
+      return this.setState({ fullTeachers: fullData })
+    }, 10000);
+  }
 
   renderItem = ({ item, index }) => (
     <Card containerStyle={{
@@ -145,7 +144,7 @@ export default class UserView extends PureComponent {
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
         subtitle={item.lastname}
         subtitleStyle={{ color: '#bdbdbd' }}
-        leftAvatar={{ size: 60, source: { uri: item.foto} }}
+        leftAvatar={{ size: 60, source: { uri: item.foto } }}
         chevron={<Tooltip popover={<Text>Info here</Text>}>
           <Image source={require('../assets/additem.png')} style={{ height: 40, width: 40, borderRadius: 100 }} />
         </Tooltip>
@@ -227,28 +226,27 @@ export default class UserView extends PureComponent {
             fontWeight: '900'
           }}> APRENDE CON LOS MEJORES  </Text>
         </View>
-        { console.log(this.state.fullTeachers),
-          this.state.fullTeachers.length < 5
-            
-            ? <View style={{ paddingTop:20,flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%', width: '100%' }}>
+        {console.log(this.state.fullTeachers),
+          this.state.fullTeachers.length < 3
+            ? <View style={{ paddingTop: 20, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%', width: '100%' }}>
               <ActivityIndicator size="large" color="#00BEB1" />
               <Text style={styles.textload}>Cargando profesores ....</Text>
             </View>
             : <FlatList
               keyExtractor={(item, index) => 'key' + index}
               initialNumToRender={8}
-              maxToRenderPerBatch={2}
+              // maxToRenderPerBatch={2}
               data={this.state.fullTeachers}
               renderItem={this.renderItem}
               //  onEndReached={this.loadMore}
-              onEndReachedThreshold={0.5}
-              ListFooterComponent={<ActivityIndicator size="large" color="blue" />}
-              
-         
-             
-              
+              // onEndReachedThreshold={0.5}
+
+
+
+
+
             />
-        
+
         }
 
 

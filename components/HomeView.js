@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react'
-import {View,Image,TouchableOpacity,Text,BackHandler,Alert } from 'react-native'
+import {View,Image,TouchableOpacity,Text} from 'react-native'
 import firebase from 'firebase'
 import {Header } from 'react-native-elements'
 import {DrawerActions} from 'react-navigation-drawer'
