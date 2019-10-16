@@ -13,14 +13,19 @@ import ContenCompo from './ContenCompo';
 import ProfileView from './ProfileView'
 import Preoloader from './Preloader'
 import { createStackNavigator } from 'react-navigation-stack';
-
+import Perfil from './Perfil'
 
 const Stack = createStackNavigator (   {
     HomeScreen:HomeView,
     Settings:Settings,
     UserView:UserView,
     ProfileView:ProfileView,
-    Preoloader:Preoloader
+    Preoloader:Preoloader,
+    //Perfil:Perfil
+    Perfil:{
+        screen:Perfil
+      
+    }
 },{
     headerMode:'none'
     }

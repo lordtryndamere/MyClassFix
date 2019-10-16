@@ -29,7 +29,9 @@ const ITEMS_PER_PAGE = 8;
 var fullData = [];
 
 export default class UserView extends PureComponent {
-
+  constructor(props){
+    super(props)
+  }
   state = {
     timepassed: false,
     fullTeachers: '',
@@ -218,7 +220,7 @@ export default class UserView extends PureComponent {
   }
 
   ClickView(Profile){
-    console.log('Has realizado click en el siguiente perfil');
+    this.props.navigation.navigate('Perfil',{Profile})
     console.log(Profile)
   }
   HadleSearch = (text) => {
