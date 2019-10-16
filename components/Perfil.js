@@ -7,10 +7,10 @@ export default class Perfil extends PureComponent{
         console.log(props)
     }
 render(){
-    var name = this.props.navigation.state.params.Profile.name
+    var {name,lastname} = this.props.navigation.state.params.Profile
     return(
         <View style={styles.ViewBody}>
-        <Text>Visitando Perfil de s {name} </Text>
+        <Text>Visitando Perfil de s {name}{lastname} </Text>
 
         </View>
     )
