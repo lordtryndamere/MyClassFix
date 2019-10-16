@@ -14,6 +14,7 @@ import ProfileView from './ProfileView'
 import Preoloader from './Preloader'
 import { createStackNavigator } from 'react-navigation-stack';
 import Perfil from './Perfil'
+import AjustesView from './AjustesView'
 
 const Stack = createStackNavigator (   {
     HomeScreen:HomeView,
@@ -21,6 +22,7 @@ const Stack = createStackNavigator (   {
     UserView:UserView,
     ProfileView:ProfileView,
     Preoloader:Preoloader,
+    AjustesView:AjustesView,
     //Perfil:Perfil
     Perfil:{
         screen:Perfil

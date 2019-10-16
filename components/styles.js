@@ -106,7 +106,8 @@ inputs2:{
     text:{
         color:"#f0ffff",
         textShadowColor:'#75827d',
-        fontSize:16
+        fontSize:16,
+        paddingLeft:20  
     },
     textload:{
       paddingTop:15,

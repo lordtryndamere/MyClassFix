@@ -52,6 +52,7 @@ export default class UserView extends PureComponent {
   }
 
   componentWillMount() {
+
     this.loadTeachers()
   }
 
@@ -178,7 +179,7 @@ export default class UserView extends PureComponent {
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
         subtitle={item.skl[0]}
         subtitleStyle={{ color: '#bdbdbd' }}
-        leftAvatar={{ size: 60,     source: { uri: item.foto==null ? require('../assets/AVATAR.png') :item.foto   } }}
+        leftAvatar={{  renderPlaceholderContent:<Image  style={{height:50,width:50}} source={require('../assets/logo.png')}/>, size: 60,     source: { uri: item.foto   } }}
         chevron={  <PopoverTooltip
           ref='tooltip1'
           buttonComponent={
@@ -222,13 +223,20 @@ export default class UserView extends PureComponent {
   ClickView(Profile){
     this.props.navigation.navigate('Perfil',{Profile})
     console.log(Profile)
+    
   }
-  HadleSearch = (text) => {
-    const formatQuery = text.toLowerCase();
-    const data = _.filter(this.state.render, user => {
-      return contains(user, formatQuery);
+  HadleSearch=                     value=>{
+    const filteredTeachers= this.state.fullTeachers.filter(teacher=>{
+      var teacherLowerCase = (
+        teacher.name+
+        ' ' +
+        teacher.lastname
+      ).toLowerCase();
+
+        var searchTermLowerCase = value.toLowerCase();
+        return teacherLowerCase.indexOf(searchTermLowerCase) > -1;
     });
-    this.setState({ query: formatQuery, data })
+    this.setState({fullTeachers:filteredTeachers})
   }
 
 
@@ -238,7 +246,7 @@ export default class UserView extends PureComponent {
 
       <View >
         <Header
-          rightComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} >
+          rightComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={() => this.props.navigation.navigate('AjustesView')} >
             <View style={styles.row}>
               <Image source={require('../assets/ajustes.png')} style={styles.headerImage3} />
             </View>
@@ -249,7 +257,7 @@ export default class UserView extends PureComponent {
               <TextInput style={styles.inputs2}
                 placeholder="¿Que quieres aprender?"
                 underlineColorAndroid='transparent'
-                onChangeText={this.HadleSearch} />
+                onChangeText={value=>this.HadleSearch(value)} />
             </View>
           }
           leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} >
