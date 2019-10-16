@@ -132,6 +132,7 @@ export default class UserView extends PureComponent {
   }
 
   renderItem = ({ item, index }) => (
+    
     <Card containerStyle={{
       padding: 0, borderRadius: 20, shadowColor: "#000",
       shadowOffset: {
@@ -199,10 +200,11 @@ export default class UserView extends PureComponent {
 
         }
         bottomDivider
-        onPress={() => { this.props.navigation.navigate('ProfileView') }}
-
+        //onPress={() => { this.props.navigation.navigate('ProfileView') }}
+        onPress={()=>this.ClickView(item)}
       />
     </Card>
+
   )
   loadMore() {
 
@@ -215,6 +217,10 @@ export default class UserView extends PureComponent {
     this.setState({ data: [...data, ...newData] });
   }
 
+  ClickView(Profile){
+    console.log('Has realizado click en el siguiente perfil');
+    console.log(Profile)
+  }
   HadleSearch = (text) => {
     const formatQuery = text.toLowerCase();
     const data = _.filter(this.state.render, user => {
