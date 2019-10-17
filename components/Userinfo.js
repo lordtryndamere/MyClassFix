@@ -1,10 +1,13 @@
 import React,{PureComponent} from 'react'
 import {View,Text,StyleSheet,Image, Alert} from 'react-native'
+import * as ImagePicker from 'expo-image-picker';
+import * as  Permissions from 'expo-permissions'
 import Toast from 'react-native-simple-toast';
 import {Avatar} from 'react-native-elements'
 import * as firebase from 'firebase'
 import  UpdateUser from './UpdateUserinfo'
-import {NavigationActions} from 'react-navigation'
+
+
 export default class Userinfo extends PureComponent{
     constructor(props){
         super(props)
@@ -24,6 +27,16 @@ user.providerData.forEach(userinfo=>{
 this.setState({userinfo})
 });
 
+}
+
+ChangeAvatarUser = async ()=>{
+    const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    if(resultPermission.status =="denied"){
+        Toast.show("Es Necesario aceptar permisos de galeria",Toast.LONG,4000);
+    }else{
+        const Result = await ImagePicker.launchImageLibraryAsync
+    }
+    
 }
 
 reLogear = currentPassword =>{
@@ -93,6 +106,8 @@ retunUpdateUserinfoComponent = userinfoData =>{
         <View  style={styles.ViewAvatar}>
                 <Avatar
                 rounded
+                onEditPress={()=>this.ChangeAvatarUser()}
+                showEditButton
                 size="large"
                 source={{uri:this.CheckUserAvatar(photoURL)}}
                 containerStyle={styles.UserinfoAvatar}

@@ -28,7 +28,8 @@
       "supportsTablet": true
     },
     "android":{
-      "package": "com.educarsas.miclassflix"
+      "package": "com.educarsas.miclassflix",
+      "permissions" : ["CAMERA_ROLL"]
     }
   }
 }
