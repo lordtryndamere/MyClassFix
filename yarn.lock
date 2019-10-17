@@ -5222,6 +5222,13 @@ react-native-easy-grid@0.2.2:
   dependencies:
     lodash "^4.17.15"
 
+react-native-easy-toast@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-1.2.0.tgz#0f70bcb99e3306cda4800c244bfb4a67d42276ed"
+  integrity sha512-UtpxnRn1ME+035Uey4VR+9K0P4aVoTcWNOx5QkioWBe3LBKMPb/kZjrQ1LtvWzOyeGP4TeTUTtMX3IOPWv5MtA==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-elements@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.2.3.tgz#de16b592d872ec550da414f787bbf030598e702b"
@@ -5328,6 +5335,11 @@ react-native-safe-area-view@^0.14.1, react-native-safe-area-view@^0.14.6:
   integrity sha512-tOxHGQUN83MTmQB4ghoQkibqOdGiX4JQEmeyEv96MKWO/x8T2PJv84ECUos9hD3blPRQwVwSpAid1PPPhrVEaw==
   dependencies:
     debounce "^1.2.0"
+
+react-native-simple-toast@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-simple-toast/-/react-native-simple-toast-1.0.0.tgz#116f00774c00b082bde2c44585028f4015b9aaaa"
+  integrity sha512-xaMhI1PTNlDs4PF9AflNsD55RDwlPaFpF6iq1qb3o1MCy1nDkYyqRbytwtvUODepPwOvtgMQSDaGW1u0tgUnjw==
 
 react-native-snap-carousel@^3.8.1:
   version "3.8.1"

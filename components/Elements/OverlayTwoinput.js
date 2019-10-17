@@ -31,9 +31,15 @@ export default class OverlayTwoinput extends Component{
         const NewValueTwo =  this.state.InputValueTwo;
 
         this.state.updateFunction(NewValueOne,NewValueTwo)
-        this.setState({
-            isVisibleOverlay:false
-        });
+
+        setTimeout(() => {
+            this.setState({
+                isVisibleOverlay:false
+            });
+        }, 4000);
+        // this.setState({
+        //     isVisibleOverlay:false
+        // });
     };
 
 
@@ -44,7 +50,7 @@ export default class OverlayTwoinput extends Component{
         this.state.updateFunction(null);
     }
     render(){
-        const {isVisibleOverlay,PlaceholderOne,PlaceholderTwo,InputValueOne,InputValueTwo} = this.state
+        const {isVisibleOverlay,PlaceholderOne,PlaceholderTwo,InputValueOne,InputValueTwo,password} = this.state
         return(
            <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
             
@@ -55,6 +61,7 @@ export default class OverlayTwoinput extends Component{
                    value={InputValueOne} />
                     <Input
                    placeholder={PlaceholderTwo}
+                   secureTextEntry={password}
                    containerStyle={styles.inputcontainer}
                    onChangeText={value =>this.onChangeinputTwo(value)}
                    value={InputValueTwo} />

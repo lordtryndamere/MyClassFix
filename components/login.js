@@ -49,7 +49,7 @@ export default class LoginView extends PureComponent {
 
   handleLogin = () => {
     var {email,password} = this.state
-    if(email&&password==null){
+    if(email&&password==null ||email&&password=="" || email&&password == undefined || !email&&password  ){
       this.setState({errorMessage:"Verifica los datos ingresados"})
       setTimeout(() => {
         this.setState({errorMessage:null})

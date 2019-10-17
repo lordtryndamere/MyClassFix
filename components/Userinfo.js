@@ -1,9 +1,10 @@
 import React,{PureComponent} from 'react'
-import {View,Text,StyleSheet,Image} from 'react-native'
+import {View,Text,StyleSheet,Image, Alert} from 'react-native'
+import Toast from 'react-native-simple-toast';
 import {Avatar} from 'react-native-elements'
 import * as firebase from 'firebase'
 import  UpdateUser from './UpdateUserinfo'
-
+import {NavigationActions} from 'react-navigation'
 export default class Userinfo extends PureComponent{
     constructor(props){
         super(props)
@@ -24,6 +25,16 @@ this.setState({userinfo})
 });
 
 }
+
+reLogear = currentPassword =>{
+    const user = firebase.auth().currentUser
+    const  credentials = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+    );
+    return user.reauthenticateWithCredential(credentials)
+}
+
 CheckUserAvatar =photoURL =>{
 return photoURL 
 ?photoURL 
@@ -42,8 +53,26 @@ this.getUserinfo();
 }
 
 updateUserEmail = async (NewEmail,password) =>{
+this.reLogear(password)
+.then(()=>{
+    const user  = firebase.auth().currentUser;
+    user
 
-console.log(NewEmail,password)
+    .updateEmail(NewEmail)
+    .then(()=>{
+        Toast.show("Correo Actualizado Correctamente", Toast.BOTTOM,  Toast.LONG,4000)
+        Alert.alert("Por favor cierra sesion, e inicia con el nuevo email ")
+     })
+    .catch(err =>{
+        Toast.show("Contraseña incorrecta", Toast.BOTTOM, Toast.LONG,2000)
+        
+    })
+})
+.catch(error =>{
+    Toast.show("Contraseña incorrecta", Toast.BOTTOM, Toast.LONG)
+    
+})
+
 }
 
 retunUpdateUserinfoComponent = userinfoData =>{
@@ -76,6 +105,7 @@ retunUpdateUserinfoComponent = userinfoData =>{
 
         <View  >
         {this.retunUpdateUserinfoComponent(this.state.userinfo)}
+
         </View>
     </View>
         )

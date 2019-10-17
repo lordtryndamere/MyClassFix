@@ -88,6 +88,7 @@ this.setState({
         PlaceholderTwo={PlaceholderTwo}
         InputValueOne={InputValueOne}
         InputValueTwo=""
+        password={true}
         updateFunction={updateFunction}
        
        
