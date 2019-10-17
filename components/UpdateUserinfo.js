@@ -4,10 +4,10 @@ import {ListItem} from 'react-native-elements'
 import  OverlayInput from "./Elements/OverlayOneinput"
 
 export default class UpdateUserinfo extends PureComponent{
-    constructor(state){
-        super(state);
+    constructor(props){
+        super(props);
         this.state={
-            ...state,
+            ...props,
             overLayComponent:null,      
             menuItems:[
                 {
@@ -17,7 +17,7 @@ export default class UpdateUserinfo extends PureComponent{
                     iconColorRight:"#9C27B0",
                     iconNameLeft:"account-circle",
                     iconColorLeft:"#ccc",
-                    onPress: ()=> console.log("Clickeo En Cambiar Nombre")
+                    onPress: ()=> this.openOverlay("Nombrer y Apellidos",this.updateUserDisplayName,props.userinfo.displayName)
 
 
                 },
@@ -46,10 +46,28 @@ export default class UpdateUserinfo extends PureComponent{
 
     }
 
+openOverlay =(Placeholder,updateFunction,inputValue)=>{
+      this.setState({
+          overLayComponent:<OverlayInput
+              isVisibleOverlay={true}
+              Placeholder={Placeholder}
+              updateFunction={updateFunction}
+              inputValue={inputValue}
+          />  
+      }) 
+
+}
+updateUserDisplayName =  (NewDisplayname) =>{
     
+        if(NewDisplayname){
+        this.state.uPdateUserDisplayname(NewDisplayname);
+        }
+        else { 
+            this.setState({overLayComponent:null})
+        }
+}    
     render(){
-        console.log(this.state.userinfo)
-        const  {menuItems}  = this.state
+        const  {menuItems,overLayComponent}  = this.state
         return(
             <View> 
                         {
@@ -75,8 +93,8 @@ export default class UpdateUserinfo extends PureComponent{
 
                         }
 
-                    <OverlayInput/>    
-
+                   
+            {overLayComponent}
             </View>
         )
     }

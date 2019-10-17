@@ -1,23 +1,50 @@
 import React,{Component} from 'react'
-import {StyleSheet,View,Text} from 'react-native'
-import {Overlay,Input,Button} from 'react-native-elements'
+import {StyleSheet,View} from 'react-native'
+import {Overlay,Input,Button,Icon} from 'react-native-elements'
 
 export default class OverlayOneinput extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        this.state={
+            ...props
+        }
+        
+    }
+    onChangeinput = inputData =>{
+        this.setState({
+            inputValue:inputData
+        })
+    }
+    Update=()=>{
+        const newValue = this.state.inputValue;
+        this.state.updateFunction(newValue)
+        this.setState({
+            isVisibleOverlay:false
+        });
+    };
+
+
+    close = () => {
+        this.setState({
+            isVisibleOverlay:false
+        });
+        this.state.updateFunction(null);
     }
     render(){
+        const {isVisibleOverlay,Placeholder,inputValue} = this.state
         return(
-           <Overlay isVisible={true} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
+           <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
                <View style={styles.viewOverlay} >
                    <Input
-                   placeholder="texto" 
+                   placeholder={Placeholder}
                    containerStyle={styles.inputcontainer}
-                   onChangeText={value=>console.log(value)}
-                   value=""  />
-                   <Button  
+                   onChangeText={value=>this.onChangeinput(value)}
+                   value={inputValue} />
+                   <Button
+                   onPress={()=>this.Update()}  
                     buttonStyle={styles.buttonStyle}
                    title="Actualizar"/>
+                   <Icon  onPress={() => this.close()} size={30}  containerStyle={styles.containerclose}  type="material-community" name="close-circle-outline" />
                </View>
            </Overlay>
         )
@@ -47,5 +74,10 @@ inputcontainer:{
 },
 buttonStyle:{
     backgroundColor:"#00BEB1"
+},
+containerclose:{
+    position:"absolute",
+    right:-16,
+    top:-16
 }
 })

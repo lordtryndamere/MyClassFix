@@ -5,9 +5,10 @@ import * as firebase from 'firebase'
 import  UpdateUser from './UpdateUserinfo'
 
 export default class Userinfo extends PureComponent{
-    constructor(state){
-        super(state)
+    constructor(props){
+        super(props)
         this.state={
+            ...props,
             userinfo:{}
         }
     }
@@ -31,8 +32,13 @@ return photoURL
  
 }
 
-uPdateUserDisplayname = (newDisplayName) =>{
-console.log(newDisplayName)
+uPdateUserDisplayname =  async (newDisplayName) =>{
+const update ={
+    displayName:newDisplayName
+}
+ await firebase.auth().currentUser.updateProfile(update);
+this.getUserinfo();
+
 }
 
 retunUpdateUserinfoComponent = userinfoData=>{
