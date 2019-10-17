@@ -1,7 +1,9 @@
 import React,{PureComponent} from 'react';
 import {View,Text,StyleSheet} from 'react-native'
 import {ListItem} from 'react-native-elements'
+
 import  OverlayInput from "./Elements/OverlayOneinput"
+import OverlayTwo    from "./Elements/OverlayTwoinput"
 
 export default class UpdateUserinfo extends PureComponent{
     constructor(props){
@@ -28,7 +30,7 @@ export default class UpdateUserinfo extends PureComponent{
                     iconColorRight:"#00BEB1",
                     iconNameLeft:"at",
                     iconColorLeft:"#00BEB1",
-                    onPress: () => console.log("Clickeo En Cambiar Email")
+                    onPress: () => this.openOverlayTwo("Email","Password", props.userinfo.email ,this.UpdateUserEmail)
 
                 },
                 {
@@ -65,7 +67,34 @@ updateUserDisplayName =  (NewDisplayname) =>{
         else { 
             this.setState({overLayComponent:null})
         }
-}    
+} 
+
+UpdateUserEmail = async (NewEmail,password) =>{
+    const emailOld = this.props.userinfo.email;
+    if(emailOld != NewEmail){
+        this.state.updateUserEmail(NewEmail,password);
+    }
+    this.setState({
+        overLayComponent:null
+    })
+}
+
+
+openOverlayTwo = (PlaceholderOne,PlaceholderTwo,InputValueOne,updateFunction) =>{
+this.setState({
+        overLayComponent:<OverlayTwo
+        isVisibleOverlay={true}
+        PlaceholderOne={PlaceholderOne}
+        PlaceholderTwo={PlaceholderTwo}
+        InputValueOne={InputValueOne}
+        InputValueTwo=""
+        updateFunction={updateFunction}
+       
+       
+    />  
+})
+}
+
     render(){
         const  {menuItems,overLayComponent}  = this.state
         return(
@@ -83,7 +112,7 @@ updateUserDisplayName =  (NewDisplayname) =>{
                         rightIcon={{
                             type:item.iconType,
                             name:item.iconNameRight,
-                            color:item.iconNameRight
+                            color:item.iconColorRight
                         }}
     
                         onPress={item.onPress}

@@ -41,10 +41,18 @@ this.getUserinfo();
 
 }
 
-retunUpdateUserinfoComponent = userinfoData=>{
+updateUserEmail = async (NewEmail,password) =>{
+
+console.log(NewEmail,password)
+}
+
+retunUpdateUserinfoComponent = userinfoData =>{
     if(userinfoData.hasOwnProperty("uid")){
         return(
-            <UpdateUser userinfo={this.state.userinfo} uPdateUserDisplayname={this.uPdateUserDisplayname}  /> 
+            <UpdateUser 
+            userinfo={this.state.userinfo} 
+            uPdateUserDisplayname={this.uPdateUserDisplayname}
+            updateUserEmail={this.updateUserEmail}  /> 
         )
     }
 }

@@ -59,7 +59,6 @@ export default class LoginView extends PureComponent {
     .auth()
     .signInWithEmailAndPassword(email,password)
     .then(()=>{
-      this.setState({email:null,password:null})
       this.setState({messagelogin:"iniciando..."})
       setTimeout(()=>{
         this.props.navigation.navigate('HomeScreen') 
