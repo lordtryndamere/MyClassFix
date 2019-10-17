@@ -34,7 +34,7 @@ export default class OverlayOneinput extends Component{
         const {isVisibleOverlay,Placeholder,inputValue} = this.state
         return(
            <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
-               <View style={styles.viewOverlay} >
+            
                    <Input
                    placeholder={Placeholder}
                    containerStyle={styles.inputcontainer}
@@ -44,22 +44,20 @@ export default class OverlayOneinput extends Component{
                    onPress={()=>this.Update()}  
                     buttonStyle={styles.buttonStyle}
                    title="Actualizar"/>
-                   <Icon  onPress={() => this.close()} size={30}  containerStyle={styles.containerclose}  type="material-community" name="close-circle-outline" />
-               </View>
+                   <Icon  onPress={() => this.close()} size={30} color="#00BEB1"  containerStyle={styles.containerclose}  type="font-awesome" name="window-close" />
+             
            </Overlay>
         )
     }
 }
-
+    
 
 const styles = StyleSheet.create({
-overlaystyle:{
-    flex:1,
+    overlaystyle:{
     alignItems:'center',
-    justifyContent:'center'
-},
-viewOverlay:{
-    width:"100%",
+    justifyContent:'center',
+    width:"70%",
+    height:"20%",
     backgroundColor:"#fff",
     padding:20,
     borderColor:"#00BEB1",
@@ -68,7 +66,19 @@ viewOverlay:{
     borderLeftWidth:2,
     borderRightWidth:2
 
+    
 },
+// viewOverlay:{  ESTILO CON VIEW
+//     width:"100%",
+//     backgroundColor:"#fff",
+//     padding:20,
+//     borderColor:"#00BEB1",
+//     borderBottomWidth:2,
+//     borderTopWidth:2,
+//     borderLeftWidth:2,
+//     borderRightWidth:2
+
+// },
 inputcontainer:{
     marginBottom:20
 },
@@ -77,7 +87,7 @@ buttonStyle:{
 },
 containerclose:{
     position:"absolute",
-    right:-16,
-    top:-16
+    right:-2,
+    top:-4
 }
 })

@@ -14,9 +14,9 @@ export default class UpdateUserinfo extends PureComponent{
                     title:"Cambiar Nombre y Apellidos",
                     iconType:"material-community",
                     iconNameRight:"chevron-right",
-                    iconColorRight:"#9C27B0",
+                    iconColorRight:"#00BEB1",
                     iconNameLeft:"account-circle",
-                    iconColorLeft:"#ccc",
+                    iconColorLeft:"#00BEB1",
                     onPress: ()=> this.openOverlay("Nombrer y Apellidos",this.updateUserDisplayName,props.userinfo.displayName)
 
 
@@ -25,9 +25,9 @@ export default class UpdateUserinfo extends PureComponent{
                     title:"Cambiar Email",
                     iconType:"material-community",
                     iconNameRight:"chevron-right",
-                    iconColorRight:"#9C27B0",
+                    iconColorRight:"#00BEB1",
                     iconNameLeft:"at",
-                    iconColorLeft:"#ccc",
+                    iconColorLeft:"#00BEB1",
                     onPress: () => console.log("Clickeo En Cambiar Email")
 
                 },
@@ -35,9 +35,9 @@ export default class UpdateUserinfo extends PureComponent{
                     title:"Cambiar Contraseña",
                     iconType:"material-community",
                     iconNameRight:"chevron-right",
-                    iconColorRight:"#9C27B0",
+                    iconColorRight:"#00BEB1",
                     iconNameLeft:"lock-reset",
-                    iconColorLeft:"#ccc",
+                    iconColorLeft:"#00BEB1",
                     onPress: () => console.log("Clickeo En Cambiar Contraseña")
 
                 },

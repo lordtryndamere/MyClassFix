@@ -14,7 +14,7 @@ export default class ContentCompo extends Component{
 
                 <ImageBackground   source={require('../assets/ImageBack.png')}  style={styles.header} >
                     <Image source={require('../assets/user.png')} style={styles.headerImage} />
-                    <Text     style={styles.text,{color:'white'}}>Mi Perfil {firebase.auth().currentUser.displayName}  </Text>
+                    <Text   style={styles.text,{color:'white',fontWeight:"bold"}}>Mi Perfil {firebase.auth().currentUser.displayName}  </Text>
                 </ImageBackground>
 
                     
@@ -32,19 +32,19 @@ export default class ContentCompo extends Component{
                 </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
+                {/* <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/classlive.png')} style={styles.headerImage2}  />
                     <Text style={styles.text} >CLASSLIVE</Text>
                 </View>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
 
-                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
+                {/* <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/grupales.png')} style={styles.headerImage2}  />
                     <Text style={styles.text} > CLASES GRUPALES</Text>
                 </View>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
 
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
                 <View  style={styles.row}>
@@ -53,7 +53,7 @@ export default class ContentCompo extends Component{
                 </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
+                <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('AjustesView')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/soporte.png')} style={styles.headerImage2}  />
                     <Text style={styles.text} >SOPORTE</Text>

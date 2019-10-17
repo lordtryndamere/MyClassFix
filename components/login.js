@@ -1,6 +1,7 @@
 import React, { Component,PureComponent } from 'react';
 import * as firebase from 'firebase';
-import {Overlay,Card,Button} from 'react-native-elements'
+import {StyleSheet} from 'react-native'
+import {Overlay,Button,Icon,Input} from 'react-native-elements'
 import styles from  './styles'
 import {NavigationActions} from 'react-navigation'
 import Preloader from './Preloader'
@@ -106,19 +107,30 @@ componentDidMount(){
     var auth = firebase.auth()
     const email = this.state.email2
 
+    if(email){
+      auth.sendPasswordResetEmail(email).then(()=>{
+        this.setState({correoenviado:"Por favor verifica tu correo electronico"})
+      }).then(()=>{
+        setTimeout(()=>{
+          this.setState({email2:null})
+          this.setState({correoenviado:null})
+          this.isVisible(false)
+        },6000)
+       
+      })
+      .catch((e)=>{
+        this.setState({email2:null})
+        this.setState({correoenviado:"Algo ocurrio no se pudo enviar el correo de restablecimiento"})
+        setTimeout(() => {
+          this.setState({correoenviado:null})
+        }, 7000);
+        
+      })
+    }else{
+      
+      this.setState({email2:null,})
+    }
 
-    auth.sendPasswordResetEmail(email).then(()=>{
-      this.setState({correoenviado:"Por favor verifica tu correo electronico"})
-    }).then(()=>{
-      setTimeout(()=>{
-        this.isVisible(false)
-      },6000)
-     
-    })
-    .catch((e)=>{
-  
-      this.setState({correoenviado:"Algo ocurrio no se pudo enviar el correo de restablecimiento"})
-    })
 
   }
   render() {
@@ -141,35 +153,22 @@ componentDidMount(){
 
           
 
-    <Overlay   overlayStyle={{height:'40%',width:'80%',borderRadius:30}}   isVisible={this.state.isVisible} >
-    {this.state.correoenviado &&
+          <Overlay isVisible={this.state.isVisible} overlayBackgroundColor="transparent"   overlayStyle={styles2.overlaystyle} >
+           {this.state.correoenviado &&
           <Text style={{ color: '#0097A7' }}>
             {this.state.correoenviado}
           </Text>} 
-       <View style={{justifyContent:'center',alignContent:'center'   }}  >
-                <Card title="Restablecimiento de contraseña" containerStyle={{borderRadius:30}} >
-              <View style={styles.inputContainer3} >
-                <TextInput
-                placeholderTextColor="#0097A7"
-                style={styles.inputs5}
+
+                <Input
+                containerStyle={styles2.inputcontainer}
                 placeholder="Escribe tu email"
-                underlineColorAndroid='transparent'
-                onChangeText={(email2) => this.setState({email2})}/>
-              </View>
-              </Card>
-          <View style={{justifyContent:'center',alignContent:'center',paddingTop:30}} >
-        <Button  title="Enviar"   type="solid"      buttonStyle={{ width:'35%',position:'relative',marginLeft:100,borderRadius:10}} onPress={()=> this.ResetPassword()} ></Button>
-          </View>
+                onChangeText={(email2) => this.setState({email2})}
+                value={this.state.email2}/>
 
-          <View style={{justifyContent:'center',alignContent:'center',marginLeft:20}} >
-          <TouchableOpacity onPress={()=>this.isVisible(false)} style={styles.buttonContainer} >
-              <Text style={styles.text3}>Salir</Text>
-          </TouchableOpacity>
-          </View>
-      </View>   
+
+        <Button  title="Enviar Correo"   type="solid"        buttonStyle={styles2.buttonStyle} onPress={()=> this.ResetPassword()} />
+        <Icon  onPress={()=>this.isVisible(false)} size={30} color="#00BEB1"  containerStyle={styles2.containerclose}  type="font-awesome" name="window-close" />
     </Overlay>
-  
-
 
 
         <View style={styles.inputContainer}>
@@ -214,3 +213,42 @@ componentDidMount(){
   }
 }
 
+const styles2 = StyleSheet.create({
+  overlaystyle:{
+  alignItems:'center',
+  justifyContent:'center',
+  width:"85%",
+  height:"37%",
+  backgroundColor:"#fff",
+  padding:20,
+  borderColor:"#00BEB1",
+  borderBottomWidth:2,
+  borderTopWidth:2,
+  borderLeftWidth:2,
+  borderRightWidth:2
+
+  
+},
+// viewOverlay:{  ESTILO CON VIEW
+//     width:"100%",
+//     backgroundColor:"#fff",
+//     padding:20,
+//     borderColor:"#00BEB1",
+//     borderBottomWidth:2,
+//     borderTopWidth:2,
+//     borderLeftWidth:2,
+//     borderRightWidth:2
+
+// },
+inputcontainer:{
+  marginBottom:20
+},
+buttonStyle:{
+  backgroundColor:"#00BEB1"
+},
+containerclose:{
+  position:"absolute",
+  right:-2,
+  top:-4
+}
+})
