@@ -48,20 +48,30 @@ export default class LoginView extends PureComponent {
   }
 
   handleLogin = () => {
-    const {email,password} = this.state
-    if(!email&&password){
+    var {email,password} = this.state
+    if(email&&password==null){
       this.setState({errorMessage:"Verifica los datos ingresados"})
+      setTimeout(() => {
+        this.setState({errorMessage:null})
+      }, 5000);
     }else {  
     firebase
     .auth()
     .signInWithEmailAndPassword(email,password)
     .then(()=>{
+      this.setState({email:null,password:null})
       this.setState({messagelogin:"iniciando..."})
       setTimeout(()=>{
         this.props.navigation.navigate('HomeScreen') 
       },2000) 
     })
-    .catch(error => this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"}))
+    .catch((e) => { 
+      this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})
+      this.setState({password:null})
+      setTimeout(() => {
+        this.setState({errorMessage:null})
+      }, 5000);
+    })
   }
 
   }

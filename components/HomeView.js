@@ -123,7 +123,6 @@ export default class HomeView extends PureComponent{
 
 
 
-
 </View>
 
 
