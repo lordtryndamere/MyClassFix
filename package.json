@@ -44,6 +44,7 @@
     "react-navigation-tabs": "^2.5.5",
     "sweetalert-react": "^0.4.11",
     "tcomb-form-native": "^0.6.20",
+    "uglify-es": "3.2.2",
     "yarn": "^1.19.0"
   },
   "devDependencies": {

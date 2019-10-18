@@ -94,7 +94,7 @@ inputs2:{
     },
     registerbutton: {
       backgroundColor: "white",
-      marginTop:100,
+      marginTop:15,
       height:35,
       width:180,
      
@@ -119,7 +119,7 @@ inputs2:{
       color:"#f0ffff",
       textShadowColor:'#75827d',
       fontSize:16,
-      marginTop:190
+      marginTop:40
   },
   text3:{
     color:"#009688",

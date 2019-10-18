@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "MyClassFix",
+    "name": "MyClassFlix",
 
     "slug": "MyClassFix",
     "privacy": "public",
@@ -25,7 +25,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.educarsas.miclassflix"
     },
     "android":{
       "package": "com.educarsas.miclassflix",

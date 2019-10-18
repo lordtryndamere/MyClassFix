@@ -72,7 +72,7 @@ updateUserDisplayName =  (NewDisplayname) =>{
 
 UpdateUserEmail = async (NewEmail,password) =>{
     const emailOld = this.props.userinfo.email;
-    if(emailOld != NewEmail){
+    if(emailOld != NewEmail && password){
         this.state.updateUserEmail(NewEmail,password);
     }
     this.setState({

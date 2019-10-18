@@ -152,7 +152,7 @@ componentDidMount(){
   
      <KeyboardAvoidingView   keyboardVerticalOffset={-170} behavior='padding' > 
       <SafeAreaView      style={styles.container}>
-           <Image  style={{marginBottom:20,height:120,width:200}} source={require('../assets/LOGO2.png')}  />
+           <Image  style={{marginBottom:20,height:140,width:260}} source={require('../assets/PRUEBA-18.png')}  />
             {this.state.errorMessage &&
           <Text style={{ color: 'white' }}>
             {this.state.errorMessage}
@@ -202,9 +202,9 @@ componentDidMount(){
             <Text style={styles.text}>¿Haz olvidado tu contraseña?</Text>
         </TouchableOpacity>
           
-        <TouchableNativeFeedback  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
+        <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>
-        </TouchableNativeFeedback>
+        </TouchableOpacity>
               <Text style={{color:"white",fontSize:14}} > {this.state.messagelogin} </Text>
      <TouchableHighlight style={styles.buttonContainer} >
             <Text style={styles.text2}>Puedes registrarte aqui abajo</Text>

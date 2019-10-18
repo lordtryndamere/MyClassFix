@@ -62,7 +62,7 @@ export default class OverlayThreeinput extends Component{
         const {isVisibleOverlay,PlaceholderOne,PlaceholderTwo,PlaceholderThree,InputValueOne,InputValueTwo,InputValueThree,password} = this.state
         return(
            <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
-               <View style={styles.overlaystyle}>
+               <View style={styles.viewOverlay}>
                    <Input
                    placeholder={PlaceholderOne}
                    containerStyle={styles.inputcontainer}
