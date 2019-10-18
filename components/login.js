@@ -5,6 +5,7 @@ import {Overlay,Button,Icon,Input} from 'react-native-elements'
 import styles from  './styles'
 import {NavigationActions} from 'react-navigation'
 import Preloader from './Preloader'
+import Toast from 'react-native-simple-toast';
 
 
 import {
@@ -49,28 +50,27 @@ export default class LoginView extends PureComponent {
 
   handleLogin = () => {
     var {email,password} = this.state
-    if(email&&password==null ||email&&password=="" || email&&password == undefined || !email&&password  ){
-      this.setState({errorMessage:"Verifica los datos ingresados"})
-      setTimeout(() => {
-        this.setState({errorMessage:null})
-      }, 5000);
+    if(email&&password){
+      firebase.auth()
+      .signInWithEmailAndPassword(email,password)
+      .then(()=>{
+        this.setState({messagelogin:Toast.show("Iniciando ",Toast.LONG,1600)})
+        setTimeout(()=>{
+          this.props.navigation.navigate('HomeScreen') 
+        },2000) 
+      })
+      .catch((e) => { 
+        this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})
+        this.setState({password:null})
+        setTimeout(() => {
+          this.setState({errorMessage:null})
+        }, 5000);
+      })
     }else {  
-    firebase
-    .auth()
-    .signInWithEmailAndPassword(email,password)
-    .then(()=>{
-      this.setState({messagelogin:"iniciando..."})
-      setTimeout(()=>{
-        this.props.navigation.navigate('HomeScreen') 
-      },2000) 
-    })
-    .catch((e) => { 
-      this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})
-      this.setState({password:null})
+      this.setState({errorMessage:"Tienes que rellenar todos los campos"})
       setTimeout(() => {
         this.setState({errorMessage:null})
       }, 5000);
-    })
   }
 
   }

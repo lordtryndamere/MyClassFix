@@ -1,9 +1,10 @@
 import React,{PureComponent} from 'react';
 import {View,Text,StyleSheet} from 'react-native'
 import {ListItem} from 'react-native-elements'
-
+import Toast from 'react-native-simple-toast';
 import  OverlayInput from "./Elements/OverlayOneinput"
 import OverlayTwo    from "./Elements/OverlayTwoinput"
+import OverlayThree from './Elements/OverlayThreeinput'
 
 export default class UpdateUserinfo extends PureComponent{
     constructor(props){
@@ -40,7 +41,7 @@ export default class UpdateUserinfo extends PureComponent{
                     iconColorRight:"#00BEB1",
                     iconNameLeft:"lock-reset",
                     iconColorLeft:"#00BEB1",
-                    onPress: () => console.log("Clickeo En Cambiar Contraseña")
+                    onPress: () => this.openOverlayThree("Contraseña actual","Nueva contraseña","Repetir nueva contraseña",this.updateUserpassword  )
 
                 },
             ]
@@ -96,6 +97,45 @@ this.setState({
 })
 }
 
+updateUserpassword  = async (currentPassword,newPassword,newPasswordRepeat) =>{
+    if(currentPassword && newPassword&& newPasswordRepeat){
+        if(newPassword===newPasswordRepeat){
+            if(currentPassword===newPassword){
+                Toast.show("La nueva contraseña , no puede ser igual a la actual")
+            }else{
+            this.state.UpdateUserPassword(currentPassword,newPassword)
+            }
+
+        }else{
+            Toast.show("Las contraseñas no coinciden",1500)
+        }
+    }else{
+        Toast.show("Tienes que rellenar todos los capos",1500)
+    }
+
+    this.setState({
+    overLayComponent:null
+})
+}
+
+openOverlayThree =(PlaceholderOne,PlaceholderTwo,PlaceholderThree,updateFunction)=>{
+    this.setState({
+        overLayComponent:<OverlayThree
+        isVisibleOverlay={true}
+        PlaceholderOne={PlaceholderOne}
+        PlaceholderTwo={PlaceholderTwo}
+        PlaceholderThree={PlaceholderThree}
+        InputValueOne=""
+        InputValueTwo=""
+        InputValueThree=""
+        password={true}
+        updateFunction={updateFunction}
+       
+       
+    />  
+})   
+
+}
     render(){
         const  {menuItems,overLayComponent}  = this.state
         return(

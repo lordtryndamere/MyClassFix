@@ -1,9 +1,9 @@
 import React,{Component} from 'react'
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet} from 'react-native'
 import {Overlay,Input,Button,Icon} from 'react-native-elements'
+import { View } from 'native-base';
 
-
-export default class OverlayTwoinput extends Component{
+export default class OverlayThreeinput extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -23,6 +23,13 @@ export default class OverlayTwoinput extends Component{
         })
     }
 
+    onChangeinputThree = inputData =>{
+        this.setState({
+            InputValueThree:inputData
+        })
+    }
+
+
 
 
 
@@ -30,8 +37,9 @@ export default class OverlayTwoinput extends Component{
     Update=()=>{
         const NewValueOne =  this.state.InputValueOne;
         const NewValueTwo =  this.state.InputValueTwo;
+        const NewValueThree =  this.state.InputValueThree;
 
-        this.state.updateFunction(NewValueOne,NewValueTwo)
+        this.state.updateFunction(NewValueOne,NewValueTwo,NewValueThree)
 
         setTimeout(() => {
             this.setState({
@@ -51,27 +59,34 @@ export default class OverlayTwoinput extends Component{
         this.state.updateFunction(null);
     }
     render(){
-        const {isVisibleOverlay,PlaceholderOne,PlaceholderTwo,InputValueOne,InputValueTwo,password} = this.state
+        const {isVisibleOverlay,PlaceholderOne,PlaceholderTwo,PlaceholderThree,InputValueOne,InputValueTwo,InputValueThree,password} = this.state
         return(
            <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
-               <View style={styles.viewOverlay}>
+               <View style={styles.overlaystyle}>
                    <Input
                    placeholder={PlaceholderOne}
                    containerStyle={styles.inputcontainer}
                    onChangeText={value =>this.onChangeinputOne(value)}
-                   value={InputValueOne} />
+                   value={InputValueOne}
+                   secureTextEntry={password} />
                     <Input
                    placeholder={PlaceholderTwo}
                    secureTextEntry={password}
                    containerStyle={styles.inputcontainer}
                    onChangeText={value =>this.onChangeinputTwo(value)}
                    value={InputValueTwo} />
+                    <Input
+                   placeholder={PlaceholderThree}
+                   secureTextEntry={password}
+                   containerStyle={styles.inputcontainer}
+                   onChangeText={value =>this.onChangeinputThree(value)}
+                   value={InputValueThree} />
                    <Button
                    onPress={()=>this.Update()}  
                     buttonStyle={styles.buttonStyle}
-                   title="Actualizar"/>
+                   title="Cambiar contraseña"/>
                    <Icon  onPress={() => this.close()} size={30} color="#00BEB1"  containerStyle={styles.containerclose}  type="font-awesome" name="window-close" />
-             </View>
+            </View>
            </Overlay>
         )
     }
@@ -94,7 +109,7 @@ const styles = StyleSheet.create({
 
     
 },
-viewOverlay:{ 
+viewOverlay:{  
     width:"100%",
     backgroundColor:"#fff",
     padding:20,

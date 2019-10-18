@@ -6,7 +6,7 @@ import Toast from 'react-native-simple-toast';
 import {Avatar} from 'react-native-elements'
 import * as firebase from 'firebase'
 import  UpdateUser from './UpdateUserinfo'
-import { resolve } from 'dns';
+
 
 
 
@@ -31,6 +31,16 @@ this.setState({userinfo})
 
 }
 
+updateUserPhotoURL =  async (photoUri) =>{
+    const update ={
+        photoURL:photoUri
+    }
+     await firebase.auth().currentUser.updateProfile(update);
+    this.getUserinfo();
+    
+    }
+    
+
 ChangeAvatarUser = async ()=>{
     const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     if(resultPermission.status =="denied"){
@@ -44,36 +54,66 @@ ChangeAvatarUser = async ()=>{
             Toast.show("Has cerrado la galeria de imagenes",Toast.LONG,1500);
         }else{
             console.log(Result);
-            const {uid} = this.state.userinfo
-            this.uploadImage(Result.uri,"ProfilePicture")
-            .then(resolve=>{
-                Toast.show("Avatar actualizado correctamente",Toast.BOTTOM,Toast.SHORT,1500);
-            }).catch(error=>{
+
+            var key = firebase.auth().currentUser.uid
+            this.uploadImage(Result.uri)
+            .then(resolve =>{
+             Toast.show("Avatar actualizado correctamente",Toast.BOTTOM,Toast.SHORT,1500);
+                firebase
+                .storage()
+                .ref('teachers/' + key + '/' + 'profilePicture.jpg')
+                .getDownloadURL()
+                .then(resolve=>{
+                   this.updateUserPhotoURL(resolve)
+                })
+                .catch(erro=>{
+                     Toast.show("Error al recuperar avatar del servidor" ,1500)
+                    
+                })
+             }).catch(error=>{
                 Toast.show("Error al actualizar , intentalo mas tarde",Toast.BOTTOM,Toast.SHORT,1500);
-            })
+             })
             
         }
     }
     
 }
 
-uploadImage= async(uri,nameImage)  =>{
-    const {uid} = this.state.userinfo
+UpdateUserPassword = (currentPassword,newPassword) =>{
+this.reLogear(currentPassword).then(()=>{
+    const user = firebase.auth().currentUser
+    user.updatePassword(newPassword).then(()=>{
+        Toast.show("Contraseña actualizada , VUELVE A INICIAR SESION",2500,()=>{
+            firebase.auth().signOut().then(()=>{
+                this.props.navigation.navigate('LoginView')
+            })
+        })
+    }).catch((e)=>{
+        Toast.show("Error del servidor , intentalo mas tarde",1600)
+    })
+}).catch(err=>{
+    Toast.show("Contraseña actual incorrecta",1600)
+})
+    
+}
+uploadImage= async(uri)  =>{
+
+    var key = firebase.auth().currentUser.uid
     return new Promise((resolve,reject)=>{
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.onerror= reject;
         xhr.onreadystatechange = () =>{
-            if(xhr.readyState){
+            if(xhr.readyState === 4){
                 resolve(xhr.response);
             }
         }
         xhr.open("GET",uri);
         xhr.responseType="blob";
-        xhr.send
-    }).then(async resolve=>{
+        xhr.send();
+    }).then(async resolve =>{
         //let ref = firebase.storage().ref().child("teachers/"+uid+"Picture.jpg");  // asi creo referias para subir imagenes
-        let ref = firebase.storage().ref(`/teachers/${uid}/`+nameImage ).put(resolve)  // paso una referia de donde quiero guardar y lo que quiero
-        return await ref
+        var ref = firebase.storage().ref('teachers/' + key + '/' + 'profilePicture.jpg' )  // paso una referia de donde quiero guardar y lo que quiero
+        return await ref.put(resolve);
     }).catch(error=>{
         Toast.show("Error al subir imagen al servidor",Toast.SHORT,Toast.BOTTOM,1500)
     });
@@ -137,7 +177,9 @@ retunUpdateUserinfoComponent = userinfoData =>{
             <UpdateUser 
             userinfo={this.state.userinfo} 
             uPdateUserDisplayname={this.uPdateUserDisplayname}
-            updateUserEmail={this.updateUserEmail}  /> 
+            updateUserEmail={this.updateUserEmail}
+            UpdateUserPassword={this.UpdateUserPassword}
+              /> 
         )
     }
 }
