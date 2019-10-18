@@ -6,6 +6,8 @@ import Toast from 'react-native-simple-toast';
 import {Avatar} from 'react-native-elements'
 import * as firebase from 'firebase'
 import  UpdateUser from './UpdateUserinfo'
+import { resolve } from 'dns';
+
 
 
 export default class Userinfo extends PureComponent{
@@ -34,8 +36,49 @@ ChangeAvatarUser = async ()=>{
     if(resultPermission.status =="denied"){
         Toast.show("Es Necesario aceptar permisos de galeria",Toast.LONG,4000);
     }else{
-        const Result = await ImagePicker.launchImageLibraryAsync
+        const Result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing:true,
+            aspect: [4,3]
+        });
+        if(Result.cancelled){
+            Toast.show("Has cerrado la galeria de imagenes",Toast.LONG,1500);
+        }else{
+            console.log(Result);
+            const {uid} = this.state.userinfo
+            this.uploadImage(Result.uri,"ProfilePicture")
+            .then(resolve=>{
+                Toast.show("Avatar actualizado correctamente",Toast.BOTTOM,Toast.SHORT,1500);
+            }).catch(error=>{
+                Toast.show("Error al actualizar , intentalo mas tarde",Toast.BOTTOM,Toast.SHORT,1500);
+            })
+            
+        }
     }
+    
+}
+
+uploadImage= async(uri,nameImage)  =>{
+    const {uid} = this.state.userinfo
+    return new Promise((resolve,reject)=>{
+        let xhr = new XMLHttpRequest();
+        xhr.onerror= reject;
+        xhr.onreadystatechange = () =>{
+            if(xhr.readyState){
+                resolve(xhr.response);
+            }
+        }
+        xhr.open("GET",uri);
+        xhr.responseType="blob";
+        xhr.send
+    }).then(async resolve=>{
+        //let ref = firebase.storage().ref().child("teachers/"+uid+"Picture.jpg");  // asi creo referias para subir imagenes
+        let ref = firebase.storage().ref(`/teachers/${uid}/`+nameImage ).put(resolve)  // paso una referia de donde quiero guardar y lo que quiero
+        return await ref
+    }).catch(error=>{
+        Toast.show("Error al subir imagen al servidor",Toast.SHORT,Toast.BOTTOM,1500)
+    });
+
+    
     
 }
 
