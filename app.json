@@ -1,7 +1,6 @@
 {
   "expo": {
     "name": "MyClassFlix",
-
     "slug": "MyClassFix",
     "privacy": "public",
     "sdkVersion": "35.0.0",
@@ -32,5 +31,6 @@
       "package": "com.educarsas.miclassflix",
       "permissions" : ["CAMERA_ROLL"]
     }
+    
   }
 }

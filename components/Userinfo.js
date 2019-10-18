@@ -42,10 +42,10 @@ updateUserPhotoURL =  async (photoUri) =>{
     
 
 ChangeAvatarUser = async ()=>{
-    const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    const resultPermission = await Permissions.getAsync(Permissions.CAMERA_ROLL)
     if(resultPermission.status =="denied"){
         Toast.show("Es Necesario aceptar permisos de galeria",Toast.LONG,4000);
-    }else{
+    }else{    
         const Result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing:true,
             aspect: [4,3]
