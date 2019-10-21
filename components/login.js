@@ -62,6 +62,7 @@ export default class LoginView extends PureComponent {
       })
       .then(()=>{
         this.setState({password:null})
+        this.setState({errorMessage:null})
       })
       .catch((e) => { 
         this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})

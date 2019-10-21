@@ -34,7 +34,7 @@ export default class HomeView extends PureComponent{
  
         return(
 
-  <View>  
+  <View style={{height:"100%",width:"100%"}}>  
 
 
 
@@ -78,9 +78,9 @@ export default class HomeView extends PureComponent{
                                       fontWeight:'900'}}> Bienvenido {firebase.auth().currentUser.displayName}  </Text>
             </View>
 
-            <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40}}>  
+            <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40,height:"50%",width:"100%",justifyContent:'center',flexDirection:"row",flexWrap:"wrap",padding:5}}>  
             
-                    <View style={{width: '100%', ustifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex',marginTop:6}} >
+                   
                             
 
                     <TouchableOpacity  style={styles.header3} onPress={()=>this.props.navigation.navigate('UserView')} >
@@ -100,8 +100,8 @@ export default class HomeView extends PureComponent{
 
 
 
-                    </View>
-                      <View style={{width:'100%',justifyContent:'center',alignContent:'center',alignItems:'center',flexDirection:'row',display:'flex'}} >
+                
+            
                               
 
                               <TouchableOpacity  style={styles.header4} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
@@ -117,7 +117,7 @@ export default class HomeView extends PureComponent{
 
                                   </View>
                                   </TouchableOpacity>
-                        </View>
+                       
 
           </View>
 
