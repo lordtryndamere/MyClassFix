@@ -43,7 +43,7 @@ export default class HomeView extends PureComponent{
                     <Header
                       leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
                       <View  style={styles.row}>
-                          <Image source={require('../assets/menu2.png')} style={styles.headerImage2}  />
+                          <Image source={require('../assets/menu2.png')} style={styles.headerImage3}  />
                       </View>
                       </TouchableOpacity> }
                       centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#00BEB1', fontSize:20} }}
@@ -75,7 +75,7 @@ export default class HomeView extends PureComponent{
                                   <Text style={{ color:"#424242",
                                       textShadowColor:'#424242',
                                       fontSize:18,
-                                      fontWeight:'900'}}> Bienvenido {firebase.auth().currentUser.displayName}  </Text>
+                                      fontWeight:'900'}}>¡Bienvenido {firebase.auth().currentUser.displayName}!   </Text>
             </View>
 
             <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40,height:"50%",width:"100%",justifyContent:'center',flexDirection:"row",flexWrap:"wrap",padding:5}}>  
@@ -85,7 +85,7 @@ export default class HomeView extends PureComponent{
 
                     <TouchableOpacity  style={styles.header3} onPress={()=>this.props.navigation.navigate('UserView')} >
                         <View  style={styles.row}>
-                            <Image source={require('../assets/DOCENTES.png')} style={styles.headerImage2}  />
+                            <Image source={require('../assets/03.png')} style={{height:90,width:140,padding:5}}  />
                         
                         </View>
                       </TouchableOpacity>
@@ -93,7 +93,7 @@ export default class HomeView extends PureComponent{
                         
                         <TouchableOpacity style={styles.header5} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                         <View  style={styles.row}>
-                            <Image source={require('../assets/MISRESERVAS.png')} style={styles.headerImage2}  />
+                            <Image source={require('../assets/02.png')} style={{height:90,width:140,padding:5}}  />
                          
                         </View>
                         </TouchableOpacity>
@@ -106,14 +106,14 @@ export default class HomeView extends PureComponent{
 
                               <TouchableOpacity  style={styles.header4} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                                   <View  style={styles.row}>
-                                      <Image source={require('../assets/CLASESGRUPALES.png')} style={styles.headerImage2}  />
+                                      <Image source={require('../assets/04.png')} style={{height:90,width:140,padding:5}}  />
                                   </View>
                                 </TouchableOpacity>
                   
                                   
                                   <TouchableOpacity style={styles.header6} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                                   <View  style={styles.row}>
-                                      <Image source={require('../assets/MISCREDITOS.png')} style={styles.headerImage2}  />
+                                      <Image source={require('../assets/01.png')} style={{height:90,width:140,padding:5}}  />
 
                                   </View>
                                   </TouchableOpacity>

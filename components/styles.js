@@ -226,7 +226,9 @@ inputs2:{
     },
     headerImage2:{
      marginTop:5,
-      position:'relative'
+      position:'relative',
+      height:100,
+      width:140
   
     },
     headerImage3:{
@@ -257,7 +259,8 @@ inputs2:{
     borderRightWidth:1,
     borderRightColor:'#bdbdbd',
     backgroundColor:'white',
-    width:'50%'
+    width:'50%',
+    
 
 
     
