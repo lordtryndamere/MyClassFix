@@ -49,8 +49,9 @@ export default class LoginView extends PureComponent {
   }
 
   handleLogin = () => {
-    var {email,password} = this.state
+    const {email,password} = this.state
     if(email&&password){
+      
       firebase.auth()
       .signInWithEmailAndPassword(email,password)
       .then(()=>{
@@ -59,9 +60,12 @@ export default class LoginView extends PureComponent {
           this.props.navigation.navigate('HomeScreen') 
         },2000) 
       })
+      .then(()=>{
+        this.setState({password:null})
+      })
       .catch((e) => { 
         this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})
-        this.setState({password:null})
+      
         setTimeout(() => {
           this.setState({errorMessage:null})
         }, 5000);
@@ -74,26 +78,6 @@ export default class LoginView extends PureComponent {
   }
 
   }
-    // componentWillMount(){
-    //   var firebaseConfig = {
-    //       apiKey: "AIzaSyDD8IvY_nMvjYzuA5QGzcndDovfbqGF-vo",
-    //       authDomain: "myclassflix-dev.firebaseapp.com",
-    //       databaseURL: "https://myclassflix-dev.firebaseio.com",
-    //       projectId: "myclassflix-dev",
-    //       storageBucket: "myclassflix-dev.appspot.com",
-    //       messagingSenderId: "1055855079259",
-    //       appId: "1:1055855079259:web:ab973b7a8f4c4d3963f47e"
-    //     };
-    //     // Initialize Firebase
-    //     firebase.initializeApp(firebaseConfig);
-    //     firebase.auth().onAuthStateChanged((user)=>{
-    //     if(user){
-    //         this.setState({loggedIn:true})
-    //     }else {
-    //         this.setState({loggedIn:false})
-    //       }
-    //     });
-    // }
 
 componentDidMount(){
   setTimeout(() => {

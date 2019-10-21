@@ -3,7 +3,7 @@ import React, { Component, PureComponent } from 'react';
 import PopoverTooltip from  'react-native-popover-tooltip'
 import firebase from 'firebase';
 import styles from './styles'
-import { ListItem, Card, Header,SearchBar } from 'react-native-elements'
+import { ListItem, Card, Header,SearchBar,Tooltip } from 'react-native-elements'
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
 import _ from 'lodash'
@@ -181,26 +181,9 @@ export default class UserView extends PureComponent {
         subtitle={item.skl[0]}
         subtitleStyle={{ color: '#bdbdbd' }}
         leftAvatar={{  renderPlaceholderContent:<Image  style={{height:50,width:50}} source={require('../assets/logo.png')}/>, size: 60,     source: { uri: item.foto   } }}
-        chevron={  <PopoverTooltip
-          ref='tooltip1'
-          buttonComponent={
-
-          <Image source={require('../assets/additem.png')} style={{ height: 40, width: 40, borderRadius: 100 }} />
-        
-          }
-          items={[
-            {
-              label: item.name,
-              onPress: () => {}
-            },
-            {
-              label: 'Item 2',
-              onPress: () => {}
-            }
-          ]}
-          animationType='spring' // spring-damper animation
-          springConfig={{tension: 100, friction: 3}}
-          />
+        chevron={ <Tooltip popover={<Text>Info here</Text>}  width={150} height={60}  >
+                    <Image source={require('../assets/additem.png')} />
+              </Tooltip>
 
         }
         bottomDivider
@@ -293,13 +276,13 @@ export default class UserView extends PureComponent {
         </View>
         {console.log(this.state.fullTeachers),
           this.state.fullTeachers.length < 3
-            ?<View style={{   paddingTop:120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+            ?<View style={{   paddingTop:120  , flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
                     <Image source={require('../assets/spinner.gif')} style={{ height: 200, width: 200 }} />
                     <Text style={styles.textload}>Cargando profesores ....</Text> 
             </View>
             :<FlatList
               keyExtractor={(item, index) => 'key' + index}
-              initialNumToRender={8}
+              initialNumToRender={15}
               // maxToRenderPerBatch={2}
               data={this.state.fullTeachers}
               renderItem={this.renderItem}
