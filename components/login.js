@@ -3,9 +3,9 @@ import * as firebase from 'firebase';
 import {StyleSheet} from 'react-native'
 import {Overlay,Button,Icon,Input} from 'react-native-elements'
 import styles from  './styles'
-import {NavigationActions} from 'react-navigation'
 import Preloader from './Preloader'
 import Toast from 'react-native-simple-toast';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 
 import {
@@ -130,13 +130,13 @@ componentDidMount(){
     } else {  
     return (
 <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
-  
+<PaperProvider>
      <KeyboardAvoidingView   keyboardVerticalOffset={-170} behavior='padding' > 
       <SafeAreaView      style={styles.container}>
            <Image  style={{marginBottom:20,height:140,width:260}} source={require('../assets/PRUEBA-18.png')}  />
             {this.state.errorMessage &&
           <Text style={{ color: 'white' }}>
-            {this.state.errorMessage}
+            {this.state.errorMessage} 
           </Text>}
   
 
@@ -196,6 +196,7 @@ componentDidMount(){
         </TouchableOpacity>
       </SafeAreaView>
       </KeyboardAvoidingView>
+      </PaperProvider>
 </ImageBackground>
 
     );

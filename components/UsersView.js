@@ -3,7 +3,8 @@ import React, { Component, PureComponent } from 'react';
 import PopoverTooltip from  'react-native-popover-tooltip'
 import firebase from 'firebase';
 import styles from './styles'
-import { ListItem, Card, Header,SearchBar,Tooltip } from 'react-native-elements'
+import { ListItem, Card, Header,Tooltip } from 'react-native-elements'
+import { Searchbar } from 'react-native-paper';
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
 import _ from 'lodash'
@@ -34,6 +35,7 @@ export default class UserView extends PureComponent {
     super(props)
   }
   state = {
+    Search:'',
     timepassed: false,
     fullTeachers: '',
     nuevo: [],
@@ -62,7 +64,7 @@ export default class UserView extends PureComponent {
     var skl=[];
     var teachers;
     var OBJETO;
-    firebase.database().ref(`/approveds`).limitToFirst(60).once('child_added', (snapshot) => {
+    firebase.database().ref(`/approveds`).limitToFirst(60).once('value', (snapshot) => {
       teachers = snapshot.val();
     })
       .then(() => {
@@ -225,7 +227,7 @@ export default class UserView extends PureComponent {
 
 
   render() {
-
+    const { Search } = this.state;
     return (
 
       <View >
@@ -236,13 +238,12 @@ export default class UserView extends PureComponent {
             </View>
           </TouchableOpacity>}
           centerComponent={
-            <View style={styles.inputContainer2}>
-
-              <TextInput style={styles.inputs2}
-                placeholder="¿Que quieres aprender?"
-                underlineColorAndroid='transparent'
-                onChangeText={value=>this.HadleSearch(value)} />
-            </View>
+            <Searchbar
+            style={{width:"130%",height:38,borderRadius:30}}
+            placeholder="Search"
+            onChangeText={query => { this.setState({ Search: query }); }}
+            value={Search}
+          />
           }
           leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} >
             <View  >
@@ -251,7 +252,7 @@ export default class UserView extends PureComponent {
           </TouchableOpacity>}
           // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
           // centerComponent={ }
-          containerStyle={{
+          containerStyle={{   
             backgroundColor: '#fff',
             borderBottomColor: '#9E9E9E',
             shadowColor: "#000",
@@ -283,15 +284,9 @@ export default class UserView extends PureComponent {
             :<FlatList
               keyExtractor={(item, index) => 'key' + index}
               initialNumToRender={15}
-              // maxToRenderPerBatch={2}
               data={this.state.fullTeachers}
               renderItem={this.renderItem}
-              //  onEndReached={this.loadMore}
-              // onEndReachedThreshold={0.5}
-
-
-
-
+              get
 
             />
 

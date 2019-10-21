@@ -230,8 +230,8 @@ inputs2:{
   
     },
     headerImage3:{
-      height:25,
-      width:25,
+      height:20,
+      width:20,
       position:'relative'
   
     },
