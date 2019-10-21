@@ -14,6 +14,8 @@ export default class AjustesView extends PureComponent{
 
 const styles = StyleSheet.create({
     Container:{
+        height:"100%",
+        width:"100%",
         alignContent:'center',
     
     }

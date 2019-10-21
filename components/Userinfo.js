@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react'
-import {View,Text,StyleSheet,Image, Alert} from 'react-native'
+import {View,Text,StyleSheet,Image, Alert,ImageBackground} from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import * as  Permissions from 'expo-permissions'
 import Toast from 'react-native-simple-toast';
@@ -53,7 +53,6 @@ ChangeAvatarUser = async ()=>{
         if(Result.cancelled){
             Toast.show("Has cerrado la galeria de imagenes",Toast.LONG,1500);
         }else{
-            console.log(Result);
 
             var key = firebase.auth().currentUser.uid
             this.uploadImage(Result.uri)
@@ -188,10 +187,10 @@ retunUpdateUserinfoComponent = userinfoData =>{
 
         return(
     <View style={styles.Userinfo}>
-        <View  style={styles.ViewAvatar}>
+        <ImageBackground source={require("../assets/ImageBack.png")} style={styles.ViewAvatar}    >
                 <Avatar
                 rounded
-                onEditPress={()=>this.ChangeAvatarUser()}
+                onEditPress={()=>this.ChangeAvatarUser()}   
                 showEditButton
                 size="xlarge"
                 source={{uri:this.CheckUserAvatar(photoURL)}}
@@ -201,9 +200,9 @@ retunUpdateUserinfoComponent = userinfoData =>{
                 />
                     <Text style={styles.text1} > {displayName} </Text>
                     <Text style={styles.text1} >   {email} </Text>
-        </View>
+        </ImageBackground>
 
-        <View  >
+        <View style={{backgroundColor:"#f2f2f2"}} >
         {this.retunUpdateUserinfoComponent(this.state.userinfo)}
 
         </View>
@@ -230,6 +229,9 @@ const styles=StyleSheet.create({
     },
     text1:{
         fontWeight:"bold",
+        color:"white",
+        fontWeight:"bold"
+
         
         
     },

@@ -62,7 +62,7 @@ export default class UserView extends PureComponent {
     var skl=[];
     var teachers;
     var OBJETO;
-    firebase.database().ref(`/approveds`).once('value', (snapshot) => {
+    firebase.database().ref(`/approveds`).limitToFirst(60).once('child_added', (snapshot) => {
       teachers = snapshot.val();
     })
       .then(() => {
@@ -91,7 +91,7 @@ export default class UserView extends PureComponent {
               }
 
        
-              console.log(DataFull)
+        
             })
 
 

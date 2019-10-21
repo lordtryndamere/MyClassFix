@@ -139,7 +139,7 @@ openOverlayThree =(PlaceholderOne,PlaceholderTwo,PlaceholderThree,updateFunction
     render(){
         const  {menuItems,overLayComponent}  = this.state
         return(
-            <View> 
+            <View style={{backgroundColor:"#f2f2f2"}} > 
                         {
                     menuItems.map((item,index)=>(
 
