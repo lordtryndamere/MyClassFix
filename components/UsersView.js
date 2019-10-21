@@ -1,4 +1,5 @@
 import React, { Component, PureComponent } from 'react';
+
 import PopoverTooltip from  'react-native-popover-tooltip'
 import firebase from 'firebase';
 import styles from './styles'
@@ -292,11 +293,11 @@ export default class UserView extends PureComponent {
         </View>
         {console.log(this.state.fullTeachers),
           this.state.fullTeachers.length < 3
-            ? <View style={{ paddingTop: 20, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', height: '100%', width: '100%' }}>
-              <ActivityIndicator size="large" color="#00BEB1" />
-              <Text style={styles.textload}>Cargando profesores ....</Text>
+            ?<View style={{   paddingTop:120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+                    <Image source={require('../assets/spinner.gif')} style={{ height: 200, width: 200 }} />
+                    <Text style={styles.textload}>Cargando profesores ....</Text> 
             </View>
-            : <FlatList
+            :<FlatList
               keyExtractor={(item, index) => 'key' + index}
               initialNumToRender={8}
               // maxToRenderPerBatch={2}
