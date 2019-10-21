@@ -61,10 +61,11 @@ render(){
                       {...props}
                     getLabelText={({ route }) => route.title}
                       indicatorStyle={{ backgroundColor: '#00BEB1' }}
-                      style={{ backgroundColor: '#fff' }}
+                      style={{ backgroundColor: '#fff',shadowColor:"#424242" }}
+
                     />}
                 
-                style={{backgroundColor:"#424242"}}
+                style={{backgroundColor:"#fff"}}
                 navigationState={this.state}
                 renderScene={SceneMap({
                     first:FirstRoute,
