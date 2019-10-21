@@ -60,10 +60,6 @@ export default class LoginView extends PureComponent {
           this.props.navigation.navigate('HomeScreen') 
         },2000) 
       })
-      .then(()=>{
-        this.setState({password:null})
-        this.setState({errorMessage:null})
-      })
       .catch((e) => { 
         this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})
       

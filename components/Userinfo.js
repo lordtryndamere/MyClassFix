@@ -193,7 +193,7 @@ retunUpdateUserinfoComponent = userinfoData =>{
                 rounded
                 onEditPress={()=>this.ChangeAvatarUser()}
                 showEditButton
-                size="large"
+                size="xlarge"
                 source={{uri:this.CheckUserAvatar(photoURL)}}
                 containerStyle={styles.UserinfoAvatar}
                 // renderPlaceholderContent={<Image source={require('../assets/logo.png')} />}
