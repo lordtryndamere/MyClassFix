@@ -1,8 +1,9 @@
 import React ,{PureComponent} from 'react'
 import {StyleSheet,View,Text,Dimensions} from 'react-native'
-import {Avatar,Header} from 'react-native-elements'
+import {Avatar,Header,Rating,Icon} from 'react-native-elements'
 import *as firebase from 'firebase'
 import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
+
 
 const FirstRoute = () =>(
     <View style={[styles.scene]}> 
@@ -31,37 +32,59 @@ export default class Perfil extends PureComponent{
        }
     }
 render(){
-    var {name,lastname,key,foto} = this.props.navigation.state.params.Profile
+    var {name,lastname,key,foto,rank,skl} = this.props.navigation.state.params.Profile
     return(
         <View style={styles.container}>
                 <View style={styles.top} >   
                     <Header
-                          centerComponent={{ text: 'DOCENTES', style: { color: '#212121', fontSize:16} }}
-                          containerStyle={{backgroundColor:"#fff"}}
+                          centerComponent={{ text: 'D O C E N T E S', style: { color: '#212121', fontSize:18,fontWeight:"bold"} }}
+                          containerStyle={{backgroundColor:"#fff",borderBottomWidth:2,borderBottomColor:"#9e9e9e",shadowOpacity:12,shadowColor: "#000",      shadowOffset: {
+                            width: 0,
+                            height: 12,
+                          },
+                          shadowOpacity: 0.58,
+                          shadowRadius: 16.00,
+                          elevation: 24,
+                         }}
+                         leftComponent={<Icon  type={"material-community"}   name={"arrow-left-box"} color={"#212121"}  onPress={()=>this.props.navigation.goBack()} />}
+
+
                   />
                 </View>
 
-            <View style={{justifyContent:'center',flexDirection:'row',alignContent:'center'}}>
+        <View style={styles.center}>
             <Avatar
                 rounded
                 source={{
                     uri: foto
                 }}
-                size={120}
+                size={100}
                 // renderPlaceholderContent={<Image source={require('../assets/logo.png')} />}
                 />
+                <Text style={styles.text} >{`${name}${lastname} `} </Text>
+                <Text style={styles.text2} > {skl[0]} </Text>
+                <Rating
+                  imageSize={20}
+                  readonly
+                  startingValue={rank}
+                //   style={{ styles.rating }}
+                />
+
             </View>
 
 
-
+        <View style={styles.botton} >
             <TabView
                 
                 renderTabBar={props =>
                     <TabBar
                       {...props}
-                    getLabelText={({ route }) => route.title}
+                        getLabelText={({ route }) => route.title}
+                        activeColor={"#212121"}
+                        inactiveColor={"#bdbdbd"}
+                        
                       indicatorStyle={{ backgroundColor: '#00BEB1' }}
-                      style={{ backgroundColor: '#fff',shadowColor:"#424242" }}
+                      style={{ backgroundColor: '#fff' }}
 
                     />}
                 
@@ -74,6 +97,7 @@ render(){
                 onIndexChange={index=>this.setState({index})}
                 initialLayout={{width:Dimensions.get('window').width}}
             />
+        </View>
 
         </View>
     )
@@ -90,10 +114,33 @@ const styles=StyleSheet.create({
     top:{
         alignContent:'center',
         width:"100%",
-        height:"10%",
-        paddingBottom:6
+        height:"5%",
+    },
+    center:{
+
+        width:"100%",
+        height:"40%",
+        paddingTop:70,
+        flex:1,
+        alignContent:'center',
+        alignItems:'center'
+
+
     },
     scene:{
         flex:1,
+    },
+    botton:{
+        width:"100%",
+        height:"60%"
+    },
+    text:{
+        fontWeight:"bold",
+        fontSize:18,
+        color:"#212121"
+    },
+    text2:{
+        fontSize:16,
+        color:"#9e9e9e"
     }
 })

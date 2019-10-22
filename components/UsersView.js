@@ -255,13 +255,15 @@ export default class UserView extends PureComponent {
           containerStyle={{   
             backgroundColor: '#fff',
             borderBottomColor: '#9E9E9E',
-            shadowColor: "#000",
-            shadowOffset: {
+            borderBottomWidth:2,
+            shadowColor: "#000",      shadowOffset: {
               width: 0,
               height: 12,
             },
             shadowOpacity: 0.58,
             shadowRadius: 16.00,
+  
+            elevation: 24,
 
 
           }}

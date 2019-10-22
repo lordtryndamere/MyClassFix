@@ -127,7 +127,8 @@ inputs2:{
     color:"#009688",
     textShadowColor:'#212121',
     fontSize:14,
-    marginLeft:10
+    marginLeft:10,
+   
    
 },
     textregistry:{
