@@ -41,27 +41,20 @@ export default class Perfil extends PureComponent{
        }
     }
 render(){
-    var {name,lastname,key,foto,rank,skl} = this.props.navigation.state.params.Profile
+    var {name,lastname,key,foto,rank,skl,desc,video} = this.props.navigation.state.params.Profile
 
     const FirstRoute = () =>(
         <View style={[styles.scene]}>
-        <ScrollView>
-    
+            <Text style={styles.PresentationText} >
+                {desc}
+            </Text>
 
-
-
-
-
-        </ScrollView> 
         </View>
     )
     
     const SecondRoute = () =>(
         <View style={[styles.scene]}>
-        <ScrollView>
-     
-            
-        </ScrollView> 
+
         </View>
     )
 
@@ -99,6 +92,7 @@ render(){
                 <Rating
                     type={"custom"}
                     ratingColor={"#00BEB1"}
+                    
                     ratingImage={require("../assets/rating.png")}
                     style={styles.rating}
                     ratingBackgroundColor={"#00BEB1"}
@@ -106,7 +100,7 @@ render(){
     
                   readonly
                   startingValue={rank}
-                //   style={{ styles.rating }}
+            
                 />
 
             </View>
@@ -188,7 +182,9 @@ const styles=StyleSheet.create({
         color:"#9e9e9e"
     },
     rating:{
-        borderColor:"#00BEB1"
+        borderColor:"#00BEB1",
+        paddingRight:5,
+    
     },
 
 TouchableOpacityStyle: {
@@ -213,6 +209,16 @@ TouchableOpacityStyle: {
   },
   TabView:{
       fontWeight:"bold",
-      color:"#212121"
+      color:"#212121",
+  
+  },
+  PresentationText:{
+      paddingTop:30,
+      fontSize:16,
+      color:"#757575",
+      paddingLeft:50,
+      paddingRight:50,
+      textShadowOffset:{width:3,height:3},
+      fontWeight:"500"
   }
 })

@@ -3,7 +3,7 @@ import React, { Component, PureComponent } from 'react';
 import PopoverTooltip from  'react-native-popover-tooltip'
 import firebase from 'firebase';
 import styles from './styles'
-import { ListItem, Card, Header,Tooltip } from 'react-native-elements'
+import { ListItem, Card, Header,Tooltip,Rating } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
@@ -73,6 +73,7 @@ export default class UserView extends PureComponent {
           skl=[];
           firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
             OBJETO = snapshot.val()
+            console.log(OBJETO)
           }).then(()=>{
             firebase.database().ref(`/teachers/${key}/newSkill`).once('value',data=>{
 
@@ -106,6 +107,8 @@ export default class UserView extends PureComponent {
               var country = OBJETO.country
               var photo = OBJETO.linkPhoto
               var tags = OBJETO.tags
+              var description = OBJETO.resume
+              var video = OBJETO.url
 
               var ojc = {
                 key: uid,
@@ -115,7 +118,9 @@ export default class UserView extends PureComponent {
                 pais: country,
                 foto: photo,
                 tag: tags,
-                skl:skl
+                skl:skl,
+                desc:description,
+                video:video
               }
               fullData.push(ojc)
               // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
@@ -180,11 +185,28 @@ export default class UserView extends PureComponent {
         title={item.name}
         
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
-        subtitle={item.skl[0]}
+        subtitle={<View>
+                    
+                    <Text style={{color:"#757575",fontSize:13,fontWeight:"600"}} > {item.skl[0]} </Text> 
+                   <View style={styles.contentRating} >   
+                    <Rating
+                    type={"custom"}
+                    ratingColor={"#00BEB1"}
+                    
+                    ratingImage={require("../assets/rating.png")}
+                    style={styles.rating}
+                    ratingBackgroundColor={"#00BEB1"}
+                  imageSize={13}
+    
+                  readonly
+                  startingValue={item.rank}
+                />
+                </View>
+            </View>}
         subtitleStyle={{ color: '#bdbdbd' }}
         leftAvatar={{  renderPlaceholderContent:<Image  style={{height:50,width:50}} source={require('../assets/logo.png')}/>, size: 60,     source: { uri: item.foto   } }}
         chevron={ <Tooltip popover={<Text>Info here</Text>}  width={150} height={60}  >
-                    <Image source={require('../assets/additem.png')} />
+                    <Image source={require('../assets/additem.png')}  style={{height:30,width:30}} />
               </Tooltip>
 
         }

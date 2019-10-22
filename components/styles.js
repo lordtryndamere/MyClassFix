@@ -295,7 +295,17 @@ header6:{
 },
 
  
-   
+rating:{
+  borderColor:"#00BEB1",
+  paddingRight:5,
+
+},
+contentRating:{
+  alignContent:'center',
+  alignItems:'center',
+  marginRight:145
+}
+
     
   
   });

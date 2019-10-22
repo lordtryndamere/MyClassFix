@@ -21,14 +21,14 @@ export default class ContentCompo extends Component{
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('UserView')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/buscar.png')} style={styles.headerImage2}  />
-                    <Text style={styles.text} > BUSCAR DOCENTES</Text>
+                    <Text style={styles.textDocentes} > BUSCAR DOCENTES</Text>
                 </View>
                 </TouchableHighlight>
 
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('Settings')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/reservadas.png')} style={styles.headerImage2}  />
-                    <Text style={styles.text} > CLASES RESERVADAS</Text>
+                    <Text style={styles.textclases} > CLASES RESERVADAS</Text>
                 </View>
                 </TouchableHighlight>
 
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         alignSelf:'center',
     },
     text:{
-        paddingRight:5,
+        paddingRight:8,
         fontSize:13,
         fontWeight:'bold',
         flex:1,
@@ -148,5 +148,28 @@ const styles = StyleSheet.create({
         height:1,
         backgroundColor:'gray',
         margin:15
+    },
+    textclases:{
+        paddingRight:5,
+        fontSize:13,
+        fontWeight:'bold',
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginLeft:32,
+        color:'#111',
+        position:'relative'
+    },
+    textDocentes:{
+        paddingRight:5,
+        fontSize:13,
+        fontWeight:'bold',
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginLeft:18,
+        color:'#111',
+        position:'relative'
+
     }
 });
