@@ -1,21 +1,30 @@
 import React ,{PureComponent} from 'react'
-import {StyleSheet,View,Text,Dimensions} from 'react-native'
+import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView} from 'react-native'
 import {Avatar,Header,Rating,Icon} from 'react-native-elements'
 import *as firebase from 'firebase'
 import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
 
 
-const FirstRoute = () =>(
-    <View style={[styles.scene]}> 
-    <Text>PrIMERA</Text> 
-    </View>
-)
 
-const SecondRoute = () =>(
-    <View style={[styles.scene]}> 
-    <Text>Segunda</Text> 
-    </View>
-)
+
+// const FirstRoute = () =>(
+//     <View style={[styles.scene]}>
+//     <ScrollView>
+
+//     </ScrollView> 
+
+//     </View>
+// )
+
+// const SecondRoute = () =>(
+//     <View style={[styles.scene]}>
+//     <ScrollView>
+ 
+        
+//     </ScrollView> 
+
+//     </View>
+// )
 
 
 
@@ -26,13 +35,37 @@ export default class Perfil extends PureComponent{
        this.state ={
            index:0,
            routes:[
-               {key:'first',title:"PRESENTACION"},
+               {key:'first',title:"PRESENTACIÓN"},
                {key:'second',title:"CONOCIMIENTOS"}
            ]
        }
     }
 render(){
     var {name,lastname,key,foto,rank,skl} = this.props.navigation.state.params.Profile
+
+    const FirstRoute = () =>(
+        <View style={[styles.scene]}>
+        <ScrollView>
+    
+
+
+
+
+
+        </ScrollView> 
+        </View>
+    )
+    
+    const SecondRoute = () =>(
+        <View style={[styles.scene]}>
+        <ScrollView>
+     
+            
+        </ScrollView> 
+        </View>
+    )
+
+
     return(
         <View style={styles.container}>
                 <View style={styles.top} >   
@@ -46,7 +79,7 @@ render(){
                           shadowRadius: 16.00,
                           elevation: 24,
                          }}
-                         leftComponent={<Icon  type={"material-community"}   name={"arrow-left-box"} color={"#212121"}  onPress={()=>this.props.navigation.goBack()} />}
+                         leftComponent={<Icon  type={"material-community"}   name={"arrow-left"} color={"#212121"}  onPress={()=>this.props.navigation.goBack()} />}
 
 
                   />
@@ -64,7 +97,13 @@ render(){
                 <Text style={styles.text} >{`${name}${lastname} `} </Text>
                 <Text style={styles.text2} > {skl[0]} </Text>
                 <Rating
-                  imageSize={20}
+                    type={"custom"}
+                    ratingColor={"#00BEB1"}
+                    ratingImage={require("../assets/rating.png")}
+                    style={styles.rating}
+                    ratingBackgroundColor={"#00BEB1"}
+                  imageSize={14}
+    
                   readonly
                   startingValue={rank}
                 //   style={{ styles.rating }}
@@ -82,6 +121,7 @@ render(){
                         getLabelText={({ route }) => route.title}
                         activeColor={"#212121"}
                         inactiveColor={"#bdbdbd"}
+                        contentContainerStyle={styles.TabView}
                         
                       indicatorStyle={{ backgroundColor: '#00BEB1' }}
                       style={{ backgroundColor: '#fff' }}
@@ -97,6 +137,10 @@ render(){
                 onIndexChange={index=>this.setState({index})}
                 initialLayout={{width:Dimensions.get('window').width}}
             />
+   <TouchableOpacity  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
+          <Text style={styles.loginText}>RESERVAR CLASE</Text>
+    </TouchableOpacity>
+
         </View>
 
         </View>
@@ -142,5 +186,33 @@ const styles=StyleSheet.create({
     text2:{
         fontSize:16,
         color:"#9e9e9e"
-    }
+    },
+    rating:{
+        borderColor:"#00BEB1"
+    },
+
+TouchableOpacityStyle: {
+   //Here is the trick
+   position: 'absolute',
+   alignItems: 'center',
+   justifyContent: 'center',
+//    right: 30,
+   bottom:0,
+},
+  loginText:{
+    color: 'white',
+    fontWeight:"bold",
+    fontSize:16
+
+  },
+  reservarclase:{
+    resizeMode: 'contain',
+    backgroundColor: "#00BEB1",
+    height:50,
+    width:"100%",
+  },
+  TabView:{
+      fontWeight:"bold",
+      color:"#212121"
+  }
 })
