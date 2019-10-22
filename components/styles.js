@@ -297,13 +297,13 @@ header6:{
  
 rating:{
   borderColor:"#00BEB1",
-  paddingRight:5,
+  paddingVertical:10
 
 },
 contentRating:{
   alignContent:'center',
   alignItems:'center',
-  marginRight:145
+  marginRight:150
 }
 
     

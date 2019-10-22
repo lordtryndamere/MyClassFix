@@ -2595,6 +2595,14 @@ expo-asset@~7.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-av@~7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-7.0.1.tgz#c25cb66f20333157ae65110aa9faef68b34cc7a8"
+  integrity sha512-wsSMqvkvVvYMsqTrgCDO8xsDVsv201kg+LTO1j6/HfKRLLKcTapZZVSSl4rqMCEWRzdTP4L/hCyOo19jf8PdKQ==
+  dependencies:
+    lodash "^4.17.15"
+    nullthrows "^1.1.0"
+
 expo-constants@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.0.tgz#668c3ec0100e219522ffd9515ec47fadfccd443d"
@@ -5529,7 +5537,7 @@ react-native-public-ip@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-native-public-ip/-/react-native-public-ip-1.0.1.tgz#f47c29efbb901135bde6af226eff882a1f3a94f5"
   integrity sha512-o5wGIqajjwNnTzmrQk05/P4631vXJNNYjmVNIKrKX6SiPAHWDAPhWYv7H2QKHLyRn+W0Qh1ARWi06Db6Ro+xwg==
 
-react-native-ratings@^6.3.0:
+react-native-ratings@^6.3.0, react-native-ratings@^6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.5.0.tgz#a1606ccba3c5b54eec8e6cfa4765a45cf0e4ab8d"
   integrity sha512-YMcfQ7UQCmXGEc/WPlukHSHs5yvckTwjq5fTRk1FG8gaO7fZCNygEUGPuw4Dbvvp3IlsCUn0bOQd63RYsb7NDQ==

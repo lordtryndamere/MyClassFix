@@ -1,12 +1,14 @@
 import React, { Component, PureComponent } from 'react';
-
+import { Rating, AirbnbRating } from 'react-native-ratings';
 import PopoverTooltip from  'react-native-popover-tooltip'
 import firebase from 'firebase';
 import styles from './styles'
-import { ListItem, Card, Header,Tooltip,Rating } from 'react-native-elements'
+import { ListItem, Card, Header,Tooltip } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
+import Profile from './Perfil'
+
 import _ from 'lodash'
 
 
@@ -190,15 +192,16 @@ export default class UserView extends PureComponent {
                     <Text style={{color:"#757575",fontSize:13,fontWeight:"600"}} > {item.skl[0]} </Text> 
                    <View style={styles.contentRating} >   
                     <Rating
+               
                     type={"custom"}
+                    ratingCount={item.rank}
                     ratingColor={"#00BEB1"}
-                    
+                    fractions={item.rank}
                     ratingImage={require("../assets/rating.png")}
                     style={styles.rating}
                     ratingBackgroundColor={"#00BEB1"}
-                  imageSize={13}
-    
-                  readonly
+                    imageSize={13}
+                    
                   startingValue={item.rank}
                 />
                 </View>

@@ -1,4 +1,5 @@
 import React ,{PureComponent} from 'react'
+import {Video} from 'expo-av'
 import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView} from 'react-native'
 import {Avatar,Header,Rating,Icon} from 'react-native-elements'
 import *as firebase from 'firebase'
@@ -40,15 +41,31 @@ export default class Perfil extends PureComponent{
            ]
        }
     }
+
+
+    
 render(){
     var {name,lastname,key,foto,rank,skl,desc,video} = this.props.navigation.state.params.Profile
 
+    
     const FirstRoute = () =>(
         <View style={[styles.scene]}>
+            <ScrollView>
             <Text style={styles.PresentationText} >
                 {desc}
             </Text>
-
+            <Video
+            useNativeControls={true}
+            source={{uri:video}}
+            rate={1.0}
+            volume={1.0}
+            isMuted={false}
+            resizeMode="contain"
+            // shouldPlay
+            isLooping
+            style={{width:"100%",height:300}}
+            />
+    </ScrollView>
         </View>
     )
     
@@ -214,6 +231,7 @@ TouchableOpacityStyle: {
   },
   PresentationText:{
       paddingTop:30,
+      paddingBottom:25,
       fontSize:16,
       color:"#757575",
       paddingLeft:50,

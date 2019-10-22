@@ -150,7 +150,9 @@ const styles = StyleSheet.create({
         margin:15
     },
     textclases:{
-        paddingRight:5,
+        marginTop:6,
+
+        marginRight:10,
         fontSize:13,
         fontWeight:'bold',
         flex:1,
@@ -161,7 +163,8 @@ const styles = StyleSheet.create({
         position:'relative'
     },
     textDocentes:{
-        paddingRight:5,
+        marginTop:6,
+        marginRight:10,
         fontSize:13,
         fontWeight:'bold',
         flex:1,
