@@ -1,5 +1,6 @@
 import React ,{PureComponent} from 'react'
 import {Video} from 'expo-av'
+import VideoPlayer from 'expo-video-player'
 import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView} from 'react-native'
 import {Avatar,Header,Rating,Icon} from 'react-native-elements'
 import *as firebase from 'firebase'
@@ -7,42 +8,26 @@ import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
 
 
 
-
-// const FirstRoute = () =>(
-//     <View style={[styles.scene]}>
-//     <ScrollView>
-
-//     </ScrollView> 
-
-//     </View>
-// )
-
-// const SecondRoute = () =>(
-//     <View style={[styles.scene]}>
-//     <ScrollView>
- 
-        
-//     </ScrollView> 
-
-//     </View>
-// )
-
-
-
-
 export default class Perfil extends PureComponent{
     constructor(props){
         super(props)
        this.state ={
+           ...props,
            index:0,
+           duration: 0.0,
            routes:[
                {key:'first',title:"PRESENTACIÓN"},
                {key:'second',title:"CONOCIMIENTOS"}
            ]
        }
+       console.log(props);
+       
     }
 
-
+    onLoad = (data) => {
+        this.setState({ duration: data.duration });
+      };
+    
     
 render(){
     var {name,lastname,key,foto,rank,skl,desc,video} = this.props.navigation.state.params.Profile
@@ -55,13 +40,15 @@ render(){
                 {desc}
             </Text>
             <Video
+
+            onLoad={this.onLoad}
             useNativeControls={true}
             source={{uri:video}}
             rate={1.0}
             volume={1.0}
             isMuted={false}
             resizeMode="contain"
-            // shouldPlay
+            shouldPlay={false}
             isLooping
             style={{width:"100%",height:300}}
             />

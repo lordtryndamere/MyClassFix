@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add firesql
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-community
 
 PATH: 
-  C:\Users\PROGRAMADOR\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\PROGRAMADOR\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Intel\DMIX;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Users\PROGRAMADOR\AppData\Local\Microsoft\WindowsApps;C:\Users\PROGRAMADOR\AppData\Roaming\npm;C:\Users\PROGRAMADOR\AppData\Local\Yarn\bin;C:\Users\PROGRAMADOR\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\DMIX;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\PROGRAMADOR\AppData\Local\Microsoft\WindowsApps;C:\Users\PROGRAMADOR\AppData\Roaming\npm;C:\Users\PROGRAMADOR\AppData\Local\Yarn\bin;C:\Users\PROGRAMADOR\AppData\Local\Programs\Microsoft VS Code\bin
 
 Yarn version: 
   1.19.0
@@ -14,7 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\reactnativeapps\MyClassFix\node_modules\@babel\generator\node_modules\.bin'
+  Error: https://registry.yarnpkg.com/react-native-community: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66027:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140539:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141511:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141433:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1145:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
   {
@@ -28,13 +38,16 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "@react-native-community/netinfo": "^4.4.0",
       "axios": "^0.19.0",
       "eslint": "^6.5.1",
       "expo": "^35.0.0",
       "expo-av": "~7.0.0",
       "expo-image-picker": "~7.0.0",
       "expo-permissions": "~7.0.0",
+      "expo-video-player": "^1.5.1",
       "firebase": "^7.0.0",
+      "firesql": "^2.0.2",
       "native-base": "^2.13.8",
       "react": "16.8.3",
       "react-dom": "^16.10.1",
@@ -1232,6 +1245,11 @@ Lockfile:
       xcode "^2.0.0"
       xmldoc "^0.4.0"
   
+  "@react-native-community/netinfo@^4.4.0":
+    version "4.4.0"
+    resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-4.4.0.tgz#a18eb9ba082b6aca6add004b4a918250ad7d13bc"
+    integrity sha512-qqNWMOsrDjj/daqV21ID2T8mNUjZD4pdx3PuWyE65gzKh2w+oMnzKb+J0NbLyZPn3wwLwU1+Cpf58A0ff5szjQ==
+  
   "@react-navigation/core@^3.5.1":
     version "3.5.1"
     resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.5.1.tgz#7a2339fca3496979305fb3a8ab88c2ca8d8c214d"
@@ -2211,6 +2229,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
     integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
   
+  core-js@^3.0.1:
+    version "3.3.3"
+    resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.3.tgz#b7048d3c6c1a52b5fe55a729c1d4ccdffe0891bb"
+    integrity sha512-0xmD4vUJRY8nfLyV9zcpC17FtSie5STXzw+HyYw2t8IIvmDnbq7RJUULECCo+NstpJtwK9kx8S+898iyqgeUow==
+  
   core-util-is@~1.0.0:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -2743,6 +2766,14 @@ Lockfile:
       "@types/websql" "^0.0.27"
       lodash "^4.17.15"
   
+  expo-video-player@^1.5.1:
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/expo-video-player/-/expo-video-player-1.5.1.tgz#625b6b81a9cb3de51d03e04c744fc5ecc5de4928"
+    integrity sha512-Tz2ZXlhu9tNJ4OmpkzJvbxJ1sG/QzB74+gf/QOcVXfzrwj4+3/70V2UulmRhVWMUy5WxWGOv8DGmCbuYtwVl9g==
+    dependencies:
+      tslib "^1.10.0"
+      with-default-props "^0.2.1"
+  
   expo-web-browser@~7.0.0:
     version "7.0.1"
     resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-7.0.1.tgz#b64ef895b5c0604f312b64b085f7a2f1da630e20"
@@ -3055,6 +3086,13 @@ Lockfile:
       "@firebase/remote-config" "0.1.0"
       "@firebase/storage" "0.3.12"
       "@firebase/util" "0.2.28"
+  
+  firesql@^2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/firesql/-/firesql-2.0.2.tgz#0d69130d9ad65a13ad219fabcd9ba2cb9587b668"
+    integrity sha512-3HipSyyJlVTIESHt5OQ0YhCvclm1FV4J2zcPg9I9xpJGjrTn7Gi7tZFniKbgeg1kYS5k5htDvxEQbPfHiHMWBg==
+    dependencies:
+      core-js "^3.0.1"
   
   flat-cache@^2.0.1:
     version "2.0.1"
@@ -6673,7 +6711,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
     integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
   
-  tslib@1.10.0, tslib@^1.9.0:
+  tslib@1.10.0, tslib@^1.10.0, tslib@^1.9.0:
     version "1.10.0"
     resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
     integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
@@ -6964,6 +7002,11 @@ Lockfile:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
     integrity sha1-+OGqHuWlPsW/FR/6CXQqatdpeHY=
+  
+  with-default-props@^0.2.1:
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/with-default-props/-/with-default-props-0.2.1.tgz#41470545d2fa945308993c86a81c7481c298cb95"
+    integrity sha512-yTrBg7EGzFwpZLCN5M4ropSbZ/V+scx5DXBE6HZhKCevsRaYCRBBf/69UvfaWxu/zRaWX5j9Y/F4YFs1Q1yg4w==
   
   wordwrap@^1.0.0, wordwrap@~1.0.0:
     version "1.0.0"

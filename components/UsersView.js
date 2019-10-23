@@ -1,14 +1,14 @@
 import React, { Component, PureComponent } from 'react';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import PopoverTooltip from  'react-native-popover-tooltip'
-import  * as firebase from 'firebase';
+// import PopoverTooltip from  'react-native-popover-tooltip'
+import * as firebase from 'firebase';
 
 import styles from './styles'
-import { ListItem, Card, Header,Tooltip } from 'react-native-elements'
+import { ListItem, Card, Header, Tooltip } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
-import Profile from './Perfil'
+
 
 
 
@@ -20,43 +20,42 @@ import {
   Text,
   View,
   FlatList,
-  ActivityIndicator,
   TouchableOpacity,
   Image,
-  TextInput
+
 
 
 
 
 } from 'react-native';
+import Perfil from './Perfil';
 
 
-const initialData = [123];
-const ITEMS_PER_PAGE = 8;
+
 var fullData = [];
 
 export default class UserView extends PureComponent {
-  constructor(props){
+  constructor(props) {
     super(props)
-  }
-  state = {
 
-    busquedaprofesores:null,
-    Search:'',
-    timepassed: false,
-    fullTeachers: '',
-    nuevo: [],
-    items: [],
-    teachersAproveds: [],
-    render: '',
-    idiomasAcentos: ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
-    page: 1,
-    data: [9],
-    query: "",
-    habil: '',
-    toolTipVisible:false
+    this.state = {
+      ...props,
+      busquedaprofesores: null,
+      Search: '',
+      timepassed: false,
+      fullTeachers: '',
+      nuevo: [],
+      items: [],
+      teachersAproveds: [],
+      render: '',
+      idiomasAcentos: ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
+      page: 1,
+      data: [9],
+      query: "",
+      habil: '',
+      toolTipVisible: false
+    }
   }
-
   showContainer = (index) => {
     console.log(index.name);
   }
@@ -68,7 +67,7 @@ export default class UserView extends PureComponent {
 
   loadTeachers() {
     var DataFull;
-    var skl=[];
+    var skl = [];
     var teachers;
     var OBJETO;
     firebase.database().ref(`/approveds`).limitToFirst(60).once('value', (snapshot) => {
@@ -77,35 +76,37 @@ export default class UserView extends PureComponent {
       .then(() => {
         fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
         for (const key in teachers) {
-          skl=[];
+          skl = [];
           firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
             OBJETO = snapshot.val()
-            console.log(OBJETO)
-          }).then(()=>{
-            firebase.database().ref(`/teachers/${key}/newSkill`).once('value',data=>{
+          })
+            .then(() => {
+              firebase.database().ref(`/teachers/${key}/newSkill`).once('value', data => {
 
-              DataFull = data.val()
-            
-              for (const i in DataFull) {
+                DataFull = data.val()
 
-                for (const j in DataFull[i]) {
+                for (const i in DataFull) {
 
-                  for (const k in DataFull[i][j]) {
+                  for (const j in DataFull[i]) {
 
-                    skl.push(DataFull[i][j][k].skill)
+                    for (const k in DataFull[i][j]) {
+
+                      skl.push(DataFull[i][j][k].skill)
+              
+
+
+                    }
 
                   }
 
                 }
 
-              }
 
-       
-        
+
+              })
+
+
             })
-
-
-          })
             .then(() => {
               var uid = key
               var nombre = OBJETO.name
@@ -125,9 +126,9 @@ export default class UserView extends PureComponent {
                 pais: country,
                 foto: photo,
                 tag: tags,
-                skl:skl,
-                desc:description,
-                video:video
+                skl: skl,
+                desc: description,
+                video: video
               }
               fullData.push(ojc)
               // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
@@ -150,7 +151,7 @@ export default class UserView extends PureComponent {
   }
 
   renderItem = ({ item, index }) => (
-    
+
     <Card containerStyle={{
       padding: 0, borderRadius: 20, shadowColor: "#000",
       shadowOffset: {
@@ -190,75 +191,70 @@ export default class UserView extends PureComponent {
 
         // key={this.state.render[item].key}
         title={item.name}
-        
+
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
         subtitle={<View>
-                    
-                    <Text style={{color:"#757575",fontSize:13,fontWeight:"600"}} > {item.skl[0]} </Text> 
-                   <View style={styles.contentRating} >   
-                    <Rating
-               
-                    type={"custom"}
-                    ratingCount={item.rank}
-                    ratingColor={"#00BEB1"}
-                    fractions={item.rank}
-                    ratingImage={require("../assets/rating.png")}
-                    style={styles.rating}
-                    ratingBackgroundColor={"#00BEB1"}
-                    imageSize={13}
-                    
-                  startingValue={item.rank}
-                />
-                </View>
-            </View>}
+
+          <Text style={{ color: "#757575", fontSize: 13, fontWeight: "600" }} > {item.skl[0]} </Text>
+          <View style={styles.contentRating} >
+            <Rating
+
+              type={"custom"}
+              ratingCount={item.rank}
+              ratingColor={"#00BEB1"}
+              fractions={item.rank}
+              ratingImage={require("../assets/rating.png")}
+              style={styles.rating}
+              ratingBackgroundColor={"#00BEB1"}
+              imageSize={13}
+
+              startingValue={item.rank}
+            />
+          </View>
+        </View>}
         subtitleStyle={{ color: '#bdbdbd' }}
-        leftAvatar={{  renderPlaceholderContent:<Image  style={{height:50,width:50}} source={require('../assets/logo.png')}/>, size: 60,     source: { uri: item.foto   } }}
-        chevron={ <Tooltip popover={<Text>Info here</Text>}  width={150} height={60}  >
-                    <Image source={require('../assets/additem.png')}  style={{height:30,width:30}} />
-              </Tooltip>
+        leftAvatar={{ renderPlaceholderContent: <Image style={{ height: 50, width: 50 }} source={require('../assets/logo.png')} />, size: 60, source: { uri: item.foto } }}
+        chevron={<Tooltip popover={<Text>Info here</Text>} width={150} height={60}  >
+          <Image source={require('../assets/additem.png')} style={{ height: 30, width: 30 }} />
+        </Tooltip>
 
         }
         bottomDivider
         //onPress={() => { this.props.navigation.navigate('ProfileView') }}
-        onPress={()=>this.ClickView(item)}
+        onPress={() => this.ClickView(item)}
       />
     </Card>
 
   )
-  loadMore() {
 
-    const page = this.state.page
-    const data = this.state.data
-    const start = page * ITEMS_PER_PAGE;
-    const end = (page + 1) * ITEMS_PER_PAGE - 1;
 
-    const newData = initialData.slice(start, end);
-    this.setState({ data: [...data, ...newData] });
+  ClickView(Profile) {
+    const element = <Perfil datacomple={Profile} />
+    if (Profile.hasOwnProperty("key")) {
+
+      this.props.navigation.navigate('Perfil', { Profile })
+      return element;
+
+    }
   }
 
-  ClickView(Profile){
-    this.props.navigation.navigate('Perfil',{Profile})
-    console.log(Profile)
-    
-  }
+  searchTeachers = (value) => {
 
-  searchTeachers = (value) =>{
-   
 
-    const filteredTeachers  = this.state.fullTeachers.filter(teacher=>{
-       teacherLowerCase = (
-        teacher.name + '' 
+    const filteredTeachers = this.state.fullTeachers.filter(teacher => {
+      teacherLowerCase = (
+        teacher.name + ''
       ).toLowerCase();
-      var searchTermLowerCase  = value.toLowerCase();
+      var searchTermLowerCase = value.toLowerCase();
       return teacherLowerCase.indexOf(searchTermLowerCase)
-    
-    })
-    this.setState({Search:value  })
 
-   console.log(this.state.Search);
-   
-      
-    
+    })
+    this.setState({ Search: value })
+
+    console.log(this.state.Search);
+
+
+
   }
 
   render() {
@@ -274,11 +270,11 @@ export default class UserView extends PureComponent {
           </TouchableOpacity>}
           centerComponent={
             <Searchbar
-            style={{width:"130%",height:38,borderRadius:30}}
-            placeholder="Buscar"
-            onChangeText={this.searchTeachers}
-            value={Search}
-          />
+              style={{ width: "130%", height: 38, borderRadius: 30 }}
+              placeholder="Buscar"
+              onChangeText={this.searchTeachers}
+              value={Search}
+            />
           }
           leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} >
             <View  >
@@ -287,17 +283,17 @@ export default class UserView extends PureComponent {
           </TouchableOpacity>}
           // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
           // centerComponent={ }
-          containerStyle={{   
+          containerStyle={{
             backgroundColor: '#fff',
             borderBottomColor: '#9E9E9E',
-            borderBottomWidth:2,
-            shadowColor: "#000",      shadowOffset: {
+            borderBottomWidth: 2,
+            shadowColor: "#000", shadowOffset: {
               width: 0,
               height: 12,
             },
             shadowOpacity: 0.58,
             shadowRadius: 16.00,
-  
+
             elevation: 24,
 
 
@@ -314,14 +310,14 @@ export default class UserView extends PureComponent {
         </View>
         {console.log(this.state.fullTeachers),
           this.state.fullTeachers.length < 3
-            ?<View style={{   paddingTop:120  , flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
-                    <Image source={require('../assets/spinner.gif')} style={{ height: 200, width: 200 }} />
-                    <Text style={styles.textload}>Cargando profesores ....</Text> 
+            ? <View style={{ paddingTop: 120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+              <Image source={require('../assets/spinner.gif')} style={{ height: 200, width: 200 }} />
+              <Text style={styles.textload}>Cargando profesores ....</Text>
             </View>
-            :<FlatList
+            : <FlatList
               keyExtractor={(item, index) => 'key' + index}
               initialNumToRender={15}
-              data={ this.state.fullTeachers}
+              data={this.state.fullTeachers}
               renderItem={this.renderItem}
               get
 
