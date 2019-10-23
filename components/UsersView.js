@@ -1,13 +1,16 @@
 import React, { Component, PureComponent } from 'react';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import PopoverTooltip from  'react-native-popover-tooltip'
-import firebase from 'firebase';
+import  * as firebase from 'firebase';
+
 import styles from './styles'
 import { ListItem, Card, Header,Tooltip } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
 import TouchableScale from 'react-native-touchable-scale';
 import { DrawerActions } from 'react-navigation-drawer'
 import Profile from './Perfil'
+
+
 
 import _ from 'lodash'
 
@@ -37,6 +40,8 @@ export default class UserView extends PureComponent {
     super(props)
   }
   state = {
+
+    busquedaprofesores:null,
     Search:'',
     timepassed: false,
     fullTeachers: '',
@@ -236,20 +241,25 @@ export default class UserView extends PureComponent {
     console.log(Profile)
     
   }
-  HadleSearch=                     value=>{
-    const filteredTeachers= this.state.fullTeachers.filter(teacher=>{
-      var teacherLowerCase = (
-        teacher.name+
-        ' ' +
-        teacher.lastname
+
+  searchTeachers = (value) =>{
+   
+
+    const filteredTeachers  = this.state.fullTeachers.filter(teacher=>{
+       teacherLowerCase = (
+        teacher.name + '' 
       ).toLowerCase();
+      var searchTermLowerCase  = value.toLowerCase();
+      return teacherLowerCase.indexOf(searchTermLowerCase)
+    
+    })
+    this.setState({Search:value  })
 
-        var searchTermLowerCase = value.toLowerCase();
-        return teacherLowerCase.indexOf(searchTermLowerCase) > -1;
-    });
-    this.setState({fullTeachers:filteredTeachers})
+   console.log(this.state.Search);
+   
+      
+    
   }
-
 
   render() {
     const { Search } = this.state;
@@ -265,8 +275,8 @@ export default class UserView extends PureComponent {
           centerComponent={
             <Searchbar
             style={{width:"130%",height:38,borderRadius:30}}
-            placeholder="Search"
-            onChangeText={query => { this.setState({ Search: query }); }}
+            placeholder="Buscar"
+            onChangeText={this.searchTeachers}
             value={Search}
           />
           }
@@ -311,7 +321,7 @@ export default class UserView extends PureComponent {
             :<FlatList
               keyExtractor={(item, index) => 'key' + index}
               initialNumToRender={15}
-              data={this.state.fullTeachers}
+              data={ this.state.fullTeachers}
               renderItem={this.renderItem}
               get
 

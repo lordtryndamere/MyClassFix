@@ -53,7 +53,7 @@ export default class OverlayTwoinput extends Component{
     render(){
         const {isVisibleOverlay,PlaceholderOne,PlaceholderTwo,InputValueOne,InputValueTwo,password} = this.state
         return(
-           <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent"   overlayStyle={styles.overlaystyle} >
+           <Overlay isVisible={isVisibleOverlay} overlayBackgroundColor="transparent" fullScreen={true}  overlayStyle={styles.overlaystyle} >
                <View style={styles.viewOverlay}>
                    <Input
                    placeholder={PlaceholderOne}
