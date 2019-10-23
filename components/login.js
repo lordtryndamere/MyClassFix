@@ -20,13 +20,18 @@ import {
   Linking,
   KeyboardAvoidingView,
   SafeAreaView,
-  Alert,
   ActivityIndicator,
 
   
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
+
+
+
+
+const  ind =  
+<ActivityIndicator size="large" color="white" />
 
 export default class LoginView extends PureComponent {
 
@@ -42,11 +47,14 @@ export default class LoginView extends PureComponent {
       isVisible:false,
       correoenviado:null,
       modalvisible:false,
-      messagelogin:'',
+      messagelogin:null,
       loader:false
 
     }
   }
+
+    
+  
 
   handleLogin = () => {
     const {email,password} = this.state
@@ -55,13 +63,13 @@ export default class LoginView extends PureComponent {
       firebase.auth()
       .signInWithEmailAndPassword(email,password)
       .then(()=>{
-        this.setState({messagelogin:Toast.show("Iniciando ",Toast.LONG,1600)})
+        this.setState({messagelogin:ind })
         setTimeout(()=>{
           this.props.navigation.navigate('HomeScreen') 
         },2000) 
       })
       .catch((e) => { 
-        this.setState({errorMessage:"Error Usuario o contraseña incorrectos!"})
+        this.setState({errorMessage:"¡Error usuario o contraseña incorrectos!"})
       
         setTimeout(() => {
           this.setState({errorMessage:null})
@@ -186,7 +194,7 @@ componentDidMount(){
         <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.handleLogin()}>
           <Text style={styles.loginText}>INGRESAR</Text>
         </TouchableOpacity>
-              <Text style={{color:"white",fontSize:14}} > {this.state.messagelogin} </Text>
+           {this.state.messagelogin}
      <TouchableHighlight style={styles.buttonContainer} >
             <Text style={styles.text2}>Puedes registrarte aqui abajo</Text>
         </TouchableHighlight>
