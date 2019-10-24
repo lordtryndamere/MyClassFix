@@ -49,7 +49,9 @@ export default class UserView extends PureComponent {
       items: [],
       teachersAproveds: [],
       render: '',
-      idiomasAcentos: ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
+      idiomasAcentos :
+
+      ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
       page: 1,
       data: [9],
       query: "",
@@ -67,7 +69,7 @@ export default class UserView extends PureComponent {
   }
 
   loadTeachers   =   () => {
-    var DataFull;
+    var snapshot;
     var skl=[];
     var teachers;
     var OBJETO;
@@ -75,7 +77,7 @@ export default class UserView extends PureComponent {
     var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
     var type = []
 
-    firebase.database().ref(`/approveds`).limitToFirst(60).once('value', (snapshot) => {
+    firebase.database().ref(`/approveds`).once('value', (snapshot) => {
       teachers = snapshot.val();
     }).then( async () => {
         fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
@@ -93,28 +95,99 @@ export default class UserView extends PureComponent {
               skl=[];
               skill = []
               type = []
-              DataFull = data.val()
+              snapshot = data.val()
               
              
-              for (const i in DataFull) {
+              for (const i in snapshot) {
 
-                for (const j in DataFull[i]) {
+                type.push(i)
 
-                  for (const k in DataFull[i][j]) {
+                for (const j in snapshot[i]) {
 
-                    skl.push(DataFull[i][j][k].skill)
-                  
+                  for (const k in snapshot[i][j]) {
+
+                    // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+
+
+                    if (i == 'Idiomas') {
+
+                      this.state.idiomasAcentos.forEach(val => {
+
+                        if (val == j) {
+
+                          mobj[0]['idiomas'].push(val);
+
+                          skill.push(val)
+
+                          skl.push(val)
+
+                        }
+
+                      })
+
+                    } else if (i == 'Musica') {
+
+                      mobj[1]['musica'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Tecnologia') {
+
+                      mobj[2]['tecnologia'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Universidad') {
+
+                      mobj[3]['universidad'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Secundaria') {
+
+                      mobj[4]['secundaria'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Primaria') {
+
+                      mobj[5]['primaria'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Otros') {
+
+                      mobj[6]['otros'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    }
 
                   }
 
                 }
-                
+
               }
+
+              mobj[0]['idiomas'] = mobj[0]['idiomas']
 
             
              
      
-              this.setState({skill:skl})
+              // this.setState({skill:skl})
         
             }) 
  
@@ -140,7 +213,9 @@ export default class UserView extends PureComponent {
               pais: country,
               foto: photo,
               tag: tags,
-              skl:this.state.skill,
+              acentSkill:skl,
+              type:type,
+              sk:mobj,
               desc:description,
               video:video
             }
@@ -215,7 +290,7 @@ export default class UserView extends PureComponent {
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
         subtitle={<View>
 
-          <Text style={{ color: "#757575", fontSize: 13, fontWeight: "600" }} > {item.skl[0]} </Text>
+          <Text style={{ color: "#757575", fontSize: 13, fontWeight: "600" }} > {item.acentSkill[0]} </Text>
           <View style={styles.contentRating} >
             <Rating
 
