@@ -43,6 +43,7 @@ export default class UserView extends PureComponent {
       busquedaprofesores: null,
       Search: '',
       timepassed: false,
+      skill:[],
       fullTeachers: '',
       nuevo: [],
       items: [],
@@ -65,26 +66,36 @@ export default class UserView extends PureComponent {
     this.loadTeachers()
   }
 
-  loadTeachers() {
+  loadTeachers   =   () => {
     var DataFull;
     var skl=[];
     var teachers;
     var OBJETO;
+    var skill = []
+    var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
+    var type = []
+
     firebase.database().ref(`/approveds`).limitToFirst(60).once('value', (snapshot) => {
       teachers = snapshot.val();
-    })
-      .then(() => {
+    }).then( async () => {
         fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
         for (const key in teachers) {
-          skl=[];
-          firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
+         
+          await firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
             OBJETO = snapshot.val()
-            console.log(OBJETO)
-          }).then(()=>{
+             
+     
+           
+          })
             firebase.database().ref(`/teachers/${key}/newSkill`).once('value',data=>{
-
+           
+              mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
+              skl=[];
+              skill = []
+              type = []
               DataFull = data.val()
-            
+              
+             
               for (const i in DataFull) {
 
                 for (const j in DataFull[i]) {
@@ -92,62 +103,73 @@ export default class UserView extends PureComponent {
                   for (const k in DataFull[i][j]) {
 
                     skl.push(DataFull[i][j][k].skill)
+                  
 
                   }
 
                 }
-
+                
               }
 
-       
+            
+             
+     
+              this.setState({skill:skl})
         
-            })
+            }) 
+ 
+           
 
+            .then( () => {
+              
+            var uid = key
+            var nombre = OBJETO.name
+            var surname = OBJETO.surname
+            var ranking = OBJETO.ranking
+            var country = OBJETO.country
+            var photo = OBJETO.linkPhoto
+            var tags = OBJETO.tags
+            var description = OBJETO.resume
+            var video = OBJETO.url
 
+            var ojc = {
+              key: uid,
+              name: nombre,
+              lastname: surname,
+              rank: ranking,
+              pais: country,
+              foto: photo,
+              tag: tags,
+              skl:this.state.skill,
+              desc:description,
+              video:video
+            }
+            fullData.push(ojc)
+            
+            
+            // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
+            // this.setState({fullTeachers:render})
+            //  this.state.teacher = snapshot.val()
+            //  this.state.teacher.uid = key
+            //  this.state.teachersAproveds.push(this.state.teacher)
+            //  var renderizar = Object.values(this.state.teachersAproveds)
+            //  // console.log(this.state.render) 
+            //  return this.setState({render:renderizar})
           })
-            .then(() => {
-              var uid = key
-              var nombre = OBJETO.name
-              var surname = OBJETO.surname
-              var ranking = OBJETO.ranking
-              var country = OBJETO.country
-              var photo = OBJETO.linkPhoto
-              var tags = OBJETO.tags
-              var description = OBJETO.resume
-              var video = OBJETO.url
 
-              var ojc = {
-                key: uid,
-                name: nombre,
-                lastname: surname,
-                rank: ranking,
-                pais: country,
-                foto: photo,
-                tag: tags,
-                skl:skl,
-                desc:description,
-                video:video
-              }
-              fullData.push(ojc)
-              // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
-              // this.setState({fullTeachers:render})
-              //  this.state.teacher = snapshot.val()
-              //  this.state.teacher.uid = key
-              //  this.state.teachersAproveds.push(this.state.teacher)
-              //  var renderizar = Object.values(this.state.teachersAproveds)
-              //  // console.log(this.state.render) 
-              //  return this.setState({render:renderizar})
-            })
+
         }
         // console.log(fullData)
         // console.log(this.state.fullTeachers)
         // this.setState({ items: teachers })
       })
+      
     setTimeout(() => {
       return this.setState({ fullTeachers: fullData })
     }, 10000);
   }
 
+  
   renderItem = ({ item, index }) => (
 
     <Card containerStyle={{
