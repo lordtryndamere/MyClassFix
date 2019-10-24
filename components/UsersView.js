@@ -67,7 +67,7 @@ export default class UserView extends PureComponent {
 
   loadTeachers() {
     var DataFull;
-    var skl = [];
+    var skl=[];
     var teachers;
     var OBJETO;
     firebase.database().ref(`/approveds`).limitToFirst(60).once('value', (snapshot) => {
@@ -76,37 +76,35 @@ export default class UserView extends PureComponent {
       .then(() => {
         fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
         for (const key in teachers) {
-          skl = [];
+          skl=[];
           firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
             OBJETO = snapshot.val()
-          })
-            .then(() => {
-              firebase.database().ref(`/teachers/${key}/newSkill`).once('value', data => {
+            console.log(OBJETO)
+          }).then(()=>{
+            firebase.database().ref(`/teachers/${key}/newSkill`).once('value',data=>{
 
-                DataFull = data.val()
+              DataFull = data.val()
+            
+              for (const i in DataFull) {
 
-                for (const i in DataFull) {
+                for (const j in DataFull[i]) {
 
-                  for (const j in DataFull[i]) {
+                  for (const k in DataFull[i][j]) {
 
-                    for (const k in DataFull[i][j]) {
-
-                      skl.push(DataFull[i][j][k].skill)
-              
-
-
-                    }
+                    skl.push(DataFull[i][j][k].skill)
 
                   }
 
                 }
 
+              }
 
-
-              })
-
-
+       
+        
             })
+
+
+          })
             .then(() => {
               var uid = key
               var nombre = OBJETO.name
@@ -126,9 +124,9 @@ export default class UserView extends PureComponent {
                 pais: country,
                 foto: photo,
                 tag: tags,
-                skl: skl,
-                desc: description,
-                video: video
+                skl:skl,
+                desc:description,
+                video:video
               }
               fullData.push(ojc)
               // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
