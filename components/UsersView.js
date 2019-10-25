@@ -29,6 +29,7 @@ import {
 
 } from 'react-native';
 import Perfil from './Perfil';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -297,7 +298,7 @@ export default class UserView extends PureComponent {
               type={"custom"}
               ratingCount={item.rank}
               ratingColor={"#00BEB1"}
-              fractions={item.rank}
+              fractions={item.rank} 
               ratingImage={require("../assets/rating.png")}
               style={styles.rating}
               ratingBackgroundColor={"#00BEB1"}
@@ -309,17 +310,22 @@ export default class UserView extends PureComponent {
         </View>}
         subtitleStyle={{ color: '#bdbdbd' }}
         leftAvatar={{ renderPlaceholderContent: <Image style={{ height: 50, width: 50 }} source={require('../assets/logo.png')} />, size: 60, source: { uri: item.foto } }}
-        chevron={<Tooltip   containerStyle={{alignContent:'center',alignItems:'center',flexDirection:'row'}} height={300} width={300}  popover={
+        chevron={<Tooltip  height={150} width={260}  containerStyle={{alignItems:'flex-start',justifyContent:'center'}}  popover={
           
           <View  >
+            <ScrollView>
                  {(() => {
                    
                    if(item.sk != undefined && item.sk[0] != undefined && item.sk[0]['idiomas'].length > 0 ){
                       return(
+                       
                         <View>
-                        <Text style={{color:"#4fc3f7" ,fontSize:14 }} > IDIOMAS  </Text>
-                        <Text style={{color:"#fff",fontSize:10 }} > {item.sk[0]['idiomas'].join(', ')}  </Text>
+                        
+                        <Text style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900" }} > IDIOMAS  </Text>
+                        <Text style={{color:"#fff",fontSize:13 }} > {item.sk[0]['idiomas'].join(', ')}  </Text>
+                        
                         </View>
+                        
                       )
                    }
 
@@ -329,8 +335,10 @@ export default class UserView extends PureComponent {
                    if(item.sk != undefined && item.sk[1] != undefined && item.sk[1]['musica'].length > 0 ){
                     return(
                       <View>
-                      <Text style={{color:"#4fc3f7" ,fontSize:14 }} > MUSICA  </Text>
-                      <Text style={{color:"#fff",fontSize:10 }}  > {item.sk[1]['musica'].join(', ')}  </Text>
+                       
+                      <Text style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900"  }} > MUSICA  </Text>
+                      <Text style={{color:"#fff",fontSize:13 }}  > {item.sk[1]['musica'].join(', ')}  </Text>
+                   
                       </View>
                     )
 
@@ -342,8 +350,10 @@ export default class UserView extends PureComponent {
                    if(item.sk != undefined && item.sk[2] != undefined && item.sk[2]['tecnologia'].length > 0 ){
                     return(
                       <View>
-                      <Text  style={{color:"#4fc3f7" ,fontSize:14 }} > TECNOLOGIA  </Text>
-                      <Text style={{color:"#fff",fontSize:10 }} > {item.sk[2]['tecnologia'].join(', ')}  </Text>
+                    
+                      <Text  style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900" }} > TECNOLOGIA  </Text>
+                      <Text style={{color:"#fff",fontSize:13 }} > {item.sk[2]['tecnologia'].join(', ')}  </Text>
+                      
                       </View>
                     )
 
@@ -356,8 +366,10 @@ export default class UserView extends PureComponent {
 
                     return(
                       <View>
-                      <Text   style={{color:"#4fc3f7" ,fontSize:14 }} > UNIVERSIDAD  </Text>
-                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[3]['universidad'].join(', ')}  </Text>
+                   
+                      <Text   style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900" }} > UNIVERSIDAD  </Text>
+                      <Text  style={{color:"#fff",fontSize:13 }} > {item.sk[3]['universidad'].join(', ')}  </Text>
+                      
                       </View>
                     )
                    }
@@ -369,8 +381,11 @@ export default class UserView extends PureComponent {
 
                     return(
                       <View>
-                      <Text   style={{color:"#4fc3f7" ,fontSize:14 }} > SECUNDARIA  </Text>
-                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[4]['secundaria'].join(', ')}  </Text>
+                       
+                      <Text   style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900" }} > SECUNDARIA  </Text>
+                      <Text  style={{color:"#fff",fontSize:13 }} > {item.sk[4]['secundaria'].join(', ')}  </Text>
+                   
+
                       </View>
                     )
                    }
@@ -381,8 +396,11 @@ export default class UserView extends PureComponent {
                    if(item.sk != undefined && item.sk[5] != undefined && item.sk[5]['primaria'].length > 0 ){
                     return(
                       <View>
-                      <Text style={{color:"#4fc3f7" ,fontSize:14 }} > PRIMARIA  </Text>
-                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[5]['primaria'].join(', ')}  </Text>
+                       
+                      <Text style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900" }} > PRIMARIA  </Text>
+                      <Text  style={{color:"#fff",fontSize:13 }} > {item.sk[5]['primaria'].join(', ')}  </Text>
+                     
+
                       </View>
                     )
 
@@ -395,14 +413,18 @@ export default class UserView extends PureComponent {
                    if(item.sk != undefined && item.sk[6] != undefined && item.sk[6]['otros'].length > 0 ){
                     return(
                       <View>
-                      <Text  style={{color:"#4fc3f7" ,fontSize:14 }} > Otros  </Text>
-                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[6]['otros'].join(', ')}  </Text>
+                       
+                      <Text  style={{color:"#00BEB1" ,fontSize:16,fontWeight:"900" }} > Otros  </Text>
+                      <Text  style={{color:"#fff",fontSize:13 }} > {item.sk[6]['otros'].join(', ')}  </Text>
+                   
+
                       </View>
                     )
 
                    }
 
                 })()}
+            </ScrollView>
           </View>
         }   >
           <Image source={require('../assets/additem.png')} style={{ height: 30, width: 30 }} />

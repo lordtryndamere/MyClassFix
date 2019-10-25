@@ -20,7 +20,7 @@ export default class Perfil extends PureComponent{
                {key:'second',title:"CONOCIMIENTOS"}
            ]
        }
-       console.log(props);
+  
        
     }
 
@@ -61,7 +61,7 @@ render(){
     const SecondRoute = () =>(
         
         <View style={[styles.scene]}>
-        <ScrollView  >
+        <ScrollView>
             {
         <View style={styles.nivelesTop}>
                         {(() => {
