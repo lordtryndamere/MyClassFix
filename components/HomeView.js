@@ -5,6 +5,10 @@ import {Header } from 'react-native-elements'
 import {DrawerActions} from 'react-navigation-drawer'
 import Carousel from './Carousel'
 import styles from './styles'
+import {widthPercentageToDP  as ancho
+  ,heightPercentageToDP  as    alto ,
+  listenOrientationChange as op,
+  removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 
 
@@ -28,17 +32,22 @@ export default class HomeView extends PureComponent{
     }
 
 
-    
+    componentDidMount(){
+      op(this);
+    }
+    componentWillUnmount(){
+      rp(this)
+    }
 
     render(){
  
         return(
 
-  <View style={{height:"100%",width:"100%"}}>  
+  <View style={{height:alto('100%'),width:ancho("100%")}}>  
 
 
 
-
+          <View style={{width:ancho('100%'),height:alto('60%')}} >
                     <View>   
                     <Header
                       leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
@@ -77,8 +86,8 @@ export default class HomeView extends PureComponent{
                                       fontSize:18,
                                       fontWeight:'900'}}>¡Bienvenido {firebase.auth().currentUser.displayName}!   </Text>
             </View>
-
-            <View style={{paddingLeft:40,paddingRight:40,paddingTop:40,paddingBottom:40,height:"50%",width:"100%",justifyContent:'center',flexDirection:"row",flexWrap:"wrap",padding:5}}>  
+            </View>
+            <View style={{paddingLeft:40,paddingRight:40,paddingTop:20,paddingBottom:20,height:alto('40%'),width:ancho("100%"),justifyContent:'center',flexDirection:"row",flexWrap:"wrap",padding:5}}>  
             
                    
                             

@@ -1,9 +1,15 @@
 import React from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+import {widthPercentageToDP  as ancho
+  ,heightPercentageToDP  as    alto ,
+  listenOrientationChange as op,
+  removeOrientationListener as rp } from 'react-native-responsive-screen'
+
 import  {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-      height:"100%",
+      height:  "100%",
       width:"100%",
       flex: 1,
       justifyContent: 'center',
@@ -22,14 +28,14 @@ container2: {
             borderRadius: 30,
             borderWidth: 2,
             borderColor: '#fff',
-            width:290,
-            height:45,
+            width:ancho('80%'),
+            height:alto('7%'),
             marginBottom:20,
             flexDirection: 'row',
             alignItems:'center',        
     },
     inputs:{
-        height:45,
+        height:alto('7%'),
         marginLeft:16,
         borderBottomColor: '#FFFFFF',
         color:"#f0ffff",
@@ -80,7 +86,7 @@ inputs2:{
       justifyContent: 'center'
     },
     buttonContainer: {
-      height:45,
+      height:alto('5%'),
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -91,14 +97,14 @@ inputs2:{
     
     loginButton: {
       backgroundColor: "white",
-      height:35,
-      width:180,
+      height:alto('5%'),
+      width:ancho('45%'),
     },
     registerbutton: {
       backgroundColor: "white",
       marginTop:15,
-      height:35,
-      width:180,
+      height:alto('5%'),
+      width:ancho('45%'),
      
     },
     loginText: {

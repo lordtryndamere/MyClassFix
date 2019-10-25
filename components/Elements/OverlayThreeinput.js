@@ -2,6 +2,10 @@ import React,{Component} from 'react'
 import {StyleSheet} from 'react-native'
 import {Overlay,Input,Button,Icon} from 'react-native-elements'
 import { View } from 'native-base';
+import {widthPercentageToDP  as ancho
+    ,heightPercentageToDP  as    alto ,
+    listenOrientationChange as op,
+    removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 export default class OverlayThreeinput extends Component{
     constructor(props){

@@ -1,6 +1,9 @@
 import React ,{PureComponent} from 'react'
 import { StyleSheet,View,ActivityIndicator,SafeAreaView, ImageBackground,Image} from 'react-native'
-
+import {widthPercentageToDP  as ancho
+    ,heightPercentageToDP  as    alto ,
+    listenOrientationChange as op,
+    removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 import firebaseConfig from '../utils/FireBase'
 import * as firebase from 'firebase'

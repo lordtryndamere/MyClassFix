@@ -15,6 +15,10 @@ import Preoloader from './Preloader'
 import { createStackNavigator } from 'react-navigation-stack';
 import Perfil from './Perfil'
 import AjustesView from './AjustesView'
+import {widthPercentageToDP  as ancho
+    ,heightPercentageToDP  as    alto ,
+    listenOrientationChange as op,
+    removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 const Stack = createStackNavigator (   {
     HomeScreen:HomeView,

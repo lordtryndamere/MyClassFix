@@ -1,6 +1,10 @@
 import React,{Component} from 'react'
 import {StyleSheet, View} from 'react-native'
 import {Overlay,Input,Button,Icon} from 'react-native-elements'
+import {widthPercentageToDP  as ancho
+    ,heightPercentageToDP  as    alto ,
+    listenOrientationChange as op,
+    removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 
 export default class OverlayTwoinput extends Component{

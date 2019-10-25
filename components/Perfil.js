@@ -1,10 +1,13 @@
 import React ,{PureComponent} from 'react'
 import {Video} from 'expo-av'
-import VideoPlayer from 'expo-video-player'
-
 import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView,Image} from 'react-native'
 import {Avatar,Header,Rating,Icon,Card} from 'react-native-elements'
 import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
+
+import {widthPercentageToDP  as ancho
+  ,heightPercentageToDP  as    alto ,
+  listenOrientationChange as op,
+  removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 
 var a;
@@ -41,6 +44,7 @@ render(){
             <Text style={styles.PresentationText} >
                 {desc}
             </Text>
+          <View style={{paddingBottom:50}} >
             <Video
             onFullscreenUpdate={Video.FULLSCREEN_UPDATE_PLAYER_WILL_PRESENT}
             onLoad={this.onLoad}
@@ -54,6 +58,7 @@ render(){
            
             style={{width:"100%",height:300}}
             />
+          </View>
     </ScrollView>
         </View>
     )
@@ -365,12 +370,12 @@ render(){
                 onIndexChange={index=>this.setState({index})}
                 initialLayout={{width:Dimensions.get('window').width}}
             />
-   <TouchableOpacity  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
-          <Text style={styles.loginText}>RESERVAR CLASE</Text>
-    </TouchableOpacity>
+
 
         </View>
-
+      <TouchableOpacity  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
+          <Text style={styles.loginText}>RESERVAR CLASE</Text>
+    </TouchableOpacity>
         </View>
     )
 }  
@@ -391,8 +396,8 @@ const styles=StyleSheet.create({
     center:{
 
         width:"100%",
-        height:"40%",
-        paddingTop:70,
+        height:"43%",
+        marginTop:60,
         flex:1,
         alignContent:'center',
         alignItems:'center'
@@ -409,15 +414,15 @@ const styles=StyleSheet.create({
     },
     botton:{
         width:"100%",
-        height:"60%"
+        height:"52%"
     },
     text:{
         fontWeight:"bold",
-        fontSize:18,
+        fontSize:ancho('4.5%'),
         color:"#212121"
     },
     text2:{
-        fontSize:16,
+        fontSize:ancho('3.5%'),
         color:"#9e9e9e"
     },
     rating:{
@@ -432,7 +437,7 @@ TouchableOpacityStyle: {
    alignItems: 'center',
    justifyContent: 'center',
 //    right: 30,
-   bottom:0,
+    bottom:0,
 },
   loginText:{
     color: 'white',
@@ -443,7 +448,7 @@ TouchableOpacityStyle: {
   reservarclase:{
     resizeMode: 'contain',
     backgroundColor: "#00BEB1",
-    height:50,
+    height:ancho('12%'),
     width:"100%",
   },
   TabView:{
@@ -453,8 +458,8 @@ TouchableOpacityStyle: {
   },
   PresentationText:{
       paddingTop:30,
-      paddingBottom:25,
-      fontSize:16,
+      paddingBottom:15,
+      fontSize: ancho('4%'),
       color:"#757575",
       paddingLeft:50,
       paddingRight:50,
