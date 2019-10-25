@@ -1,8 +1,9 @@
 import React ,{PureComponent} from 'react'
 import {Video} from 'expo-av'
 import VideoPlayer from 'expo-video-player'
+
 import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView,Image} from 'react-native'
-import {Avatar,Header,Rating,Icon} from 'react-native-elements'
+import {Avatar,Header,Rating,Icon,Card} from 'react-native-elements'
 import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
 
 
@@ -41,7 +42,7 @@ render(){
                 {desc}
             </Text>
             <Video
-
+            onFullscreenUpdate={Video.FULLSCREEN_UPDATE_PLAYER_WILL_PRESENT}
             onLoad={this.onLoad}
             useNativeControls={true}
             source={{uri:video}}
@@ -50,7 +51,7 @@ render(){
             isMuted={false}
             resizeMode="contain"
             shouldPlay={false}
-            isLooping
+           
             style={{width:"100%",height:300}}
             />
     </ScrollView>
@@ -60,62 +61,224 @@ render(){
     const SecondRoute = () =>(
         
         <View style={[styles.scene]}>
+        <ScrollView  >
             {
         <View style={styles.nivelesTop}>
                         {(() => {
                          
-                            if(sk[0] != undefined && sk[0] != null  ){
+                            if(sk != undefined && sk[0] != undefined && sk[0]['idiomas'].length > 0 ){
                                 console.log(sk[0])
 
-                              return (<Text> {Object.values(sk[0]).join()  } </Text>)
+                              return (
+                                <Card title="IDIOMAS" titleStyle={{color:"#424242"}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.34,
+                                shadowRadius: 6.27,
+                                
+                                elevation: 10,}} > 
+                            
+                            
+                        
+                            <View style={styles.containertop} >
+        
+                                <Image  style={styles.imagen} source={require("../assets/skill/languaje.png")} />
+                              <Text style={{ fontSize:14,
+                                        color:"#9e9e9e",
+                                        textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[0]['idiomas'].join(', ')  } 
+                              </Text>
+                            </View>
+                           
+                            
+                            </Card>)
                             }
                         })()}
-
+                
                         {(() => {
-                            if(sk[1]!=undefined && sk[1] != null  ){
+                            if(sk != undefined && sk[1] != undefined && sk[1]['musica'].length > 0   ){
                                 console.log(sk[1])
 
-                              return (<Text> {Object.values(sk[1]).join()  } </Text>)
+                              return (
+                                <Card  title="MUSICA" titleStyle={{color:"#424242",alignContent:'flex-start'}} containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.34,
+                                shadowRadius: 6.27,
+                                
+                                elevation: 10,}} > 
+                         
+                         
+                           
+                              <View style={styles.containertop} >
+                             
+                                <Image   style={styles.imagen} source={require("../assets/skill/music.png")} />
+                                <Text style={{color:"#757575", textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[1]['musica'].join(', ')  } 
+                              </Text>
+                            </View>
+                            
+                        
+                            </Card>)
                             }
                         })()}
 
                         {(() => {   
-                            if(sk[2]!=undefined && sk[2] != null  ){
+                            if(sk != undefined && sk[2] != undefined && sk[2]['tecnologia'].length > 0   ){
                                 console.log(sk[2])
 
-                              return (<Text> {Object.values(sk[2]).join()  } </Text>)
+                              return (   
+                                <Card   title="TECNOLOGIA" titleStyle={{color:"#424242" ,alignContent:'flex-start'}} containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.34,
+                                shadowRadius: 6.27,
+                                
+                                elevation: 10,}} > 
+                           
+                        
+                          
+                              <View style={styles.containertop} >
+                              
+                                <Image   style={styles.imagen}  source={require("../assets/skill/tecnologi.png")} />
+                                <Text style={{color:"#757575", textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[2]['tecnologia'].join(', ')  } 
+                              </Text>
+                            </View>
+                            
+                         
+                            </Card>)
                             }
                         })()}
 
                         {(() => {  
-                            if(sk[3]!=undefined && sk[3] != null  ){
+                            if(sk != undefined && sk[3] != undefined && sk[3]['universidad'].length > 0   ){
                                 console.log(sk[3])
 
-                              return (<Text> {Object.values(sk[3]).join()  } </Text>)
+                              return (
+                                <Card  title="UNIVERSIDAD" titleStyle={{color:"#424242"  ,alignContent:'flex-start'}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.34,
+                                shadowRadius: 6.27,
+                                
+                                elevation: 10,}} > 
+                           
+                           
+                              <View style={styles.containertop} >
+                            
+                                <Image   style={styles.imagen}  source={require("../assets/skill/pregrado.png")} />
+                                <Text style={{color:"#757575", textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[3]['universidad'].join(', ')  } 
+                              </Text>
+                            </View>
+                           
+                          
+                            </Card>)
                             }
                         })()}
 
                         {(() => { 
-                            if(sk[4]!=undefined && sk[4] != null  ){
+                            if(sk != undefined && sk[4] != undefined && sk[4]['secundaria'].length > 0   ){
                                 console.log(sk[4])
 
-                              return (<Text> {Object.values(sk[4]).join()  } </Text>)
+                              return (
+                            <Card   title="SECUNDARIA" titleStyle={{color:"#424242",alignContent:'flex-start'}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 5,
+                            },
+                            shadowOpacity: 0.34,
+                            shadowRadius: 6.27,
+                            
+                            elevation: 10,}} > 
+                                    
+                        
+                            
+                              <View style={styles.containertop} >
+                  
+                                <Image    style={styles.imagen} source={require("../assets/skill/secundary.png")} />
+                                <Text style={{color:"#757575", textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[4]['secundaria'].join(', ')  } 
+                              </Text>
+                            </View>
+                        
+                            
+                            </Card> )
                             }
                         })()}
 
                         {(() => { 
-                            if(sk[5]!=undefined && sk[5] != null  ){
+                            if(sk != undefined && sk[5] != undefined && sk[5]['primaria'].length > 0  ){
                                 console.log(sk[5])
 
-                              return (<Text> {Object.values(sk[5]).join()  } </Text>)
+                              return (
+                            <Card    title="PRIMARIA" titleStyle={{color:"#424242",alignContent:'flex-start'}}   containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 5,
+                            },
+                            shadowOpacity: 0.34,
+                            shadowRadius: 6.27,
+                            
+                            elevation: 10,}} > 
+                            
+             
+                               
+                              <View style={styles.containertop} >
+                        
+                                <Image    style={styles.imagen} source={require("../assets/skill/primary.png")} />
+                                <Text style={{color:"#757575", textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[5]['primaria'].join(', ')  } 
+                              </Text>
+                            </View>
+                          
+                            </Card>)
                             }
                         })()}
 
                         {(() => { 
-                            if(sk[6]!=undefined && sk[6] != null  ){
+                            if(sk != undefined && sk[6] != undefined && sk[6]['otros'].length > 0  ){
                                 console.log(sk[6])
 
-                              return (<Text> {Object.values(sk[6]).join()  } </Text>)
+                              return (
+                                <Card  title="OTROS" titleStyle={{color:"#424242",alignContent:'flex-start'}}   containerStyle={{ paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 5,
+                                },
+                                shadowOpacity: 0.34,
+                                shadowRadius: 6.27,
+                                
+                                elevation: 10,}} > 
+                                
+                                
+                                 
+                              <View style={styles.containertop} >
+                                  
+                                <Image   style={styles.imagen}  source={require("../assets/skill/others.png")} />
+                              <Text style={{color:"#757575", textShadowColor:"#9e9e9e",
+                                        fontWeight:"700"}} > 
+                                {sk[6]['otros'].join(', ')  } 
+                              </Text>
+                              </View>
+                         
+                              </Card>
+                            )
                             }
                         })()}
                     
@@ -125,7 +288,7 @@ render(){
                  
         </View>
     }
-
+    </ScrollView>
         </View>
     )
 
@@ -299,13 +462,25 @@ TouchableOpacityStyle: {
       fontWeight:"500"
   },
   nivelesTop:{
-      flex:1,
-      alignContent:'center',
-      alignItems:'center',
       width:"100%",
-      height:"30%",
-      borderBottomWidth:2,
-      borderBottomColor:"#9e9e9e"
+      height:"100%",
+    
+   
   },
+  containertop:{
+      flexDirection:"column",
+      alignContent:'flex-start',
+      alignItems:'flex-start',
+      paddingTop:5,
+      paddingBottom:5,
+  
+      
+    
+     
+  },
+  imagen:{
+    height:80,
+    width:80
+  }
 
 })

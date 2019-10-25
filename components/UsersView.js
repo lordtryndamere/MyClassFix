@@ -246,7 +246,7 @@ export default class UserView extends PureComponent {
 
   
   renderItem = ({ item, index }) => (
-
+  
     <Card containerStyle={{
       padding: 0, borderRadius: 20, shadowColor: "#000",
       shadowOffset: {
@@ -303,13 +303,108 @@ export default class UserView extends PureComponent {
               ratingBackgroundColor={"#00BEB1"}
               imageSize={13}
 
-              startingValue={item.rank}
+              startingValue={item.rank} 
             />
           </View>
         </View>}
         subtitleStyle={{ color: '#bdbdbd' }}
         leftAvatar={{ renderPlaceholderContent: <Image style={{ height: 50, width: 50 }} source={require('../assets/logo.png')} />, size: 60, source: { uri: item.foto } }}
-        chevron={<Tooltip popover={<Text>Info here</Text>} width={150} height={60}  >
+        chevron={<Tooltip   containerStyle={{alignContent:'center',alignItems:'center',flexDirection:'row'}} height={300} width={300}  popover={
+          
+          <View  >
+                 {(() => {
+                   
+                   if(item.sk != undefined && item.sk[0] != undefined && item.sk[0]['idiomas'].length > 0 ){
+                      return(
+                        <View>
+                        <Text style={{color:"#4fc3f7" ,fontSize:14 }} > IDIOMAS  </Text>
+                        <Text style={{color:"#fff",fontSize:10 }} > {item.sk[0]['idiomas'].join(', ')}  </Text>
+                        </View>
+                      )
+                   }
+
+                })()}
+                      {(() => {
+                   
+                   if(item.sk != undefined && item.sk[1] != undefined && item.sk[1]['musica'].length > 0 ){
+                    return(
+                      <View>
+                      <Text style={{color:"#4fc3f7" ,fontSize:14 }} > MUSICA  </Text>
+                      <Text style={{color:"#fff",fontSize:10 }}  > {item.sk[1]['musica'].join(', ')}  </Text>
+                      </View>
+                    )
+
+                   }
+
+                })()}
+                      {(() => {
+                   
+                   if(item.sk != undefined && item.sk[2] != undefined && item.sk[2]['tecnologia'].length > 0 ){
+                    return(
+                      <View>
+                      <Text  style={{color:"#4fc3f7" ,fontSize:14 }} > TECNOLOGIA  </Text>
+                      <Text style={{color:"#fff",fontSize:10 }} > {item.sk[2]['tecnologia'].join(', ')}  </Text>
+                      </View>
+                    )
+
+                   }
+
+                })()}
+                      {(() => {
+                   
+                   if(item.sk != undefined && item.sk[3] != undefined && item.sk[3]['universidad'].length > 0 ){
+
+                    return(
+                      <View>
+                      <Text   style={{color:"#4fc3f7" ,fontSize:14 }} > UNIVERSIDAD  </Text>
+                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[3]['universidad'].join(', ')}  </Text>
+                      </View>
+                    )
+                   }
+
+                })()}
+                      {(() => {
+                   
+                   if(item.sk != undefined && item.sk[4] != undefined && item.sk[4]['secundaria'].length > 0 ){
+
+                    return(
+                      <View>
+                      <Text   style={{color:"#4fc3f7" ,fontSize:14 }} > SECUNDARIA  </Text>
+                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[4]['secundaria'].join(', ')}  </Text>
+                      </View>
+                    )
+                   }
+
+                })()}
+                      {(() => {
+                   
+                   if(item.sk != undefined && item.sk[5] != undefined && item.sk[5]['primaria'].length > 0 ){
+                    return(
+                      <View>
+                      <Text style={{color:"#4fc3f7" ,fontSize:14 }} > PRIMARIA  </Text>
+                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[5]['primaria'].join(', ')}  </Text>
+                      </View>
+                    )
+
+
+                   }
+
+                })()}
+                      {(() => {
+                   
+                   if(item.sk != undefined && item.sk[6] != undefined && item.sk[6]['otros'].length > 0 ){
+                    return(
+                      <View>
+                      <Text  style={{color:"#4fc3f7" ,fontSize:14 }} > Otros  </Text>
+                      <Text  style={{color:"#fff",fontSize:10 }} > {item.sk[6]['otros'].join(', ')}  </Text>
+                      </View>
+                    )
+
+                   }
+
+                })()}
+          </View>
+        }   >
           <Image source={require('../assets/additem.png')} style={{ height: 30, width: 30 }} />
         </Tooltip>
 

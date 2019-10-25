@@ -110,7 +110,7 @@ updateUserpassword  = async (currentPassword,newPassword,newPasswordRepeat) =>{
             Toast.show("Las contraseñas no coinciden",1500)
         }
     }else{
-        Toast.show("Tienes que rellenar todos los capos",1500)
+        Toast.show("Tienes que rellenar todos los campos",1500)
     }
 
     this.setState({
