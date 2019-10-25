@@ -1,13 +1,12 @@
 import React ,{PureComponent} from 'react'
 import {Video} from 'expo-av'
 import VideoPlayer from 'expo-video-player'
-import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView} from 'react-native'
+import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView,Image} from 'react-native'
 import {Avatar,Header,Rating,Icon} from 'react-native-elements'
-import *as firebase from 'firebase'
 import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
 
 
-
+var a;
 export default class Perfil extends PureComponent{
     constructor(props){
         super(props)
@@ -30,7 +29,9 @@ export default class Perfil extends PureComponent{
     
     
 render(){
-    var {name,lastname,key,foto,rank,skl,desc,video} = this.props.navigation.state.params.Profile
+    var {name,lastname,key,foto,rank,acentSkill,type,sk,desc,video} = this.props.navigation.state.params.Profile
+
+
 
     
     const FirstRoute = () =>(
@@ -57,7 +58,34 @@ render(){
     )
     
     const SecondRoute = () =>(
+        
         <View style={[styles.scene]}>
+        <View style={styles.nivelesTop}>
+            <View style={styles.ContainerTop} >
+
+            
+             {
+             
+                <View>
+                    <Text> {sk[5] } </Text>
+                    intentar hacer un .map
+                    return (
+    <div className="col">
+      <h1>Mi Casa</h1>
+      <p>This is my house y&apos;all!</p>
+      {homes.map(home => <div>{home.name}</div>)}  asi 
+    </div>
+  );
+                </View>
+            
+            }
+            
+            
+
+ 
+            </View>
+
+        </View>
 
         </View>
     )
@@ -91,8 +119,8 @@ render(){
                 size={100}
                 // renderPlaceholderContent={<Image source={require('../assets/logo.png')} />}
                 />
-                <Text style={styles.text} >{`${name}${lastname} `} </Text>
-                <Text style={styles.text2} > {skl[0]} </Text>
+                <Text style={styles.text} >{`${name}${lastname}`} </Text>
+                <Text style={styles.text2} > {`Docente de ${acentSkill[0]}`} </Text>
                 <Rating
                     type={"custom"}
                     ratingColor={"#00BEB1"}
@@ -172,6 +200,11 @@ const styles=StyleSheet.create({
     scene:{
         flex:1,
     },
+    scene2:{
+        flex:1,
+        width:"100%",
+        height:"100%"
+    },
     botton:{
         width:"100%",
         height:"60%"
@@ -225,5 +258,17 @@ TouchableOpacityStyle: {
       paddingRight:50,
       textShadowOffset:{width:3,height:3},
       fontWeight:"500"
+  },
+  nivelesTop:{
+      width:"100%",
+      height:"30%",
+      borderBottomWidth:2,
+      borderBottomColor:"#9e9e9e"
+  },
+  ContainerTop:{
+      width:"50%",
+      height:"20%",
+      paddingBottom:10,
+      paddingTop:10
   }
 })

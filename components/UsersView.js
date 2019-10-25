@@ -43,12 +43,15 @@ export default class UserView extends PureComponent {
       busquedaprofesores: null,
       Search: '',
       timepassed: false,
+      skill:[],
       fullTeachers: '',
       nuevo: [],
       items: [],
       teachersAproveds: [],
       render: '',
-      idiomasAcentos: ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
+      idiomasAcentos :
+
+      ["Alemán", "Árabe", "Chino", "Español", "Francés", "Holandés", "Inglés", "Irlandés", "Italiano", "Japonés", "Latín", "Portugués", "Ruso"],
       page: 1,
       data: [9],
       query: "",
@@ -65,33 +68,113 @@ export default class UserView extends PureComponent {
     this.loadTeachers()
   }
 
-  loadTeachers() {
-    var DataFull;
+  loadTeachers   =   () => {
+    var snapshot;
     var skl=[];
     var teachers;
     var OBJETO;
-    firebase.database().ref(`/approveds`).limitToFirst(60).once('value', (snapshot) => {
+    var skill = []
+    var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
+    var type = []
+
+    firebase.database().ref(`/approveds`).once('value', (snapshot) => {
       teachers = snapshot.val();
-    })
-      .then(() => {
+    }).then( async () => {
         fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
         for (const key in teachers) {
-          skl=[];
-          firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
+         
+          await firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {
             OBJETO = snapshot.val()
-            console.log(OBJETO)
-          }).then(()=>{
+             
+     
+           
+          })
             firebase.database().ref(`/teachers/${key}/newSkill`).once('value',data=>{
+           
+              mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
+              skl=[];
+              skill = []
+              type = []
+              snapshot = data.val()
+              
+             
+              for (const i in snapshot) {
 
-              DataFull = data.val()
-            
-              for (const i in DataFull) {
+                type.push(i)
 
-                for (const j in DataFull[i]) {
+                for (const j in snapshot[i]) {
 
-                  for (const k in DataFull[i][j]) {
+                  for (const k in snapshot[i][j]) {
 
-                    skl.push(DataFull[i][j][k].skill)
+                    // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+
+
+
+                    if (i == 'Idiomas') {
+
+                      this.state.idiomasAcentos.forEach(val => {
+
+                        if (val == j) {
+
+                          mobj[0]['idiomas'].push(val);
+
+                          skill.push(val)
+
+                          skl.push(val)
+
+                        }
+
+                      })
+
+                    } else if (i == 'Musica') {
+
+                      mobj[1]['musica'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Tecnologia') {
+
+                      mobj[2]['tecnologia'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Universidad') {
+
+                      mobj[3]['universidad'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Secundaria') {
+
+                      mobj[4]['secundaria'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Primaria') {
+
+                      mobj[5]['primaria'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    } else if (i == 'Otros') {
+
+                      mobj[6]['otros'].push(snapshot[i][j][k].skill)
+
+                      skill.push(snapshot[i][j][k].skill)
+
+                      skl.push(snapshot[i][j][k].skill)
+
+                    }
 
                   }
 
@@ -99,55 +182,69 @@ export default class UserView extends PureComponent {
 
               }
 
-       
+              mobj[0]['idiomas'] = mobj[0]['idiomas']
+
+            
+             
+     
+              // this.setState({skill:skl})
         
-            })
+            }) 
+ 
+           
 
+            .then( () => {
+              
+            var uid = key
+            var nombre = OBJETO.name
+            var surname = OBJETO.surname
+            var ranking = OBJETO.ranking
+            var country = OBJETO.country
+            var photo = OBJETO.linkPhoto
+            var tags = OBJETO.tags
+            var description = OBJETO.resume
+            var video = OBJETO.url
 
+            var ojc = {
+              key: uid,
+              name: nombre,
+              lastname: surname,
+              rank: ranking,
+              pais: country,
+              foto: photo,
+              tag: tags,
+              acentSkill:skl,
+              type:type,
+              sk:mobj,
+              desc:description,
+              video:video
+            }
+            fullData.push(ojc)
+            
+            
+            // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
+            // this.setState({fullTeachers:render})
+            //  this.state.teacher = snapshot.val()
+            //  this.state.teacher.uid = key
+            //  this.state.teachersAproveds.push(this.state.teacher)
+            //  var renderizar = Object.values(this.state.teachersAproveds)
+            //  // console.log(this.state.render) 
+            //  return this.setState({render:renderizar})
           })
-            .then(() => {
-              var uid = key
-              var nombre = OBJETO.name
-              var surname = OBJETO.surname
-              var ranking = OBJETO.ranking
-              var country = OBJETO.country
-              var photo = OBJETO.linkPhoto
-              var tags = OBJETO.tags
-              var description = OBJETO.resume
-              var video = OBJETO.url
 
-              var ojc = {
-                key: uid,
-                name: nombre,
-                lastname: surname,
-                rank: ranking,
-                pais: country,
-                foto: photo,
-                tag: tags,
-                skl:skl,
-                desc:description,
-                video:video
-              }
-              fullData.push(ojc)
-              // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
-              // this.setState({fullTeachers:render})
-              //  this.state.teacher = snapshot.val()
-              //  this.state.teacher.uid = key
-              //  this.state.teachersAproveds.push(this.state.teacher)
-              //  var renderizar = Object.values(this.state.teachersAproveds)
-              //  // console.log(this.state.render) 
-              //  return this.setState({render:renderizar})
-            })
+
         }
         // console.log(fullData)
         // console.log(this.state.fullTeachers)
         // this.setState({ items: teachers })
       })
+      
     setTimeout(() => {
       return this.setState({ fullTeachers: fullData })
     }, 10000);
   }
 
+  
   renderItem = ({ item, index }) => (
 
     <Card containerStyle={{
@@ -193,7 +290,7 @@ export default class UserView extends PureComponent {
         titleStyle={{ color: 'black', fontWeight: 'bold' }}
         subtitle={<View>
 
-          <Text style={{ color: "#757575", fontSize: 13, fontWeight: "600" }} > {item.skl[0]} </Text>
+          <Text style={{ color: "#757575", fontSize: 13, fontWeight: "600" }} > {item.acentSkill[0]} </Text>
           <View style={styles.contentRating} >
             <Rating
 
