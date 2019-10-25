@@ -60,32 +60,71 @@ render(){
     const SecondRoute = () =>(
         
         <View style={[styles.scene]}>
+            {
         <View style={styles.nivelesTop}>
-            <View style={styles.ContainerTop} >
+                        {(() => {
+                         
+                            if(sk[0] != undefined && sk[0] != null  ){
+                                console.log(sk[0])
 
-            
-             {
-             
-                <View>
-                    <Text> {sk[5] } </Text>
-                    intentar hacer un .map
-                    return (
-    <div className="col">
-      <h1>Mi Casa</h1>
-      <p>This is my house y&apos;all!</p>
-      {homes.map(home => <div>{home.name}</div>)}  asi 
-    </div>
-  );
-                </View>
-            
-            }
-            
-            
+                              return (<Text> {Object.values(sk[0]).join()  } </Text>)
+                            }
+                        })()}
 
- 
-            </View>
+                        {(() => {
+                            if(sk[1]!=undefined && sk[1] != null  ){
+                                console.log(sk[1])
 
+                              return (<Text> {Object.values(sk[1]).join()  } </Text>)
+                            }
+                        })()}
+
+                        {(() => {   
+                            if(sk[2]!=undefined && sk[2] != null  ){
+                                console.log(sk[2])
+
+                              return (<Text> {Object.values(sk[2]).join()  } </Text>)
+                            }
+                        })()}
+
+                        {(() => {  
+                            if(sk[3]!=undefined && sk[3] != null  ){
+                                console.log(sk[3])
+
+                              return (<Text> {Object.values(sk[3]).join()  } </Text>)
+                            }
+                        })()}
+
+                        {(() => { 
+                            if(sk[4]!=undefined && sk[4] != null  ){
+                                console.log(sk[4])
+
+                              return (<Text> {Object.values(sk[4]).join()  } </Text>)
+                            }
+                        })()}
+
+                        {(() => { 
+                            if(sk[5]!=undefined && sk[5] != null  ){
+                                console.log(sk[5])
+
+                              return (<Text> {Object.values(sk[5]).join()  } </Text>)
+                            }
+                        })()}
+
+                        {(() => { 
+                            if(sk[6]!=undefined && sk[6] != null  ){
+                                console.log(sk[6])
+
+                              return (<Text> {Object.values(sk[6]).join()  } </Text>)
+                            }
+                        })()}
+                    
+                  
+                      
+
+                 
         </View>
+    }
 
         </View>
     )
@@ -260,15 +299,13 @@ TouchableOpacityStyle: {
       fontWeight:"500"
   },
   nivelesTop:{
+      flex:1,
+      alignContent:'center',
+      alignItems:'center',
       width:"100%",
       height:"30%",
       borderBottomWidth:2,
       borderBottomColor:"#9e9e9e"
   },
-  ContainerTop:{
-      width:"50%",
-      height:"20%",
-      paddingBottom:10,
-      paddingTop:10
-  }
+
 })
