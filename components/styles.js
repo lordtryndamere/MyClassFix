@@ -313,7 +313,7 @@ contentRating:{
 },
 iconhome:{
   height:alto('13%'),
-  width:ancho('34%')
+  width:ancho('35.5%')
 }
 
     
