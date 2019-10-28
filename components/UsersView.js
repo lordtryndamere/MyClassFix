@@ -84,7 +84,7 @@ export default class UserView extends PureComponent {
     firebase.database().ref(`/approveds`).once('value', (snapshot) => {
       teachers = snapshot.val();
     }).then( async () => {
-        fullData = [];   // QUEDAMOS AQUI TOCABA REFRESCARLO
+        fullData = [];   
         for (const key in teachers) {
          
           await firebase.database().ref(`/teachers/${key}/personalData`).once('value', snapshot => {

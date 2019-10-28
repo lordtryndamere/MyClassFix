@@ -26,9 +26,9 @@ const Stack = createStackNavigator (   {
     Settings:Settings,
     UserView:UserView,
     ProfileView:ProfileView,
+    ReservaView:ReservaView,
     Preoloader:Preoloader,
     AjustesView:AjustesView,
-    ReservaView:ReservaView,
     //Perfil:Perfil
     Perfil:{
         screen:Perfil
