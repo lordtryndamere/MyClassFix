@@ -4,6 +4,7 @@ import { Container, Content, Icon, Header, Body } from 'native-base'
 import {createDrawerNavigator,DrawerNavigatorItems} from 'react-navigation-drawer'
 import {SafeAreaView,StyleSheet} from 'react-native'
 import {createAppContainer,createSwitchNavigator} from 'react-navigation'
+import ReservaView from './MyCalendar/ReservarClase'
 import UsersView from './UsersView';
 import Settings from './SettinsView';
 import HomeView from './HomeView';
@@ -27,6 +28,7 @@ const Stack = createStackNavigator (   {
     ProfileView:ProfileView,
     Preoloader:Preoloader,
     AjustesView:AjustesView,
+    ReservaView:ReservaView,
     //Perfil:Perfil
     Perfil:{
         screen:Perfil

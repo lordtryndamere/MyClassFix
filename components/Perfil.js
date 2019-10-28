@@ -1,4 +1,5 @@
 import React ,{PureComponent} from 'react'
+import *as firebase from 'firebase'
 import {Video} from 'expo-av'
 import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView,Image} from 'react-native'
 import {Avatar,Header,Rating,Icon,Card} from 'react-native-elements'
@@ -10,7 +11,7 @@ import {widthPercentageToDP  as ancho
   removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 
-var a;
+const vid = firebase.auth().currentUser.uid
 export default class Perfil extends PureComponent{
     constructor(props){
         super(props)
@@ -373,7 +374,7 @@ render(){
 
 
         </View>
-      <TouchableOpacity  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
+      <TouchableOpacity   onPress={()=>this.props.navigation.navigate('ReservaView')}  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
           <Text style={styles.loginText}>RESERVAR CLASE</Text>
     </TouchableOpacity>
         </View>
