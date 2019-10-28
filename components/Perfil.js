@@ -11,7 +11,7 @@ import {widthPercentageToDP  as ancho
   removeOrientationListener as rp } from 'react-native-responsive-screen'
 
 
-const vid = firebase.auth().currentUser.uid
+// const vid = firebase.auth().currentUser.uid
 export default class Perfil extends PureComponent{
     constructor(props){
         super(props)
