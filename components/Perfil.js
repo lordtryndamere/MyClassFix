@@ -75,7 +75,7 @@ render(){
                                 console.log(sk[0])
 
                               return (
-                                <Card title="IDIOMAS" titleStyle={{color:"#424242"}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
+                                <Card  title="IDIOMAS" titleStyle={{color:"#424242"}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
                                 shadowOffset: {
                                     width: 0,
                                     height: 5,
@@ -406,6 +406,10 @@ const styles=StyleSheet.create({
     },
     scene:{
         flex:1,
+        width:"100%",
+        height:"100%",
+        paddingBottom:50
+
     },
     scene2:{
         flex:1,
@@ -459,7 +463,7 @@ TouchableOpacityStyle: {
   PresentationText:{
       paddingTop:30,
       paddingBottom:15,
-      fontSize: ancho('4%'),
+      fontSize: ancho('3.5%'),
       color:"#757575",
       paddingLeft:50,
       paddingRight:50,
@@ -484,8 +488,8 @@ TouchableOpacityStyle: {
      
   },
   imagen:{
-    height:80,
-    width:80
+    height:alto('6%'),
+    width:ancho('6%')
   }
 
 })

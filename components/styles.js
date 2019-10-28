@@ -121,7 +121,7 @@ inputs2:{
       paddingTop:15,
       color:"#9E9E9E",
       textShadowColor:'#75827d',
-      fontSize:16
+      fontSize:ancho('4%')
   },
     text2:{
       color:"#f0ffff",
@@ -239,8 +239,8 @@ inputs2:{
   
     },
     headerImage3:{
-      height:20,
-      width:20,
+      height:alto('3%'),
+      width:ancho('5%'),
       position:'relative'
   
     },
@@ -307,9 +307,13 @@ rating:{
 
 },
 contentRating:{
-  alignContent:'center',
-  alignItems:'center',
-  marginRight:150
+  alignContent:'flex-start',
+  alignItems:'flex-start',
+  // marginRight:ancho('38%')
+},
+iconhome:{
+  height:alto('13%'),
+  width:ancho('34%')
 }
 
     

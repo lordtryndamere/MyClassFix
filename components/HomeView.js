@@ -55,7 +55,7 @@ export default class HomeView extends PureComponent{
                           <Image source={require('../assets/menu2.png')} style={styles.headerImage3}  />
                       </View>
                       </TouchableOpacity> }
-                      centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#00BEB1', fontSize:20} }}
+                      centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#00BEB1', fontSize:ancho('4.5%')} }}
                     containerStyle={{
                       backgroundColor:'#fff',
                       borderBottomColor:'#9E9E9E',
@@ -74,7 +74,7 @@ export default class HomeView extends PureComponent{
                                 <View style={{padding: 7,justifyContent:'center',alignItems:'center'}}>
                                   <Text style={{ color:"#424242",
                                       textShadowColor:'#424242',
-                                      fontSize:18,
+                                      fontSize:ancho('4.5%'),
                                       fontWeight:'900'}}> APRENDE CON LOS MEJORES  </Text>
                   </View>  
                 
@@ -83,18 +83,18 @@ export default class HomeView extends PureComponent{
             <View style={{padding: 5,justifyContent:'center',alignItems:'center'}}>
                                   <Text style={{ color:"#424242",
                                       textShadowColor:'#424242',
-                                      fontSize:18,
+                                      fontSize:ancho('4.4%'),
                                       fontWeight:'900'}}>¡Bienvenido {firebase.auth().currentUser.displayName}!   </Text>
             </View>
             </View>
-            <View style={{paddingLeft:40,paddingRight:40,paddingTop:20,paddingBottom:20,height:alto('40%'),width:ancho("100%"),justifyContent:'center',flexDirection:"row",flexWrap:"wrap",padding:5}}>  
+            <View style={{paddingLeft:40,paddingRight:40,paddingTop:10,paddingBottom:20,height:alto('40%'),width:ancho("100%"),justifyContent:'center',flexDirection:"row",flexWrap:"wrap",padding:5}}>  
             
                    
                             
 
                     <TouchableOpacity  style={styles.header3} onPress={()=>this.props.navigation.navigate('UserView')} >
                         <View  style={styles.row}>
-                            <Image source={require('../assets/03.png')} style={{height:90,width:140,padding:5}}  />
+                            <Image source={require('../assets/03.png')} style={styles.iconhome}  />
                         
                         </View>
                       </TouchableOpacity>
@@ -102,7 +102,7 @@ export default class HomeView extends PureComponent{
                         
                         <TouchableOpacity style={styles.header5} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                         <View  style={styles.row}>
-                            <Image source={require('../assets/02.png')} style={{height:90,width:140,padding:5}}  />
+                            <Image source={require('../assets/02.png')} style={styles.iconhome}   />
                          
                         </View>
                         </TouchableOpacity>
@@ -115,14 +115,14 @@ export default class HomeView extends PureComponent{
 
                               <TouchableOpacity  style={styles.header4} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                                   <View  style={styles.row}>
-                                      <Image source={require('../assets/04.png')} style={{height:90,width:140,padding:5}}  />
+                                      <Image source={require('../assets/04.png')} style={styles.iconhome}   />
                                   </View>
                                 </TouchableOpacity>
                   
                                   
                                   <TouchableOpacity style={styles.header6} onPress={()=>this.props.navigation.navigate('HomeScreen')} >
                                   <View  style={styles.row}>
-                                      <Image source={require('../assets/01.png')} style={{height:90,width:140,padding:5}}  />
+                                      <Image source={require('../assets/01.png')}style={styles.iconhome}   />
 
                                   </View>
                                   </TouchableOpacity>

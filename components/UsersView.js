@@ -1,8 +1,11 @@
-import React, { Component, PureComponent } from 'react';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import React, {  PureComponent } from 'react';
+import { Rating } from 'react-native-ratings';
 // import PopoverTooltip from  'react-native-popover-tooltip'
 import * as firebase from 'firebase';
-
+import {widthPercentageToDP  as ancho
+  ,heightPercentageToDP  as    alto ,
+  listenOrientationChange as op,
+  removeOrientationListener as rp } from 'react-native-responsive-screen'
 import styles from './styles'
 import { ListItem, Card, Header, Tooltip } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
@@ -248,7 +251,9 @@ export default class UserView extends PureComponent {
   
   renderItem = ({ item, index }) => (
   
-    <Card containerStyle={{
+    <Card
+    
+    containerStyle={{
       padding: 0, borderRadius: 20, shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -258,9 +263,11 @@ export default class UserView extends PureComponent {
       shadowRadius: 6.27,
 
       elevation: 10,
+  
     }}>
 
       <ListItem
+
         containerStyle={{
           borderRadius: 20, shadowColor: "#000",
           shadowOffset: {
@@ -288,10 +295,11 @@ export default class UserView extends PureComponent {
         // key={this.state.render[item].key}
         title={item.name}
 
-        titleStyle={{ color: 'black', fontWeight: 'bold' }}
+        titleStyle={{ color: 'black', fontWeight: 'bold',fontSize:ancho('3.8%') }}
         subtitle={<View>
-
-          <Text style={{ color: "#757575", fontSize: 13, fontWeight: "600" }} > {item.acentSkill[0]} </Text>
+            <View style={styles.contentRating} >
+            <Text style={{ color: "#757575", fontSize:ancho('3.4%'), fontWeight: "600" }} > {item.acentSkill[0]} </Text>
+            </View>
           <View style={styles.contentRating} >
             <Rating
 
@@ -482,7 +490,7 @@ export default class UserView extends PureComponent {
           </TouchableOpacity>}
           centerComponent={
             <Searchbar
-              style={{ width: "130%", height: 38, borderRadius: 30 }}
+              style={{ width: "130%", height: alto('5%'), borderRadius: 30 }}
               placeholder="Buscar"
               onChangeText={this.searchTeachers}
               value={Search}
@@ -516,14 +524,14 @@ export default class UserView extends PureComponent {
           <Text style={{
             color: "#424242",
             textShadowColor: '#424242',
-            fontSize: 18,
+            fontSize: ancho('4.5%'),
             fontWeight: '900'
           }}> APRENDE CON LOS MEJORES  </Text>
         </View>
         {console.log(this.state.fullTeachers),
           this.state.fullTeachers.length < 3
             ? <View style={{ paddingTop: 120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
-              <Image source={require('../assets/spinner.gif')} style={{ height: 200, width: 200 }} />
+              <Image source={require('../assets/spinner.gif')} style={{ height: alto('23%'), width: ancho('38%') }} />
               <Text style={styles.textload}>Cargando profesores ....</Text>
             </View>
             : <FlatList

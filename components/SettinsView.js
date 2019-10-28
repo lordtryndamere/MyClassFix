@@ -17,7 +17,7 @@ export default class SettinsView extends PureComponent{
               <Header
   leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.dispatch(DrawerActions.openDrawer())} >
   <View  style={styles.row}>
-      <Image source={require('../assets/menu2.png')} style={styles.headerImage2}  />
+      <Image source={require('../assets/menu2.png')} style={styles.headerImage3}  />
   </View>
   </TouchableOpacity>}
   // centerComponent={{ text: 'M Y C L A S S F L I X', style: { color: '#26a69a', fontSize:20} }}
