@@ -34,7 +34,7 @@ export default class Perfil extends PureComponent{
     
     
 render(){
-    var {name,lastname,key,foto,rank,acentSkill,type,sk,desc,video} = this.props.navigation.state.params.Profile
+    const {name,lastname,key,foto,rank,acentSkill,type,sk,desc,video} = this.props.navigation.state.params.Profile
 
 
 
@@ -374,7 +374,7 @@ render(){
 
 
         </View>
-      <TouchableOpacity   onPress={()=>this.props.navigation.navigate('ReservaView')}  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
+      <TouchableOpacity   onPress={()=>this.props.navigation.navigate('ReservaView',key)}  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
           <Text style={styles.loginText}>RESERVAR CLASE</Text>
     </TouchableOpacity>
         </View>

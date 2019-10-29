@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native responsive-screen
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add moment
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\DMIX;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\PROGRAMADOR\AppData\Local\Microsoft\WindowsApps;C:\Users\PROGRAMADOR\AppData\Roaming\npm;C:\Users\PROGRAMADOR\AppData\Local\Yarn\bin;C:\Users\PROGRAMADOR\AppData\Local\Programs\Microsoft VS Code\bin
+  C:\Users\PROGRAMADOR\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\PROGRAMADOR\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Intel\DMIX;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Users\PROGRAMADOR\AppData\Local\Microsoft\WindowsApps;C:\Users\PROGRAMADOR\AppData\Roaming\npm;C:\Users\PROGRAMADOR\AppData\Local\Yarn\bin;C:\Users\PROGRAMADOR\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.19.0
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/responsive-screen: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66027:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140539:22)
-      at Request.emit (events.js:198:13)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141511:10)
-      at Request.emit (events.js:198:13)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141433:12)
-      at Object.onceWrapper (events.js:286:20)
-      at IncomingMessage.emit (events.js:203:15)
-      at endReadableNT (_stream_readable.js:1145:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: EPERM: operation not permitted, unlink 'C:\reactnativeapps\MyClassFix\node_modules\@babel\generator\node_modules\.bin'
 
 npm manifest: 
   {
@@ -68,6 +58,7 @@ npm manifest:
       "react-native-public-ip": "^1.0.1",
       "react-native-ratings": "^6.5.0",
       "react-native-reanimated": "^1.2.0",
+      "react-native-responsive-screen": "^1.3.0",
       "react-native-screens": "^1.0.0-alpha.23",
       "react-native-simple-toast": "^1.0.0",
       "react-native-snap-carousel": "^3.8.1",
@@ -5501,6 +5492,11 @@ Lockfile:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.3.0.tgz#581cdb0bd1ff05e7304b116af712ded0c7665ede"
     integrity sha512-KFno6D0q09kx71IDuPa4qeC1t1msALsCMuli3/EN3YDf8XoM2CG53yzhVHMFtmcW0IUCySugHgxQiuT5BzwOPA==
+  
+  react-native-responsive-screen@^1.3.0:
+    version "1.3.0"
+    resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.3.0.tgz#3e81d266fe9d1212b4acedf9eeb2b3cb64cacce4"
+    integrity sha512-9ltQQZGYTClbzcXEkUHVHcSOzLoEOti/xLMjhDQCx9K5D1TwjswNe4b/cfiwF8Bwal+3Wscsb3FJTDR/tPORag==
   
   react-native-safe-area-view@^0.12.0:
     version "0.12.0"

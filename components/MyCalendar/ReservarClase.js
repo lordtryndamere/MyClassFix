@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import * as firebase from 'firebase'
 import { Header, Icon } from 'react-native-elements'
 import { Agenda, Calendar } from 'react-native-calendars'
+import moment from 'moment'
 import {
     widthPercentageToDP as ancho
     , heightPercentageToDP as alto,
@@ -13,6 +15,50 @@ import {
 export default class ReservasClase extends Component {
     constructor(props) {
         super(props)
+        this.state ={
+            ...props,
+            calendar:[],
+            key:this.props.navigation.state.params,
+
+        }
+
+    
+        
+        
+    }
+
+
+    loadCalendar =  (day)=>{
+    //   ref.orderByChild('date').startAt(startTime).on()
+    
+        var stado = [];
+        const {key} = this.state
+        console.log(day);
+        var startTime = moment(day.timestamp).utc().format('x')
+        var endTime = moment(day.timestamp).utc().add(1, 'day').format('x')
+        console.log(startTime)
+        console.log(endTime)
+
+         firebase.database().ref(`/teachers/${key}/newCalendar/week`).once('value',snapshot=>{
+            fechas = snapshot.val()
+            // console.log(fechas);
+            
+        
+        }).then(()=>{
+            for (const llave in fechas) {
+                firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).orderByChild('date').startAt(parseInt(startTime)).once('value',snapshot=>{
+                //    var date =  new Date(snapshot.val().date)
+                //    console.log(date.toISOString());
+                console.log(snapshot.val());
+                
+                   
+               })
+   
+           }
+        })
+
+        
+       
 
     }
     render() {
@@ -37,22 +83,22 @@ export default class ReservasClase extends Component {
                 </View>
 
                 <View style={styles.centerContent}>
-                    <Agenda
+                    <Calendar
                         // the list of items that have to be displayed in agenda. If you want to render item as empty date
                         // the value of date key kas to be an empty array []. If there exists no value for date key it is
                         // considered that the date in question is not yet loaded
-                        items={{
-                            '2019-10-22': [{ text: 'item 1 - any js object' }],
-                            '2019-10-23': [{ text: 'item 2 - any js object' }],
-                            '2019-10-24': [],
-                            '2019-10-25': [{ text: 'item 3 - any js object' }, { text: 'any js object' }]
-                        }}
+                        // items={{
+                        //     '2019-10-22': [{ text: 'item 1 - any js object' }],
+                        //     '2019-10-23': [{ text: 'item 2 - any js object' }],
+                        //     '2019-10-24': [],
+                        //     '2019-10-25': [{ text: 'item 3 - any js object' }, { text: 'any js object' }]
+                        // }}
                         // callback that gets called when items for a certain month should be loaded (month became visible)
                         loadItemsForMonth={(month) => { console.log('trigger items loading') }}
                         // callback that fires when the calendar is opened or closed
                         onCalendarToggled={(calendarOpened) => { console.log(calendarOpened) }}
                         // callback that gets called on day press
-                        onDayPress={(day) => { console.log('day pressed') }}
+                        onDayPress={(day) => { this.loadCalendar(day) }}
                         // callback that gets called when day changes while scrolling agenda list
                         onDayChange={(day) => { console.log('day changed') }}
                         // initially selected day
@@ -94,21 +140,24 @@ export default class ReservasClase extends Component {
                         // agenda theme
                         theme={{
                             monthTextColor: '#00BEB1',
+                            selectedDayTextColor:'#00BEB1',
                             textMonthFontWeight: 'bold',
                             textMonthFontSize: ancho('4.5%'),
                             textSectionTitleColor: '#00BEB1',
                             selectedDayBackgroundColor: '#00BEB1',
                             textDayFontWeight: '600',
                             textDayFontSize: ancho('3.6%'),
+                            dayTextColor:'#9e9e9e',
                             textDayHeaderFontSize: ancho('3.4%'),
                             indicatorColor: '#00BEB1',
-                            agendaDayTextColor: '#00BEB1',
-                            agendaDayNumColor: 'green',
-                            agendaTodayColor: '#00BEB1',
-                            agendaKnobColor: '#00BEB1'
+                            
+                            // agendaDayNumColor: 'green',
+                            // agendaTodayColor: '#00BEB1',
+                            // agendaKnobColor: '#00BEB1'
                         }}
                         // agenda container style
                         style={{
+                            marginTop:20,
                             borderBottomWidth: 2,
                             borderBottomColor: "#9e9e9e", shadowOpacity: 12, shadowColor: "#000", shadowOffset: {
                                 width: 0,
@@ -122,6 +171,10 @@ export default class ReservasClase extends Component {
 
                         }}
                     />
+
+                </View>
+                <View style={styles.bottoncontent} >
+
 
                 </View>
 
@@ -139,16 +192,20 @@ export default class ReservasClase extends Component {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: '100%',
-        alignItems: 'center'
+        height: '100%'
     },
     top: {
         alignContent: 'center',
         width: '100%',
-        height: '6%'
+        height: '5%',
+        paddingBottom:60
     },
     centerContent: {
         height: '55%',
         width: '100%'
+    },
+    bottoncontent:{
+        height:"40%",
+        width:'100%'
     }
 })
