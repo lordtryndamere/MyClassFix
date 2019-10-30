@@ -1,66 +1,96 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import Toast from 'react-native-simple-toast';
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import * as firebase from 'firebase'
-import { Header, Icon } from 'react-native-elements'
+import { Header, Icon, ListItem } from 'react-native-elements'
 import { Agenda, Calendar } from 'react-native-calendars'
 import moment from 'moment'
 import {
-    widthPercentageToDP as ancho
-    , heightPercentageToDP as alto,
+    widthPercentageToDP as ancho,
+    heightPercentageToDP as alto,
     listenOrientationChange as op,
     removeOrientationListener as rp
 } from 'react-native-responsive-screen'
 
 
+
+
 export default class ReservasClase extends Component {
     constructor(props) {
         super(props)
-        this.state ={
+        this.state = {
             ...props,
-            calendar:[],
-            key:this.props.navigation.state.params,
+            calendar: [],
+            key: this.props.navigation.state.params,
 
         }
 
-    
-        
-        
+
+
+
     }
 
 
-    loadCalendar =  (day)=>{
-    //   ref.orderByChild('date').startAt(startTime).on()
-    
-        var stado = [];
-        const {key} = this.state
-        console.log(day);
-        var startTime = moment(day.timestamp).utc().format('x')
-        var endTime = moment(day.timestamp).utc().add(1, 'day').format('x')
-        console.log(startTime)
-        console.log(endTime)
+    loadCalendar = (day) => {
+        //   ref.orderByChild('date').startAt(startTime).on()
+        const { key } = this.state
 
-         firebase.database().ref(`/teachers/${key}/newCalendar/week`).once('value',snapshot=>{
+        var Dates = []
+        var startTime = parseInt(moment(day.timestamp).utc().format('x'))
+        var endTime = parseInt(moment(day.timestamp).utc().add(2, 'day').subtract(1, 'hour').format('x'))
+
+
+
+
+        firebase.database().ref(`/teachers/${key}/newCalendar/week`).orderByChild('date').startAt(startTime).endAt(endTime).on('value', snapshot => {
+
             fechas = snapshot.val()
-            // console.log(fechas);
-            
-        
-        }).then(()=>{
+            // Dates=[]
             for (const llave in fechas) {
-                firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).orderByChild('date').startAt(parseInt(startTime)).once('value',snapshot=>{
-                //    var date =  new Date(snapshot.val().date)
-                //    console.log(date.toISOString());
-                console.log(snapshot.val());
-                
-                   
-               })
-   
-           }
+
+                firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).once('value', snapshot => {
+                    if (snapshot.val().status != undefined && snapshot.val().status != null && snapshot.val().status == 1) {
+                        var date = moment(snapshot.val().date).format('YYYY/MM/DD - LT')
+                        Dates.push(date)
+                    }
+
+
+                })
+
+
+
+            }
+            if (Dates.length == 0) {
+                Toast.show('El profesor no a programador fechas para este dia ...')
+            } else {
+                this.setState({ calendar: Dates });
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         })
 
-        
-       
+
+
+
+
+
+
 
     }
+
+
     render() {
         return (
             <View style={styles.container} >
@@ -104,7 +134,7 @@ export default class ReservasClase extends Component {
                         // initially selected day
 
                         // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-      
+
                         // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
                         maxDate={'2050-05-30'}
                         // Max amount of months allowed to scroll to the past. Default = 50
@@ -140,24 +170,24 @@ export default class ReservasClase extends Component {
                         // agenda theme
                         theme={{
                             monthTextColor: '#00BEB1',
-                            selectedDayTextColor:'#00BEB1',
+                            selectedDayTextColor: '#00BEB1',
                             textMonthFontWeight: 'bold',
                             textMonthFontSize: ancho('4.5%'),
                             textSectionTitleColor: '#00BEB1',
                             selectedDayBackgroundColor: '#00BEB1',
                             textDayFontWeight: '600',
                             textDayFontSize: ancho('3.6%'),
-                            dayTextColor:'#9e9e9e',
+                            dayTextColor: '#9e9e9e',
                             textDayHeaderFontSize: ancho('3.4%'),
                             indicatorColor: '#00BEB1',
-                            
+
                             // agendaDayNumColor: 'green',
                             // agendaTodayColor: '#00BEB1',
                             // agendaKnobColor: '#00BEB1'
                         }}
                         // agenda container style
                         style={{
-                            marginTop:20,
+                            marginTop: 20,
                             borderBottomWidth: 2,
                             borderBottomColor: "#9e9e9e", shadowOpacity: 12, shadowColor: "#000", shadowOffset: {
                                 width: 0,
@@ -174,7 +204,22 @@ export default class ReservasClase extends Component {
 
                 </View>
                 <View style={styles.bottoncontent} >
+                    <ScrollView>
+                        {(() => {
+                            if (this.state.calendar.length >= 1 && this.state.calendar != undefined) {
+                                return (
+                                    this.state.calendar.map((item) => (
+                                        <ListItem
+                                            title={item}
+                                            chevron
+                                            bottomDivider
 
+                                        />
+                                    ))
+                                )
+                            }
+                        })()}
+                    </ScrollView>
 
                 </View>
 
@@ -198,14 +243,15 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         width: '100%',
         height: '5%',
-        paddingBottom:60
+        paddingBottom: 60
     },
     centerContent: {
         height: '55%',
         width: '100%'
     },
-    bottoncontent:{
-        height:"40%",
-        width:'100%'
+    bottoncontent: {
+        height: "40%",
+        width: '100%',
+        paddingBottom:30
     }
 })
