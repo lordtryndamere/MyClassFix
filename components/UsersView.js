@@ -110,7 +110,7 @@ export default class UserView extends PureComponent {
 
                   for (const k in snapshot[i][j]) {
 
-                    // skill.push(this.eliminarDiacriticos(snapshot[i][j][k].skill))
+         
 
 
 
@@ -225,22 +225,12 @@ export default class UserView extends PureComponent {
             }
             fullData.push(ojc)
             
-            
-            // var render = Object.values(ojc)  CON ESTO PUDE RENDERIZAR PERO PERDI CLAVES
-            // this.setState({fullTeachers:render})
-            //  this.state.teacher = snapshot.val()
-            //  this.state.teacher.uid = key
-            //  this.state.teachersAproveds.push(this.state.teacher)
-            //  var renderizar = Object.values(this.state.teachersAproveds)
-            //  // console.log(this.state.render) 
-            //  return this.setState({render:renderizar})
+          
           })
 
 
         }
-        // console.log(fullData)
-        // console.log(this.state.fullTeachers)
-        // this.setState({ items: teachers })
+
       })
       
     setTimeout(() => {
@@ -471,10 +461,6 @@ export default class UserView extends PureComponent {
     })
     this.setState({ Search: value })
 
-    console.log(this.state.Search);
-
-
-
   }
 
   render() {
@@ -528,8 +514,8 @@ export default class UserView extends PureComponent {
             fontWeight: '900'
           }}> APRENDE CON LOS MEJORES  </Text>
         </View>
-        {console.log(this.state.fullTeachers),
-          this.state.fullTeachers.length < 3
+        {
+         this.state.fullTeachers.length < 3
             ? <View style={{ paddingTop: 120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
               <Image source={require('../assets/spinner.gif')} style={{ height: alto('23%'), width: ancho('38%') }} />
               <Text style={styles.textload}>Cargando profesores ....</Text>

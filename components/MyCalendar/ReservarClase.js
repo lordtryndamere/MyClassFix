@@ -32,20 +32,14 @@ export default class ReservasClase extends Component {
 
 
     loadCalendar = (day) => {
-        //   ref.orderByChild('date').startAt(startTime).on()
         const { key } = this.state
-
         var Dates = []
         var startTime = parseInt(moment(day.timestamp).utc().format('x'))
         var endTime = parseInt(moment(day.timestamp).utc().add(2, 'day').subtract(1, 'hour').format('x'))
-
-
-
-
         firebase.database().ref(`/teachers/${key}/newCalendar/week`).orderByChild('date').startAt(startTime).endAt(endTime).on('value', snapshot => {
 
             fechas = snapshot.val()
-            // Dates=[]
+
             for (const llave in fechas) {
 
                 firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).once('value', snapshot => {
@@ -54,10 +48,7 @@ export default class ReservasClase extends Component {
                         Dates.push(date)
                     }
 
-
                 })
-
-
 
             }
             if (Dates.length == 0) {
@@ -66,28 +57,7 @@ export default class ReservasClase extends Component {
                 this.setState({ calendar: Dates });
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         })
-
-
-
-
-
-
-
-
     }
 
 

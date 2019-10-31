@@ -73,7 +73,7 @@ render(){
                         {(() => {
                          
                             if(sk != undefined && sk[0] != undefined && sk[0]['idiomas'].length > 0 ){
-                                console.log(sk[0])
+                             
 
                               return (
                                 <Card  title="IDIOMAS" titleStyle={{color:"#424242"}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
@@ -106,7 +106,7 @@ render(){
                 
                         {(() => {
                             if(sk != undefined && sk[1] != undefined && sk[1]['musica'].length > 0   ){
-                                console.log(sk[1])
+                             
 
                               return (
                                 <Card  title="MUSICA" titleStyle={{color:"#424242",alignContent:'flex-start'}} containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
@@ -137,7 +137,7 @@ render(){
 
                         {(() => {   
                             if(sk != undefined && sk[2] != undefined && sk[2]['tecnologia'].length > 0   ){
-                                console.log(sk[2])
+                              
 
                               return (   
                                 <Card   title="TECNOLOGIA" titleStyle={{color:"#424242" ,alignContent:'flex-start'}} containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
@@ -168,7 +168,7 @@ render(){
 
                         {(() => {  
                             if(sk != undefined && sk[3] != undefined && sk[3]['universidad'].length > 0   ){
-                                console.log(sk[3])
+                              
 
                               return (
                                 <Card  title="UNIVERSIDAD" titleStyle={{color:"#424242"  ,alignContent:'flex-start'}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
@@ -198,7 +198,7 @@ render(){
 
                         {(() => { 
                             if(sk != undefined && sk[4] != undefined && sk[4]['secundaria'].length > 0   ){
-                                console.log(sk[4])
+                               
 
                               return (
                             <Card   title="SECUNDARIA" titleStyle={{color:"#424242",alignContent:'flex-start'}}  containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
@@ -229,7 +229,7 @@ render(){
 
                         {(() => { 
                             if(sk != undefined && sk[5] != undefined && sk[5]['primaria'].length > 0  ){
-                                console.log(sk[5])
+                             
 
                               return (
                             <Card    title="PRIMARIA" titleStyle={{color:"#424242",alignContent:'flex-start'}}   containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
@@ -259,7 +259,7 @@ render(){
 
                         {(() => { 
                             if(sk != undefined && sk[6] != undefined && sk[6]['otros'].length > 0  ){
-                                console.log(sk[6])
+                             
 
                               return (
                                 <Card  title="OTROS" titleStyle={{color:"#424242",alignContent:'flex-start'}}   containerStyle={{ paddingLeft:20,paddingRight:20,shadowColor: "#000",
