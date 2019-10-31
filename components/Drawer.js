@@ -16,6 +16,8 @@ import Preoloader from './Preloader'
 import { createStackNavigator } from 'react-navigation-stack';
 import Perfil from './Perfil'
 import AjustesView from './AjustesView'
+import Pago from './MyCalendar/Pago'
+import Reserva from './MyCalendar/Reserva'
 import {widthPercentageToDP  as ancho
     ,heightPercentageToDP  as    alto ,
     listenOrientationChange as op,
@@ -27,6 +29,8 @@ const Stack = createStackNavigator (   {
     UserView:UserView,
     ProfileView:ProfileView,
     ReservaView:ReservaView,
+    Reserva:Reserva,
+    Pago:Pago,
     Preoloader:Preoloader,
     AjustesView:AjustesView,
     //Perfil:Perfil

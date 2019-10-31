@@ -83,7 +83,7 @@ inputs2:{
       width:30,
       height:30,
       marginLeft:15,
-      justifyContent: 'center'
+      justifyContent: 'center'  
     },
     buttonContainer: {
       height:alto('5%'),

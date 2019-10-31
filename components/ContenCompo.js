@@ -56,7 +56,7 @@ export default class ContentCompo extends Component{
                 <TouchableHighlight underlayColor={'rgba(0,0,0,0.2)'} onPress={()=>this.props.navigation.navigate('AjustesView')} >
                 <View  style={styles.row}>
                     <Image source={require('../assets/soporte.png')} style={styles.headerImage2}  />
-                    <Text style={styles.text} >SOPORTE</Text>
+                    <Text style={styles.text} >MI CUENTA</Text>
                 </View>
                 </TouchableHighlight>
 

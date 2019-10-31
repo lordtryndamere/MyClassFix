@@ -46,39 +46,51 @@ updateUserPhotoURL =  async (photoUri) =>{
     
 
 ChangeAvatarUser = async ()=>{
-    const resultPermission = await Permissions.getAsync(Permissions.CAMERA_ROLL)
-    if(resultPermission.status =="denied"){
-        Toast.show("Es Necesario aceptar permisos de galeria",Toast.LONG,4000);
-    }else{    
-        const Result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing:true,
-            aspect: [4,3]
-        });
-        if(Result.cancelled){
-            Toast.show("Has cerrado la galeria de imagenes",Toast.LONG,1500);
-        }else{
-
-            var key = firebase.auth().currentUser.uid
-            this.uploadImage(Result.uri)
-            .then(resolve =>{
-             Toast.show("Avatar actualizado correctamente",Toast.BOTTOM,Toast.SHORT,1500);
-                firebase
-                .storage()
-                .ref('teachers/' + key + '/' + 'profilePicture.jpg')
-                .getDownloadURL()
-                .then(resolve=>{
-                   this.updateUserPhotoURL(resolve)
-                })
-                .catch(erro=>{
-                     Toast.show("Error al recuperar avatar del servidor" ,1500)
-                    
-                })
-             }).catch(error=>{
-                Toast.show("Error al actualizar , intentalo mas tarde",Toast.BOTTOM,Toast.SHORT,1500);
-             })
-            
+    
+    const uid = firebase.auth().currentUser.uid
+    firebase.database().ref(`/roleByUser/${uid}`).once('value', async snapshot=>{
+      rol = snapshot.val()
+      if(rol.type === "student"){
+        Toast.show("Acceso degenado , solo un docente puede actualizar su foto",5000)
+      }else{
+        const resultPermission = await Permissions.getAsync(Permissions.CAMERA_ROLL)
+        if(resultPermission.status =="denied"){
+            Toast.show("Es Necesario aceptar permisos de galeria",Toast.LONG,4000);
+        }else{    
+            const Result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing:true,
+                aspect: [4,3]
+            });
+            if(Result.cancelled){
+                Toast.show("Has cerrado la galeria de imagenes",Toast.LONG,1500);
+            }else{
+    
+                var key = firebase.auth().currentUser.uid
+                this.uploadImage(Result.uri)
+                .then(resolve =>{
+                 Toast.show("Avatar actualizado correctamente",Toast.BOTTOM,Toast.SHORT,1500);
+                    firebase
+                    .storage()
+                    .ref('teachers/' + key + '/' + 'profilePicture.jpg')
+                    .getDownloadURL()
+                    .then(resolve=>{
+                       this.updateUserPhotoURL(resolve)
+                    })
+                    .catch(erro=>{
+                         Toast.show("Error al recuperar avatar del servidor" ,1500)
+                        
+                    })
+                 }).catch(error=>{
+                    Toast.show("Error al actualizar , intentalo mas tarde",Toast.BOTTOM,Toast.SHORT,1500);
+                 })
+                
+            }
         }
-    }
+       
+      }
+    })
+
+
     
 }
 

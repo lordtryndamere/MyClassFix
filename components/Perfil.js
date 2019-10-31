@@ -1,4 +1,5 @@
 import React ,{PureComponent} from 'react'
+import Toast from 'react-native-simple-toast';
 import *as firebase from 'firebase'
 import {Video} from 'expo-av'
 import {StyleSheet,View,Text,Dimensions,TouchableOpacity,ScrollView,Image} from 'react-native'
@@ -25,13 +26,28 @@ export default class Perfil extends PureComponent{
            ]
        }
   
+
        
     }
 
     onLoad = (data) => {
         this.setState({ duration: data.duration });
       };
-    
+
+
+
+  HandleButtonReservarClase = (key,sk,name,lastname) =>{
+    const uid = firebase.auth().currentUser.uid
+    firebase.database().ref(`/roleByUser/${uid}`).once('value',snapshot=>{
+      rol = snapshot.val()  
+      if(rol.type === "teacher"){
+        Toast.show("Acceso degenado , solo un estudiante puede reservar clases",5000)
+      }else{
+        this.props.navigation.navigate('ReservaView',{key,sk,name,lastname})
+      }
+    })
+  }
+
     
 render(){
     const {name,lastname,key,foto,rank,acentSkill,type,sk,desc,video} = this.props.navigation.state.params.Profile
@@ -229,8 +245,8 @@ render(){
 
                         {(() => { 
                             if(sk != undefined && sk[5] != undefined && sk[5]['primaria'].length > 0  ){
-                             
-
+                              
+                              
                               return (
                             <Card    title="PRIMARIA" titleStyle={{color:"#424242",alignContent:'flex-start'}}   containerStyle={{paddingLeft:20,paddingRight:20,shadowColor: "#000",
                             shadowOffset: {
@@ -374,9 +390,10 @@ render(){
 
 
         </View>
-      <TouchableOpacity   onPress={()=>this.props.navigation.navigate('ReservaView',key)}  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
+      <TouchableOpacity   onPress={()=>this.HandleButtonReservarClase(key,sk,name,lastname)}  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
           <Text style={styles.loginText}>RESERVAR CLASE</Text>
     </TouchableOpacity>
+   
         </View>
     )
 }  

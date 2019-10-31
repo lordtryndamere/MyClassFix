@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Toast from 'react-native-simple-toast';
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView,TouchableOpacity } from 'react-native'
 import * as firebase from 'firebase'
 import { Header, Icon, ListItem } from 'react-native-elements'
-import { Agenda, Calendar } from 'react-native-calendars'
+import {  Calendar } from 'react-native-calendars'
 import moment from 'moment'
 import {
     widthPercentageToDP as ancho,
@@ -19,49 +19,92 @@ export default class ReservasClase extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            
             ...props,
             calendar: [],
-            key: this.props.navigation.state.params,
+            key: this.props.navigation.state.params.key,
+            skill:this.props.navigation.state.params.sk,
+            name:this.props.navigation.state.params.name,
+            lastname:this.props.navigation.state.params.lastname,
+            day:null
 
         }
 
-
+            console.log(this.props);
+            
 
 
     }
 
 
+    HandleReserva = (item,skill,name,lastname)=>{
+        const uid = firebase.auth().currentUser.uid
+
+        firebase.database().ref(`/students/${uid}/coints`).once('value',snapshot=>{
+            var data = snapshot.val()
+
+            if (data.numberClassPlant > 0)
+            {
+                this.props.navigation.navigate('Reserva',{item,skill,name,lastname})
+            }
+            else{
+                this.props.navigation.navigate('Pago')
+            }
+            
+        })
+
+
+    }
+
+ 
     loadCalendar = (day) => {
+
+        this.setState({day:day})
+    
         const { key } = this.state
         var Dates = []
-        var startTime = parseInt(moment(day.timestamp).utc().format('x'))
-        var endTime = parseInt(moment(day.timestamp).utc().add(2, 'day').subtract(1, 'hour').format('x'))
-        firebase.database().ref(`/teachers/${key}/newCalendar/week`).orderByChild('date').startAt(startTime).endAt(endTime).on('value', snapshot => {
+        var startTime = parseInt(moment(day.dateString).format('x'))
+        var endTime = parseInt(moment(day.dateString).add(1, 'days').format('x'))
+ 
+        
+        
 
-            fechas = snapshot.val()
+        
 
-            for (const llave in fechas) {
+        if(  moment(day.dateString).format('YYYY-MM-DD') >=  moment().format('YYYY-MM-DD') )
+        {   
+            firebase.database().ref(`/teachers/${key}/newCalendar/week`).orderByChild('date').startAt(startTime).endAt(endTime).on('value', snapshot => {
 
-                firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).once('value', snapshot => {
-                    if (snapshot.val().status != undefined && snapshot.val().status != null && snapshot.val().status == 1) {
-                        var date = moment(snapshot.val().date).format('YYYY/MM/DD - LT')
-                        Dates.push(date)
-                    }
+                fechas = snapshot.val()
+    
+                for (const llave in fechas) {
+    
+                    firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).once('value', snapshot => {
+                        if (snapshot.val().status != undefined && snapshot.val().status != null && snapshot.val().status == 1  ) {
+                            var date = moment(snapshot.val().date).format('YYYY/MM/DD - LT')
+                            Dates.push(date)
+                        }
+    
+                    })
+    
+                }
+                if (Dates.length == 0 ) {
+                    Toast.show('El profesor no a programado fechas para este dia ...')
+                } else {
+                    this.setState({ calendar: Dates });
+                }
+    
+            })
+        }
+        else {
+            Toast.show('No se pueden reservar clases con fechas anteriores a la actual',5000)
 
-                })
-
-            }
-            if (Dates.length == 0) {
-                Toast.show('El profesor no a programador fechas para este dia ...')
-            } else {
-                this.setState({ calendar: Dates });
-            }
-
-        })
+    }
     }
 
 
     render() {
+        const {day,skill,name,lastname} = this.state
         return (
             <View style={styles.container} >
                 <View style={styles.top} >
@@ -149,23 +192,27 @@ export default class ReservasClase extends Component {
                             textDayFontSize: ancho('3.6%'),
                             dayTextColor: '#9e9e9e',
                             textDayHeaderFontSize: ancho('3.4%'),
-                            indicatorColor: '#00BEB1',
+                            todayTextColor:'#00BEB1',
+                            arrowColor:'#00BEB1',
+                            textDisabledColor: '#d9e1e8',
+                            selectedDotColor: '#00BEB1',
+                            
 
-                            // agendaDayNumColor: 'green',
-                            // agendaTodayColor: '#00BEB1',
-                            // agendaKnobColor: '#00BEB1'
+                            
+
+                    
                         }}
-                        // agenda container style
+                       
                         style={{
                             marginTop: 20,
-                            borderBottomWidth: 2,
+                            borderBottomWidth: 1,
                             borderBottomColor: "#9e9e9e", shadowOpacity: 12, shadowColor: "#000", shadowOffset: {
                                 width: 0,
-                                height: 12,
+                                height: 6,
                             },
-                            shadowOpacity: 0.58,
-                            shadowRadius: 16.00,
-                            elevation: 24,
+                            shadowOpacity: 0.37,
+                            shadowRadius: 7.49,
+                            elevation: 5,
 
 
 
@@ -173,23 +220,43 @@ export default class ReservasClase extends Component {
                     />
 
                 </View>
-                <View style={styles.bottoncontent} >
-                    <ScrollView>
+                <View style={styles.bottoncontent}>
+                    
+
                         {(() => {
                             if (this.state.calendar.length >= 1 && this.state.calendar != undefined) {
-                                return (
-                                    this.state.calendar.map((item) => (
+                                return (<View >
+                                    <View style={styles.containertext} >  
+                                        <Text style={styles.reservastext2} > { moment(day.dateString).format('MMMM')} {moment(day.dateString).format('D')}  </Text>
+                                        <Text style={styles.textclases} > Clases disponibles </Text>   
+                                    </View>
+                                  
+                                    <ScrollView>
+                                    {this.state.calendar.map((item) => (
+
+                                        
                                         <ListItem
+                                        style={{paddingLeft:20,paddingRight:20}}
+                                        containerStyle={{borderBottomWidth:1,borderBottomColor:"#9e9e9e",paddingLeft:5}}
                                             title={item}
-                                            chevron
+                                            titleStyle={{color:"#757575"}}
+                                            chevron={
+                                            <TouchableOpacity onPress={()=>this.HandleReserva(item,skill,name,lastname)} style={[styles.buttonContainer, styles.reservarButton]} >
+                                            <Text style={styles.reservastext}>RESERVAR</Text>
+                                            </TouchableOpacity>}
+                                            
                                             bottomDivider
+                                            
 
                                         />
-                                    ))
+                                    
+                                    ))}
+                                    </ScrollView>
+                                    </View>
                                 )
                             }
                         })()}
-                    </ScrollView>
+                    
 
                 </View>
 
@@ -214,7 +281,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '5%',
         paddingBottom: 60
-    },
+    },  
     centerContent: {
         height: '55%',
         width: '100%'
@@ -222,6 +289,53 @@ const styles = StyleSheet.create({
     bottoncontent: {
         height: "40%",
         width: '100%',
-        paddingBottom:30
+        paddingBottom:30,
+        paddingTop:10
+    },
+    buttonContainer:{
+        height:alto('5%'),
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width:260,
+        borderRadius:30,
+        borderColor:"#00BEB1"
+
+    },
+    reservarButton:{
+        borderWidth:2,
+        borderRadius:30,
+        borderColor:"#00BEB1",
+        backgroundColor: "transparent",
+        height:alto('5%'),
+        width:ancho('33%'),
+    },
+    reservastext:{
+     color: '#00BEB1',
+     fontWeight:"bold",
+     fontSize:ancho("3.8%")
+
+            
+          
+    },
+    reservastext2:{
+        color: '#00BEB1',
+        fontWeight:"bold",
+        fontSize:ancho("4.4%")
+   
+               
+             
+       },
+    textclases:{
+        fontWeight:"700",
+        color:"#616161",
+        fontSize:ancho("4.2%")
+    },
+    containertext:{
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+        paddingBottom:10
+
     }
 })
