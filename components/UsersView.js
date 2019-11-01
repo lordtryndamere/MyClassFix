@@ -80,6 +80,7 @@ export default class UserView extends PureComponent {
     var skill = []
     var mobj = [{ idiomas: [] }, { musica: [] }, { tecnologia: [] }, { universidad: [] }, { secundaria: [] }, { primaria: [] }, { otros: [] }]
     var type = []
+    var newSkill = []
 
     firebase.database().ref(`/approveds`).once('value', (snapshot) => {
       teachers = snapshot.val();
@@ -100,11 +101,14 @@ export default class UserView extends PureComponent {
               skill = []
               type = []
               snapshot = data.val()
+              newSkill.push(snapshot) 
               
              
               for (const i in snapshot) {
 
                 type.push(i)
+              
+                
 
                 for (const j in snapshot[i]) {
 
@@ -221,7 +225,8 @@ export default class UserView extends PureComponent {
               type:type,
               sk:mobj,
               desc:description,
-              video:video
+              video:video,
+              newSkill:newSkill
             }
             fullData.push(ojc)
             

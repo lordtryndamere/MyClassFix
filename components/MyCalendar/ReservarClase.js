@@ -26,31 +26,39 @@ export default class ReservasClase extends Component {
             skill:this.props.navigation.state.params.sk,
             name:this.props.navigation.state.params.name,
             lastname:this.props.navigation.state.params.lastname,
-            day:null
+            tipo:this.props.navigation.state.params.type,
+            newSkill:this.props.navigation.state.params.newSkill,
+            day:null,
+            keycalendar:""
 
         }
 
-            console.log(this.props);
+         
+        
             
 
 
     }
 
 
-    HandleReserva = (item,skill,name,lastname)=>{
+    HandleReserva = (item,skill,name,lastname,tipo,newSkill,key,keycalendar)=>{
         const uid = firebase.auth().currentUser.uid
 
         firebase.database().ref(`/students/${uid}/coints`).once('value',snapshot=>{
             var data = snapshot.val()
-
-            if (data.numberClassPlant > 0)
-            {
-                this.props.navigation.navigate('Reserva',{item,skill,name,lastname})
-            }
-            else{
+            if (data  != null     ){
+                if (data.numberClassPlant > 0  && data.numberClassPlant != null)
+                {
+                    this.props.navigation.navigate('Reserva',{item,skill,name,lastname,tipo,newSkill,key,keycalendar})
+                }
+                else{
+                    this.props.navigation.navigate('Pago')
+                }
+            }else{
                 this.props.navigation.navigate('Pago')
             }
-            
+
+     
         })
 
 
@@ -65,7 +73,7 @@ export default class ReservasClase extends Component {
         var Dates = []
         var startTime = parseInt(moment(day.dateString).format('x'))
         var endTime = parseInt(moment(day.dateString).add(1, 'days').format('x'))
- 
+        
         
         
 
@@ -78,16 +86,22 @@ export default class ReservasClase extends Component {
                 fechas = snapshot.val()
     
                 for (const llave in fechas) {
-    
+                    var kc = llave
                     firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).once('value', snapshot => {
+
                         if (snapshot.val().status != undefined && snapshot.val().status != null && snapshot.val().status == 1  ) {
                             var date = moment(snapshot.val().date).format('YYYY/MM/DD - LT')
                             Dates.push(date)
                         }
     
                     })
-    
+                   
+                    
                 }
+                this.setState({keycalendar:kc})
+
+                
+               
                 if (Dates.length == 0 ) {
                     Toast.show('El profesor no a programado fechas para este dia ...')
                 } else {
@@ -104,7 +118,12 @@ export default class ReservasClase extends Component {
 
 
     render() {
-        const {day,skill,name,lastname} = this.state
+        const {day,skill,name,lastname,tipo,newSkill,key,keycalendar} = this.state
+
+     
+        
+        
+        
         return (
             <View style={styles.container} >
                 <View style={styles.top} >
@@ -241,7 +260,7 @@ export default class ReservasClase extends Component {
                                             title={item}
                                             titleStyle={{color:"#757575"}}
                                             chevron={
-                                            <TouchableOpacity onPress={()=>this.HandleReserva(item,skill,name,lastname)} style={[styles.buttonContainer, styles.reservarButton]} >
+                                            <TouchableOpacity onPress={()=>this.HandleReserva(item,skill,name,lastname,tipo,newSkill,key,keycalendar)} style={[styles.buttonContainer, styles.reservarButton]} >
                                             <Text style={styles.reservastext}>RESERVAR</Text>
                                             </TouchableOpacity>}
                                             
