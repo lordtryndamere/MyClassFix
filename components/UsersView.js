@@ -458,7 +458,7 @@ export default class UserView extends PureComponent {
 
 
     const newData = this.state.inMemoryTeachers.filter(function(item){
-      const itemData = (item.name+''+item.acentSkill[0]).toLowerCase()
+      const itemData = (item.name+''+item.acentSkill).toLowerCase()
       const textData = text.toLowerCase()
       return itemData.indexOf(textData) > -1
     })

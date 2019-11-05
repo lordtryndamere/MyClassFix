@@ -1,5 +1,10 @@
-
+import {widthPercentageToDP  as ancho
+  ,heightPercentageToDP  as    alto ,
+  listenOrientationChange as op,
+  removeOrientationListener as rp } from 'react-native-responsive-screen'
+import {DatePicker} from 'native-base'
 import React, { Component,PureComponent } from 'react';
+import {TabView,SceneMap,TabBar} from 'react-native-tab-view'
 import firebase, { app } from 'firebase';
 import styles from './/styles';
 import {
@@ -7,11 +12,11 @@ import {
   Text,
   View,
   TextInput,
-  TouchableHighlight,
   ImageBackground,
   KeyboardAvoidingView,
-  BackHandler,
-  Image
+  Image,
+  Dimensions,
+  Picker
 
 
 } from 'react-native';
@@ -19,7 +24,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import publicIP from 'react-native-public-ip';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { NavigationActions} from 'react-navigation'
+import { NavigationActions, ScrollView} from 'react-navigation'
 
 
 
@@ -27,8 +32,9 @@ export default class LoginView extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.onBackPress=this.onBackPress.bind(this)
+
     this.state = {
+      tipodocumentoescogido:undefined,
       name:'',
       lastname :'',
       email   : '',
@@ -37,7 +43,7 @@ export default class LoginView extends PureComponent {
       repeatPassword:'',
       country:'',
       errorMessage:null,
-      TypesDocument:'',
+      TypesDocument:"",
       age:'',
       document:'',
       city:'',
@@ -49,6 +55,13 @@ export default class LoginView extends PureComponent {
       resume:'',
       terminos:'',
       types:'student',
+      routes:[
+        {key:'first',title:"ESTUDIANTE"},
+        {key:'second',title:"PROFESOR"}
+    ],
+    index:0,
+    date:"",
+    numerodocumento:""
      
 
 
@@ -56,17 +69,6 @@ export default class LoginView extends PureComponent {
     }
     
   }
-  componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-  }
-  componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-  }
- 
-  onBackPress = () => {
-    // this.props.navigation.dispatch(NavigationActions.back())
-    this.props.navigation.goBack()
-  };
 
   HandleIp = ()=>  {
   publicIP()
@@ -204,6 +206,7 @@ export default class LoginView extends PureComponent {
             video: false
           },
           country:this.state.country,
+
           city:this.state.city,
           linkPhoto:this.state.linkPhoto,
           working:this.state.working,
@@ -322,94 +325,249 @@ export default class LoginView extends PureComponent {
 }
 }
 
+onValueChange2(value) {
+  this.setState({
+    tipodocumentoescogido: value
+  });
+  console.log(value);
+  
+}
+
+ firstRoute = () => (
+
+  <View style={[styles.scene]} >
+  <KeyboardAvoidingView    keyboardVerticalOffset={60}   behavior="padding" >
+         <ScrollView>
+         
+         <View style={styles.inputContainer}>
+  
+  <TextInput style={styles.inputs}
+      placeholder="N o m b r e s"
+      underlineColorAndroid='transparent'
+      onChangeText={(name) => this.setState({name})}/>
+  </View>
+  
+  <View style={styles.inputContainer}>
+  
+  <TextInput style={styles.inputs}
+      placeholder="A p e l l i d o s"
+      underlineColorAndroid='transparent'
+      onChangeText={(lastname) => this.setState({lastname})}/>
+  </View>
+  <View style={styles.inputContainer}>
+  
+  <TextInput style={styles.inputs}
+    placeholder="C o r r e o  e l e c t r o n i c o"
+    keyboardType="email-address"
+    underlineColorAndroid='transparent'
+    onChangeText={(email) => this.setState({email})}/>
+  </View>
+  <View style={styles.inputContainer}>
+  
+  <TextInput style={styles.inputs}
+     keyboardType='number-pad'
+     placeholder=" C e l u l a r"
+     underlineColorAndroid='transparent'
+     onChangeText={(Phone) => this.setState({Phone})}/>
+  </View>
+  
+  <View style={styles.inputContainer}>
+  <TextInput style={styles.inputs}
+    placeholder="C o n t r a s e ñ a"
+    secureTextEntry={true}
+    underlineColorAndroid='transparent'
+    onChangeText={(password) => this.setState({password})}/>
+  </View>
+  <View style={styles.inputContainer}>
+  
+  <TextInput style={styles.inputs}
+    placeholder="R e p e t i r  c o n t r a s e ñ a"
+    secureTextEntry={true}
+    underlineColorAndroid='transparent'
+    onChangeText={(repeatPassword) => this.setState({repeatPassword})}/>
+  </View>
+  <View style={styles.inputContainer}>
+  
+  <DatePicker
+            defaultDate={new Date}
+            locale={"es"}
+            timeZoneOffsetInMinutes={undefined}
+            modalTransparent={false}
+            animationType={"fade"}
+            androidMode={"default"}
+            placeHolderText="DD/MM/YYYY"
+            textStyle={{ color: "#fff" }}
+            placeHolderTextStyle={{ color: "#d3d3d3" }}
+            onDateChange={(date)=>this.setState({date})}
+            disabled={false}
+            />
+  </View>
+  <View style={{justifyContent:'center',alignContent:'center',alignItems:'center'}} >
+  <TouchableOpacity style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegister()}>
+            <Text style={styles.loginText}>REGISTRARME</Text>
+    </TouchableOpacity>
+  </View>
+  
+  
+         </ScrollView>
+         </KeyboardAvoidingView>
+    </View>
+      )
+
+
+
+
+secondRoute = () => (
+      
+        <View style={[styles.scene]} >
+        <KeyboardAvoidingView    keyboardVerticalOffset={60}   behavior="padding" >
+               <ScrollView>
+
+        <View style={styles.inputContainer}>
+        
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" color="#fff" />}
+                style={styles.picker}
+                selectedValue={this.state.TypesDocument}
+                onValueChange={(itemValue) =>
+                this.setState({TypesDocument: itemValue})
+                }>
+
+            <Picker.Item label="Cedula ciudadania" value="cedula ciudadania" />
+            <Picker.Item label="Cedula extranjeria" value="cedula extranjeria" />
+            <Picker.Item label="Pasaporte " value="pasaporte" />
+ 
+              </Picker>
+           
+        </View>
+             
+          <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputs}
+            keyboardType='number-pad'
+            placeholder="N U M E R O  D O C U M E N T O"
+            underlineColorAndroid='transparent'
+            onChangeText={(numerodocumento) => this.setState({numerodocumento})}/>
+        </View>
+          <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputs}
+            placeholder="N o m b r e s"
+            underlineColorAndroid='transparent'
+            onChangeText={(name) => this.setState({name})}/>
+        </View>
+        
+        <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputs}
+            placeholder="A p e l l i d o s"
+            underlineColorAndroid='transparent'
+            onChangeText={(lastname) => this.setState({lastname})}/>
+        </View>
+        <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputs}
+          placeholder="C o r r e o  e l e c t r o n i c o"
+          keyboardType="email-address"
+          underlineColorAndroid='transparent'
+          onChangeText={(email) => this.setState({email})}/>
+        </View>
+        <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputs}
+           keyboardType='number-pad'
+           placeholder=" C e l u l a r"
+           underlineColorAndroid='transparent'
+           onChangeText={(Phone) => this.setState({Phone})}/>
+        </View>
+        
+        <View style={styles.inputContainer}>
+        <TextInput style={styles.inputs}
+          placeholder="C o n t r a s e ñ a"
+          secureTextEntry={true}
+          underlineColorAndroid='transparent'
+          onChangeText={(password) => this.setState({password})}/>
+        </View>
+        <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputs}
+          placeholder="R e p e t i r  c o n t r a s e ñ a"
+          secureTextEntry={true}
+          underlineColorAndroid='transparent'
+          onChangeText={(repeatPassword) => this.setState({repeatPassword})}/>
+        </View>
+        <View style={{justifyContent:'center',alignContent:'center',alignItems:'center'}} >
+        <TouchableOpacity style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegister()}>
+                  <Text style={styles.loginText}>REGISTRARME</Text>
+          </TouchableOpacity>
+        </View>
+        
+        
+               </ScrollView>
+               </KeyboardAvoidingView>
+          </View>
+      )
+     
+
   render() {
+
+ 
+  
+      
+      
+       
+
     return (
           
 
             <ImageBackground source={require('../assets/chica.jpg')}  style={styles.container} >
-            <KeyboardAvoidingView style={styles.container2}  behavior='padding' enabled >
-           
+     
                 <View style={styles.container}>
-      
-                <Image  style={{marginBottom:20}} source={require('../assets/LOGO2.png')}  />
+              <View style={styles.top} >
+                <Image  style={{height:"90%",width:"55%"}} source={require('../assets/PRUEBA-18.png')}  />
                         {this.state.errorMessage &&
                       <Text style={{ color: 'red' }}> 
                         {this.state.errorMessage}
                       </Text>}
-                    <View  style={styles.acomodar} >       
-                            <TouchableHighlight    style={[styles.buttonestudiante, styles.estudiantebutton]}  onPress={()=> this.HandleTypes('student')} >
-                            <Text style={styles.loginText}>ESTUDIANTE</Text>
-                          </TouchableHighlight>
-                          
-                          <TouchableHighlight style={[styles.buttondocente, styles.docentebutton]}    onPress={()=> this.HandleTypes('teacher')} >
-                            <Text style={styles.loginText}>DOCENTE</Text>
-                          </TouchableHighlight>
-                    </View>
+                      </View>
+                   
+            <View style={styles.botton} >
           
-              <View style={styles.inputContainer}>
+            <TabView
+                
+                renderTabBar={props =>
+                    <TabBar
+                      {...props}
+                        getLabelText={({ route }) => route.title}
+                        activeColor={"#bdbdbd"}
+                        inactiveColor={"#212121"}
+                        contentContainerStyle={styles.TabView}
+                        
+                      indicatorStyle={{ backgroundColor: '#fff' }}
+                      style={{ backgroundColor: 'transparent' }}
 
-          <TextInput style={styles.inputs}
-              placeholder="Nombres"
-              underlineColorAndroid='transparent'
-              onChangeText={(name) => this.setState({name})}/>
-        </View>
-        
-        <View style={styles.inputContainer}>
-         
-          <TextInput style={styles.inputs}
-              placeholder="Apellidos"
-              underlineColorAndroid='transparent'
-              onChangeText={(lastname) => this.setState({lastname})}/>
-        </View>
-        <View style={styles.inputContainer}>
+                    />}
+                
+                style={{backgroundColor:"transparent",justifyContent:'center',alignContent:'center'}}
+                navigationState={this.state}
+                renderScene={SceneMap({
+                    first:this.firstRoute,
+                    second:this.secondRoute,
+                })}
+                onIndexChange={index=>this.setState({index})}
+                initialLayout={{width:Dimensions.get('window').width}}
+            />
 
-        <TextInput style={styles.inputs}
-            placeholder="Email"
-            keyboardType="email-address"
-            underlineColorAndroid='transparent'
-            onChangeText={(email) => this.setState({email})}/>
-        </View>
-        <View style={styles.inputContainer}>
-         
-         <TextInput style={styles.inputs}
-             keyboardType='number-pad'
-             placeholder="Celular"
-             underlineColorAndroid='transparent'
-             onChangeText={(Phone) => this.setState({Phone})}/>
-       </View>
 
-        <View style={styles.inputContainer}>
-        <TextInput style={styles.inputs}
-            placeholder="Contraseña"
-            secureTextEntry={true}
-            underlineColorAndroid='transparent'
-            onChangeText={(password) => this.setState({password})}/>
-        </View>
-        <View style={styles.inputContainer}>
-
-        <TextInput style={styles.inputs}
-            placeholder="Repetir contraseña"
-            secureTextEntry={true}
-            underlineColorAndroid='transparent'
-            onChangeText={(repeatPassword) => this.setState({repeatPassword})}/>
-        </View>
-        <View style={styles.inputContainer}>
-
-        <TextInput style={styles.inputs}
-            placeholder="Pais"
-            underlineColorAndroid='transparent'
-            onChangeText={(country) => this.setState({country})}/>
         </View>
 
-   
+       
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegister()}>
-          <Text style={styles.loginText}>REGISTRARME</Text>
-        </TouchableOpacity>
-                          
+
+
               </View>
-                  
-      </KeyboardAvoidingView>
+           
           </ImageBackground>
       
 

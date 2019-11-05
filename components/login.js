@@ -98,7 +98,8 @@ componentDidMount(){
 
 
   NavigateRegister = () =>{
-    Linking.openURL('https://www.myclassflix.com/login')
+    // Linking.openURL('https://www.myclassflix.com/login')
+    this.props.navigation.navigate('RegisterView')
   }
 
 

@@ -59,7 +59,7 @@ export default class Reserva  extends Component{
           const uidstudent  = firebase.auth().currentUser.uid
         const {dateClass,item,key,keycalendar,text,selected2,time} = this.state
     
-         dateClass['startTime'] =  parseInt(moment(time).unix());
+         dateClass['startTime'] =  parseInt(moment(time).unix()); 
           dateClass['descriptionClass'] = text
           dateClass['skill'] = selected2
           dateClass['endTime'] = parseInt(moment(time).add(50,'minutes').unix());
@@ -111,7 +111,7 @@ export default class Reserva  extends Component{
           if(skill[0]['idiomas'] != undefined &&  skill[0]['idiomas'].length >1 )
           { return(
             skill[0]['idiomas'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }
@@ -120,7 +120,7 @@ export default class Reserva  extends Component{
            if(skill[1]['musica'] != undefined &&  skill[1]['musica'].length >1 )
           { return(
             skill[1]['musica'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }
@@ -129,7 +129,7 @@ export default class Reserva  extends Component{
            if(skill[2]['tecnologia'] != undefined &&  skill[2]['tecnologia'].length >1)
           { return(
             skill[2]['tecnologia'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }
@@ -138,13 +138,13 @@ export default class Reserva  extends Component{
            if(skill[3]['universidad'] != undefined &&  skill[3]['universidad'].length >1 )
           { return(
             skill[3]['universidad'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }else if(skill[4]['secundaria'] != undefined &&  skill[4]['secundaria'].length >1 )
           { return(
             skill[4]['secundaria'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }
@@ -152,7 +152,7 @@ export default class Reserva  extends Component{
            if(skill[5]['primaria'] != undefined &&  skill[5]['primaria'].length >1)
           { return(
             skill[5]['primaria'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }
@@ -161,7 +161,7 @@ export default class Reserva  extends Component{
            if(skill[6]['otros'] != undefined &&  skill[6]['otros'].length >1 )
           { return(
             skill[6]['otros'].map((item, index) => {
-                return (<Picker.Item label={item} value={index} key={index}/>) 
+                return (<Picker.Item label={item} value={item} key={index}/>) 
             })
           )
           }

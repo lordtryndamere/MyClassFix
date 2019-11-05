@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Toast from 'react-native-simple-toast';
-import { View, Text, StyleSheet, ScrollView,TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ScrollView,TouchableOpacity,Alert } from 'react-native'
 import * as firebase from 'firebase'
 import { Header, Icon, ListItem } from 'react-native-elements'
 import {  Calendar } from 'react-native-calendars'
@@ -53,10 +53,10 @@ export default class ReservasClase extends Component {
                     this.props.navigation.navigate('Reserva',{item,skill,name,lastname,tipo,newSkill,key,keycalendar,time})
                 }
                 else{
-                    this.props.navigation.navigate('Pago')
+                    Alert.alert('RESERVAR CLASE','Por favor ingresa desde un computador, y escoge el paquete que deseas comprar para continuar.')
                 }
             }else{
-                this.props.navigation.navigate('Pago')
+                    Alert.alert('RESERVAR CLASE','Por favor ingresa desde un computador, y escoge el paquete que deseas comprar para continuar.')
             }
 
      

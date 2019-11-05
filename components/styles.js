@@ -29,7 +29,7 @@ container2: {
             borderWidth: 2,
             borderColor: '#fff',
             width:ancho('80%'),
-            height:alto('7%'),
+            height:alto('6%'),
             marginBottom:20,
             flexDirection: 'row',
             alignItems:'center',        
@@ -314,6 +314,38 @@ contentRating:{
 iconhome:{
   height:alto('13%'),
   width:ancho('35.5%')
+},
+scene:{
+  paddingTop:30,
+  paddingLeft:20,
+  paddingRight:20,
+  alignContent:'center',
+  justifyContent:'center',
+  alignItems:'center',
+  flex:1,
+  width:"100%",
+  height:"100%",
+
+
+},
+botton:{
+  height:"80%",
+  width:"100%"
+},
+top:{
+  height:"20%",
+  width:"100%",
+  alignItems:'center',
+  justifyContent:'center',
+  alignContent:'center'
+},
+picker:{
+  width: ancho("80%"),
+  color:"#fff"
+},
+iconregister:{
+  color:"#fff",
+  backgroundColor:'#fff'
 }
 
     
