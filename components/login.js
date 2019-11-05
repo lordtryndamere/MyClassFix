@@ -176,7 +176,6 @@ componentDidMount(){
 
 
         <View style={styles.inputContainer}>
-
           <TextInput style={styles.inputs}
               ref={input => { this.textInput = input }}
               placeholder="C o r r e o    e l e c t r o n i c o"
