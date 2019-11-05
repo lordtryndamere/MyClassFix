@@ -239,7 +239,7 @@ export default class UserView extends PureComponent {
       })
       
     setTimeout(() => {
-      return this.setState({ fullTeachers: fullData })
+      return this.setState({ fullTeachers: fullData,inMemoryTeachers:fullData })
     }, 10000);
   }
 
@@ -453,21 +453,17 @@ export default class UserView extends PureComponent {
     }
   }
 
-  searchTeachers = (value) => {
+  searchTeachers = (text) => {
 
 
-    const filteredTeachers = this.state.fullTeachers.filter(teacher => {
-      teacherLowerCase = (
-        teacher.name + ''
-      ).toLowerCase();
-      var searchTermLowerCase = value.toLowerCase();
-      return teacherLowerCase.indexOf(searchTermLowerCase)
-
+    const newData = this.state.inMemoryTeachers.filter(function(item){
+      const itemData = (item.name+''+item.acentSkill[0]).toLowerCase()
+      const textData = text.toLowerCase()
+      return itemData.indexOf(textData) > -1
     })
-    this.setState({ Search: value })
+    this.setState({fullTeachers:newData})
 
   }
-
   render() {
     const { Search } = this.state;
     return (
@@ -483,8 +479,8 @@ export default class UserView extends PureComponent {
             <Searchbar
               style={{ width: "130%", height: alto('5%'), borderRadius: 30 }}
               placeholder="Buscar"
-              onChangeText={this.searchTeachers}
-              value={Search}
+              onChangeText={(text) =>  this.searchTeachers(text)}
+            
             />
           }
           leftComponent={<TouchableOpacity underlayColor={'rgba(0,0,0,0.2)'} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} >
@@ -520,7 +516,7 @@ export default class UserView extends PureComponent {
           }}> APRENDE CON LOS MEJORES  </Text>
         </View>
         {
-         this.state.fullTeachers.length < 3
+         this.state.fullTeachers.length < 1
             ? <View style={{ paddingTop: 120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
               <Image source={require('../assets/spinner.gif')} style={{ height: alto('23%'), width: ancho('38%') }} />
               <Text style={styles.textload}>Cargando profesores ....</Text>
