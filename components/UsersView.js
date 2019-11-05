@@ -44,6 +44,7 @@ export default class UserView extends PureComponent {
 
     this.state = {
       ...props,
+      isLoading:"",
       busquedaprofesores: null,
       Search: '',
       timepassed: false,
@@ -67,8 +68,8 @@ export default class UserView extends PureComponent {
     console.log(index.name);
   }
 
-  componentWillMount() {
-
+  componentDidMount() {
+    this.setState({isLoading:true})
     this.loadTeachers()
   }
 
@@ -239,8 +240,8 @@ export default class UserView extends PureComponent {
       })
       
     setTimeout(() => {
-      return this.setState({ fullTeachers: fullData,inMemoryTeachers:fullData })
-    }, 10000);
+      return this.setState({ fullTeachers: fullData,inMemoryTeachers:fullData,isLoading:false })
+    }, 8000);
   }
 
   
@@ -516,8 +517,8 @@ export default class UserView extends PureComponent {
           }}> APRENDE CON LOS MEJORES  </Text>
         </View>
         {
-         this.state.fullTeachers.length < 1
-            ? <View style={{ paddingTop: 120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+            this.state.isLoading
+            ?<View style={{ paddingTop: 120, flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
               <Image source={require('../assets/spinner.gif')} style={{ height: alto('23%'), width: ancho('38%') }} />
               <Text style={styles.textload}>Cargando profesores ....</Text>
             </View>
