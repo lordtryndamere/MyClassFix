@@ -48,8 +48,8 @@ export default class LoginView extends PureComponent {
       ranking:'',
       resume:'',
       terminos:'',
-      types:'',
-      typeteacher:''
+      types:'student',
+     
 
 
 
@@ -82,16 +82,15 @@ export default class LoginView extends PureComponent {
   
 ñ
 
- HandleTypes = (type) => {
-  this.state.types =type
+ HandleTypes = (value) => {
+ if(value == 'student'){
+   this.setState({types:'students'})
 
-  this.state.terminos = false
+ }else{
+   this.setState({type:'teachers'})
+ }
 
-  if (type == "teachers") {
 
-  //   this.acudiente = false
-
-   }
  }
  
   sendEmailStudent= (idStudent) => {
@@ -118,7 +117,7 @@ export default class LoginView extends PureComponent {
 
     
     typeStudent = () =>{
-      this.setState({types:"students"})
+  
       var d = new Date();
   
       
@@ -338,11 +337,11 @@ export default class LoginView extends PureComponent {
                         {this.state.errorMessage}
                       </Text>}
                     <View  style={styles.acomodar} >       
-                            <TouchableHighlight    style={[styles.buttonestudiante, styles.estudiantebutton]}  onPress={()=> this.state.types} >
+                            <TouchableHighlight    style={[styles.buttonestudiante, styles.estudiantebutton]}  onPress={()=> this.HandleTypes('student')} >
                             <Text style={styles.loginText}>ESTUDIANTE</Text>
                           </TouchableHighlight>
                           
-                          <TouchableHighlight style={[styles.buttondocente, styles.docentebutton]}  onPress={()=> this.state.typeteacher} >
+                          <TouchableHighlight style={[styles.buttondocente, styles.docentebutton]}    onPress={()=> this.HandleTypes('teacher')} >
                             <Text style={styles.loginText}>DOCENTE</Text>
                           </TouchableHighlight>
                     </View>

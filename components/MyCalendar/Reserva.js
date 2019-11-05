@@ -1,4 +1,6 @@
 import React ,{Component} from 'react'
+import Toast from 'react-native-simple-toast';
+import * as firebase from 'firebase'
 import axios from 'axios'
 import moment from 'moment'
 import {Item,Picker} from 'native-base'
@@ -23,12 +25,13 @@ export default class Reserva  extends Component{
         lastname:this.props.navigation.state.params.lastname,
         tipo:this.props.navigation.state.params.tipo,
         keycalendar:this.props.navigation.state.params.keycalendar,
+        time:this.props.navigation.state.params.time,
         selected2:undefined,
         text:"",
         dateClass: {
             descriptionClass: "",
             descriptionTeacher: "",
-            skill: "Selecciona la asignatura",
+            skill: "",
             status: "closed",
             titleClass: "Nombre de la clase",
             idTeacher: "",
@@ -45,6 +48,8 @@ export default class Reserva  extends Component{
         this.setState({
           selected2: value
         });
+        console.log(value);
+        
       }
 
       emailClass(param) {
@@ -52,38 +57,45 @@ export default class Reserva  extends Component{
       }
       AñadirClase() {
           const uidstudent  = firebase.auth().currentUser.uid
-        const {dateClass,item,key,keycalendar} = this.state
-         dateClass['startTime'] = item;
-          dateClass['endTime'] = moment().unix(item).add(50, 'minutes').unix();
+        const {dateClass,item,key,keycalendar,text,selected2,time} = this.state
+    
+         dateClass['startTime'] =  parseInt(moment(time).unix());
+          dateClass['descriptionClass'] = text
+          dateClass['skill'] = selected2
+          dateClass['endTime'] = parseInt(moment(time).add(50,'minutes').unix());
           dateClass['idTeacher'] = key
           dateClass['idStudent'] = uidstudent
           firebase.database().ref('classes/').push(
             dateClass
           ).then((value) => {
-            firebase.database().ref('classes/').update('' + value.key, {
-              key: value.key
-            }).then(() => {
+            var updates = {key:value.key}
+            firebase.database().ref('classes/').update(value.key,updates).then(() => {
               // agregando nodo de notifications los usuarios
               // this.db.list('students/' + this._userService.uid + '/notifications').push({ idClass: value.key })
               // this.db.list('teachers/' + this._userService.vid + '/notifications').push({ idClass: value.key })
-    
+              
               // agregando clase a los usuarios
               firebase.database().ref('students/' + uidstudent + '/myClasses').push({ idClass: value.key })
               firebase.database().ref('teachers/' + key + '/myClasses').push({ idClass: value.key })
     
               //actualizar el estado del calendario
               firebase.database().ref(`teachers/${key}/newCalendar/week/${keycalendar}`).update({ status: 2 });
-    
+              console.log(value.key);
+              
               this.emailClass(value.key);
     
               var coints
-              this.db.database.ref('students/' + uidstudent + '/coints').once('value', data => {
+              firebase.database().ref('students/' + uidstudent + '/coints').once('value', data => {
                 coints = data.val()
               }).then(() => {
                 var valor = parseInt(coints["numberClassPlant"])
                 if (valor > 0) {
                   var valorf = valor - 1;
-                  firebase.database().ref('students/' + uidstudent + '/coints').update('/', { numberClassPlant: valorf })
+                  firebase.database().ref('students/' + uidstudent + '/coints').update({ numberClassPlant: valorf }).then(()=>{
+                    Toast.show("Se a reservado una clase correctamente",4500)
+                    this.textInput.clear()
+                   
+                  })
                 }
               })
             })
@@ -96,7 +108,7 @@ export default class Reserva  extends Component{
       LoadPicker (){
           const {skill} = this.state
 
-          if(skill[0]['idiomas'] != undefined &&  skill[0]['idiomas'].length >0 )
+          if(skill[0]['idiomas'] != undefined &&  skill[0]['idiomas'].length >1 )
           { return(
             skill[0]['idiomas'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
@@ -105,7 +117,7 @@ export default class Reserva  extends Component{
           }
 
 
-           if(skill[1]['musica'] != undefined &&  skill[1]['musica'].length >0 )
+           if(skill[1]['musica'] != undefined &&  skill[1]['musica'].length >1 )
           { return(
             skill[1]['musica'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
@@ -114,7 +126,7 @@ export default class Reserva  extends Component{
           }
 
 
-           if(skill[2]['tecnologia'] != undefined &&  skill[2]['tecnologia'].length >0 )
+           if(skill[2]['tecnologia'] != undefined &&  skill[2]['tecnologia'].length >1)
           { return(
             skill[2]['tecnologia'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
@@ -123,13 +135,13 @@ export default class Reserva  extends Component{
           }
 
 
-           if(skill[3]['universidad'] != undefined &&  skill[3]['universidad'].length >0 )
+           if(skill[3]['universidad'] != undefined &&  skill[3]['universidad'].length >1 )
           { return(
             skill[3]['universidad'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
             })
           )
-          }else if(skill[4]['secundaria'] != undefined &&  skill[4]['secundaria'].length >0 )
+          }else if(skill[4]['secundaria'] != undefined &&  skill[4]['secundaria'].length >1 )
           { return(
             skill[4]['secundaria'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
@@ -137,7 +149,7 @@ export default class Reserva  extends Component{
           )
           }
 
-           if(skill[5]['primaria'] != undefined &&  skill[5]['primaria'].length >0 )
+           if(skill[5]['primaria'] != undefined &&  skill[5]['primaria'].length >1)
           { return(
             skill[5]['primaria'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
@@ -146,7 +158,7 @@ export default class Reserva  extends Component{
           }
           
 
-           if(skill[6]['otros'] != undefined &&  skill[6]['otros'].length >0 )
+           if(skill[6]['otros'] != undefined &&  skill[6]['otros'].length >1 )
           { return(
             skill[6]['otros'].map((item, index) => {
                 return (<Picker.Item label={item} value={index} key={index}/>) 
@@ -163,7 +175,7 @@ export default class Reserva  extends Component{
  
     render(){
         const { item,skill,name,lastname,tipo} = this.state
-        console.log(skill);
+   
         
 
         return(
@@ -216,17 +228,18 @@ export default class Reserva  extends Component{
                    onChangeText={(text) => this.setState({text})}
                 style={styles.textArea}
                 underlineColorAndroid="transparent"
-                placeholder="Type something"
+                placeholder="Descripcion"
                 placeholderTextColor="grey"
                 numberOfLines={10}
                 multiline={true}
+                ref={input => { this.textInput = input }}
                 />
             </View>
          
-                    
+        
                     
             </View>
-            <TouchableOpacity    style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
+            <TouchableOpacity  onPress={()=>this.AñadirClase()}  style={[styles.TouchableOpacityStyle, styles.reservarclase]} >
           <Text style={styles.loginText}>RESERVAR CLASE</Text>
             </TouchableOpacity>    
 
@@ -300,7 +313,9 @@ const styles  = StyleSheet.create({
         padding: 5
       },
       textArea:{
-        height: alto("45%"),
-        justifyContent: "flex-start"
+        height: alto("35%"),
+        justifyContent: "flex-start",
+        alignContent:'flex-start',
+        alignItems:'flex-start'
       }
 })

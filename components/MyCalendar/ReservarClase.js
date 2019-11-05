@@ -29,7 +29,8 @@ export default class ReservasClase extends Component {
             tipo:this.props.navigation.state.params.type,
             newSkill:this.props.navigation.state.params.newSkill,
             day:null,
-            keycalendar:""
+            keycalendar:"",
+            time:""
 
         }
 
@@ -41,7 +42,7 @@ export default class ReservasClase extends Component {
     }
 
 
-    HandleReserva = (item,skill,name,lastname,tipo,newSkill,key,keycalendar)=>{
+    HandleReserva = (item,skill,name,lastname,tipo,newSkill,key,keycalendar,time)=>{
         const uid = firebase.auth().currentUser.uid
 
         firebase.database().ref(`/students/${uid}/coints`).once('value',snapshot=>{
@@ -49,7 +50,7 @@ export default class ReservasClase extends Component {
             if (data  != null     ){
                 if (data.numberClassPlant > 0  && data.numberClassPlant != null)
                 {
-                    this.props.navigation.navigate('Reserva',{item,skill,name,lastname,tipo,newSkill,key,keycalendar})
+                    this.props.navigation.navigate('Reserva',{item,skill,name,lastname,tipo,newSkill,key,keycalendar,time})
                 }
                 else{
                     this.props.navigation.navigate('Pago')
@@ -73,7 +74,7 @@ export default class ReservasClase extends Component {
         var Dates = []
         var startTime = parseInt(moment(day.dateString).format('x'))
         var endTime = parseInt(moment(day.dateString).add(1, 'days').format('x'))
-        
+         this.setState({time:day.dateString})   
         
         
 
@@ -118,7 +119,7 @@ export default class ReservasClase extends Component {
 
 
     render() {
-        const {day,skill,name,lastname,tipo,newSkill,key,keycalendar} = this.state
+        const {day,skill,name,lastname,tipo,newSkill,key,keycalendar,time} = this.state
 
      
         
@@ -260,7 +261,7 @@ export default class ReservasClase extends Component {
                                             title={item}
                                             titleStyle={{color:"#757575"}}
                                             chevron={
-                                            <TouchableOpacity onPress={()=>this.HandleReserva(item,skill,name,lastname,tipo,newSkill,key,keycalendar)} style={[styles.buttonContainer, styles.reservarButton]} >
+                                            <TouchableOpacity onPress={()=>this.HandleReserva(item,skill,name,lastname,tipo,newSkill,key,keycalendar,time)} style={[styles.buttonContainer, styles.reservarButton]} >
                                             <Text style={styles.reservastext}>RESERVAR</Text>
                                             </TouchableOpacity>}
                                             

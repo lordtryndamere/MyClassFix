@@ -67,13 +67,15 @@ export default class LoginView extends PureComponent {
       firebase.auth()
       .signInWithEmailAndPassword(email,password)
       .then(()=>{
+        this.textInput.clear()
         this.setState({messagelogin:ind })
         setTimeout(()=>{
           this.props.navigation.navigate('HomeScreen') 
-        },2000) 
+        },1500) 
       })
       .catch((e) => { 
         this.setState({errorMessage:"¡Error usuario o contraseña incorrectos!"})
+        this.textInput.clear()
       
         setTimeout(() => {
           this.setState({errorMessage:null})
@@ -174,8 +176,8 @@ componentDidMount(){
 
 
         <View style={styles.inputContainer}>
-
           <TextInput style={styles.inputs}
+              ref={input => { this.textInput = input }}
               placeholder="C o r r e o    e l e c t r o n i c o"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
@@ -185,6 +187,7 @@ componentDidMount(){
         <View style={styles.inputContainer}>
          
           <TextInput style={styles.inputs}
+              ref={input => { this.textInput = input }}
               placeholder="C o n t r a s e ñ a "
               secureTextEntry={true}
               underlineColorAndroid='transparent'
