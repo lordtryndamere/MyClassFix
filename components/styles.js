@@ -345,9 +345,16 @@ picker:{
 },
 iconregister:{
   color:"#fff",
-  backgroundColor:'#fff'
+  backgroundColor:'#fff',
+  position:'absolute',
+  right:0
+},
+newpicker:{
+  borderWidth:1,
+  borderColor:"#fff",
+  borderRadius:30,
+  backgroundColor:"transparent"
 }
-
     
   
   });

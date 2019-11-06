@@ -20,7 +20,8 @@ import {
   KeyboardAvoidingView,
   Image,
   Dimensions,
-  DatePickerIOSComponent,
+  ActivityIndicator,
+
 
 
 
@@ -28,8 +29,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import publicIP from 'react-native-public-ip';
 import axios from 'axios';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { NavigationActions, ScrollView } from 'react-navigation'
+
+const  ind =
+<View> <ActivityIndicator size="large" color="white" />  </View>
 
 
 
@@ -50,7 +54,8 @@ export default class LoginView extends PureComponent {
       repeatPassword: '',
       country: '',
       errorMessage: null,
-      TypesDocument: ['Cedula ciudadania', 'Cedula Extranjeria', 'Pasaporte'],
+      Loading:null,
+      TypesDocument: ['Cedula Extranjeria', 'Cedula ciudadania', 'Pasaporte'],
       age: '',
       city: '',
       linkPhoto: '',
@@ -66,16 +71,28 @@ export default class LoginView extends PureComponent {
         { key: 'second', title: "PROFESOR" }
       ],
       index: 0,
-      date: "",
+      fecha: "",
       numerodocumento: "",
-      ipCreation: ""
-
+      ipCreation: "",
+      parent:{
+        document:"",
+        email:"",
+        name:"",
+        Phone:"",
+        tipodocumentoescogido:""
+ 
+      },
+      parentc:false
+    
 
 
 
     }
 
   }
+
+
+
 
 
 
@@ -126,44 +143,48 @@ export default class LoginView extends PureComponent {
 
 
 
-  typeStudent = (value) => {
+  typeStudent =   async  (value) => {
+    this.ageStudent()
     this.setState({ types: 'students' })
     this.HandleIp();
 
 
-    var { name, email, lastname, password, repeatPassword, date, Phone, ipCreation } = this.state
+    var { name, email, lastname, password, repeatPassword, fecha, Phone, ipCreation } = this.state
     var d = moment().unix()
 
 
 
-    firebase.database().ref('students').update(value.user.uid + '/personalData', {
+     await firebase.database().ref(`/students/${value.user.uid}/personalData`).update({
       surname: lastname,
       email: email,
       name: name,
-      age: date,
+      age: moment(fecha).format('YYYY-MM-DD'),
       tel: Phone,
       ipCreation: ipCreation,
       dateCreation: d
 
-    }).then(() => {
-      firebase.database().ref('/roleByUser').update(value.user.uid, { type: "student" })
-
-        .then(() => {
-          this.props.navigation.navigate('LoginView')
-        })
-
-
     })
+
+     await  firebase.database().ref(`/roleByUser/${value.user.uid}`).update({ type: "student" })
+     setTimeout(() => {
+      this.props.navigation.goBack()
+     }, 3000);
+     
+   
+  
+   
+
+  
 
 
   }
 
-  typeTeacher = (value) => {
+  typeTeacher = async (value) => {
     
 
     this.setState({ types: 'teachers' })
     // const user = firebase.auth().currentUser.uid
-    var { name, email, lastname, password, repeatPassword, date, Phone, ipCreation, tipodocumentoescogido, numerodocumento, linkPhoto } = this.state
+    var { name, email, lastname, password, repeatPassword, fecha, Phone, ipCreation, tipodocumentoescogido, numerodocumento, linkPhoto } = this.state
 
     var branch = {
       myStudies: {
@@ -202,7 +223,7 @@ export default class LoginView extends PureComponent {
     }
     //INSERT DATES
     var c = moment().unix()
-    firebase.database().ref('teachers').update(value.user.uid + '/personalData', {
+    await firebase.database().ref(`/teachers/${value.user.uid}/personalData`).update({
       typeDocument: tipodocumentoescogido,
       document: numerodocumento,
       tel: Phone,
@@ -230,35 +251,39 @@ export default class LoginView extends PureComponent {
       resume: "",
       dataCreation: c,
       ipCreation: ipCreation
-    }).then(() => {
-      firebase.database('/roleByUser').update(value.user.uid, { type: 'teacher' })
-        .then(() => {
-          this.props.navigation.navigate('Login')
-        })
-
-
     })
+
+       await firebase.database().ref(`/roleByUser/${value.user.uid}`).update({ type: 'teacher' })
+ 
+       setTimeout(() => {
+        this.props.navigation.goBack()
+       }, 3000);
+     
+
+        
+ 
+      
+   
 
   }
 
 
 
-  HandleRegisterStudent = () => {
+  HandleRegisterStudent =  async () => {
     this.setState({ types: 'students' })
-    var { name, email, lastname, password, repeatPassword, date, Phone, ipCreation, tipodocumentoescogido, numerodocumento, linkPhoto, types } = this.state
-    if (name, lastname, email, password, repeatPassword, date) {
+    var { name, email, lastname, password, repeatPassword, fecha, Phone, ipCreation, tipodocumentoescogido, numerodocumento, linkPhoto, types } = this.state
+    if (name, lastname, email, password, repeatPassword, fecha) {
       if (types == 'students') {
         if (Phone != "" && Phone.toString().length == 10) {
           if (password == repeatPassword) {
 
-            firebase.auth().createUserWithEmailAndPassword(email.toLocaleLowerCase(), password)
-              .then((value) => {
-                console.log(value)
+          await  firebase.auth().createUserWithEmailAndPassword(email.toLocaleLowerCase(), password)
+              .then( async (value) => {
+                this.setState({Loading:ind})
                 this.typeStudent(value)
-
-                this.sendEmailStudent(value.user.uid).then((res) => {
+                 await this.sendEmailStudent(value.user.uid).then((res) => {
                   if (res.data.status == 202) {
-                    this.setState({ errorMessage: 'SendEmailValidate' })
+                    Toast.show("Se ah enviado un correo de verificacion para confirmar si eres tu",2000)
                   }
                 }).catch((error) => {
                   this.setState({ errorMessage: 'ErrorServer' })
@@ -269,11 +294,11 @@ export default class LoginView extends PureComponent {
                 Toast.show("Te has registrado exitosamente", 3000)
 
               })
-            val.catch((err) => {
-              Toast.show("Usuario no registrado", 3000)
+              //   .catch((err) => {
+              //   Toast.show("Usuario no registrado, por favor verifica todos los campos", 3000)
 
-            })
-            // this.typeStudent()
+              // })
+    
 
 
 
@@ -281,7 +306,7 @@ export default class LoginView extends PureComponent {
             Toast.show("Las contraseñas no coinciden", 2000)
           }
         } else {
-          Toast.show("Numero de telefono incorrecto", 2000)
+            Toast.show("Numero de telefono incorrecto", 2000)
         }
 
 
@@ -294,81 +319,148 @@ export default class LoginView extends PureComponent {
   }
 
 
-  HandleRegisterTeacher = () => {
-    var { name, email, lastname, password, repeatPassword, date, Phone, ipCreation, tipodocumentoescogido, numerodocumento, linkPhoto, types } = this.state
+  HandleRegisterTeacher =  async () => {
     this.setState({ types: 'teachers' })
-    if (name.email, lastname, password, repeatPassword, date, Phone, tipodocumentoescogido) {
-
-
+    var { name, email, lastname, password, repeatPassword, fecha, Phone, ipCreation, tipodocumentoescogido, numerodocumento, linkPhoto, types } = this.state
+    if (name, lastname, email, password, repeatPassword, fecha,numerodocumento,tipodocumentoescogido) {
       if (types == 'teachers') {
+        if (Phone != "" && Phone.toString().length == 10) {
+          if (password == repeatPassword) {
 
-
-        if (password == repeatPassword) {
-
-          if (Phone != "" && Phone == null ? '' : Phone.toString().length == 10) {
-
-            var val = firebase.auth().createUserWithEmailAndPassword(email, password);
-
-            val.catch((err) => {
-
-              this.setState({ errorMessage: 'Error validate' })
-
-            })
-
-            val.then((value) => {
-
-
-
-              this.typeTeacher(value)
-
-              this.sendEmailTeacher(value.user.uid).then((res) => {
-
+          await  firebase.auth().createUserWithEmailAndPassword(email.toLocaleLowerCase(), password)
+              .then( async (value) => {
+                this.setState({Loading:ind})
+                this.typeTeacher(value)
+               await this.sendEmailTeacher(value.user.uid).then((res) => {
                 if (res.data.status == 202) {
-
-                  this.errorMessage = "sendEmailValidate"
-
+                  Toast.show("Se ah enviado un correo de verificacion para confirmar si eres tu",2000)
                 }
-
-                if (res.data.status != 202) {
-
-                  this.errorMessage = "ErrorEmailValidate"
-
-                }
-
               }).catch((error) => {
+                this.setState({ errorMessage: 'ErrorServer' })
+              })
+              }).then(() => {
 
-                this.errorMessage = "Server error"
+                Toast.show("Te has registrado exitosamente", 3000)
 
               })
+              //   .catch((err) => {
+              //   Toast.show("Usuario no registrado, por favor verifica todos los campos", 3000)
 
-            }).then(() => {
-              Toast.show("Te has registrado exitosamente", 2000)
-            })
+              // })
+    
+
+
 
           } else {
-
-            Toast.show("Numero de telefono incorrecto", 2000)
-
+            Toast.show("Las contraseñas no coinciden", 2000)
           }
-
         } else {
-
-          Toast.show("Las contraseñas no coinciden", 1500)
-
+            Toast.show("Numero de telefono incorrecto", 2000)
         }
+
+
+
       }
     } else {
-      Toast.show("Por favor rellena todos los campos", 1500)
+      Toast.show("Por favor rellena todos los campos", 2000)
     }
   }
 
+ 
+
+
+
   onValueChange2(value) {
     this.setState({
-      tipodocumentoescogido: value
+      tipodocumentoescogido: value,
+      parentc:true
     });
     console.log(value);
 
   }
+
+
+
+
+  ageStudent() {
+    var {fecha,parentc} = this.state
+                
+    var yearStudent= moment(fecha).get('year')
+    var anioActual = moment().get('year')
+
+ 
+     // fecha del sistema
+     var fechaActual = new Date();
+     var diaActual = fechaActual.getDate();
+     var mesActual = (fechaActual.getMonth() + 1);
+     var anioActual = fechaActual.getFullYear();
+    if (parentc) {
+     if (anioActual - parseInt(yearStudent) < 18) {
+        return( <View>
+          <View style={styles.inputContainer}>
+          <Picker
+          mode="dialog"
+          iosIcon={<Icon name="arrow-down" style={styles.iconregister} />}
+          style={styles.picker}
+          placeholder="asignaturas"
+          placeholderStyle={{ color: "#bfc6ea" }}
+          placeholderIconColor="#007aff"
+          selectedValue={this.state.selected2}
+          onValueChange={this.onValueChange2.bind(this)}
+        >
+    
+          {this.state.TypesDocument.map((item, index) => {
+            return (
+              <Picker.Item label={item} value={item} key={index} />
+            )
+          })}
+    
+        </Picker>
+        </View>
+    
+        <View style={styles.inputContainer}>
+    
+              <TextInput style={styles.inputs}
+                placeholder="N u m e r o  d o c u m e n t o  a c u d i e n t e"
+                keyboardType="number-pad"
+                underlineColorAndroid='transparent'
+                onChangeText={(email) => this.setState({ email })} />
+        </View>
+          
+        <View style={styles.inputContainer}>
+    
+      <TextInput style={styles.inputs}
+        placeholder="N o m b r e  a c u d i e n t e"
+        underlineColorAndroid='transparent'
+        onChangeText={(email) => this.setState({ email })} />
+      </View>
+      <View style={styles.inputContainer}>
+    
+      <TextInput style={styles.inputs}
+        placeholder="N u m e r o  d e  c e l u l a r   a c u d i e n t e"
+        keyboardType="number-pad"
+        underlineColorAndroid='transparent'
+        onChangeText={(email) => this.setState({ email })} />
+      </View>
+    
+      <View style={styles.inputContainer}>
+    
+    <TextInput style={styles.inputs}
+      placeholder="C o r r e o   e l e c t r o n i c o  a c u d i e n t e "
+      underlineColorAndroid='transparent'
+      onChangeText={(email) => this.setState({ email })} />
+    </View>
+    
+        </View>)
+       
+     }else{
+       this.setState({parent:false})
+       
+     }
+    }else{
+      this.setState({parentc:false})
+    } 
+    }
 
   firstRoute = () => (
 
@@ -434,20 +526,27 @@ export default class LoginView extends PureComponent {
               timeZoneOffsetInMinutes={undefined}
               modalTransparent={false}
               animationType={"fade"}
-              androidMode={"default"}
+              androidMode={"calendar"}
               placeHolderText="DD/MM/YYYY"
               textStyle={{ color: "#fff" }}
               placeHolderTextStyle={{ color: "#d3d3d3" }}
-              onDateChange={(date) => this.setState({ date })}
+              onDateChange={(date) => this.setState({fecha:date })}
               disabled={false}
             />
           </View>
-          <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }} >
-            <TouchableOpacity style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegisterStudent()}>
-              <Text style={styles.loginText}>REGISTRARME</Text>
-            </TouchableOpacity>
-          </View>
+        {this.state.parentc
+          ?this.ageStudent()
+          :console.log("no es true")
+          }
 
+        <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }} >
+            <TouchableNativeFeedback style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegisterStudent()}>
+              <Text style={styles.loginText}>REGISTRARME</Text>
+            </TouchableNativeFeedback>
+          </View>
+            
+              {this.state.Loading}
+              
 
         </ScrollView>
       </KeyboardAvoidingView>
@@ -470,7 +569,7 @@ export default class LoginView extends PureComponent {
 
             <Picker
               mode="dialog"
-              iosIcon={<Icon name="arrow-down" style={styles.iconregister} />}
+              iosIcon={<Icon name="add-circle"   style={styles.iconregister} />}
               style={styles.picker}
               placeholder="asignaturas"
               placeholderStyle={{ color: "#bfc6ea" }}
@@ -493,7 +592,7 @@ export default class LoginView extends PureComponent {
 
             <TextInput style={styles.inputs}
               keyboardType='number-pad'
-              placeholder="N U M E R O  D O C U M E N T O"
+              placeholder="N u m e r o  d o c u m e n t o"
               underlineColorAndroid='transparent'
               onChangeText={(numerodocumento) => this.setState({ numerodocumento })} />
           </View>
@@ -544,13 +643,16 @@ export default class LoginView extends PureComponent {
               underlineColorAndroid='transparent'
               onChangeText={(repeatPassword) => this.setState({ repeatPassword })} />
           </View>
+      
           <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }} >
-            <TouchableOpacity style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegisterTeacher()}>
+            <TouchableNativeFeedback  style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegisterTeacher()}>
               <Text style={styles.loginText}>REGISTRARME</Text>
-            </TouchableOpacity>
+            </TouchableNativeFeedback> 
           </View>
-
-
+             
+              {this.state.Loading}
+              
+               
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
@@ -572,7 +674,7 @@ export default class LoginView extends PureComponent {
 
         <View style={styles.container}>
           <View style={styles.top} >
-            <Image style={{ height: "90%", width: "55%" }} source={require('../assets/PRUEBA-18.png')} />
+            <Image style={{ height: "90%", width: "57%" }} source={require('../assets/PRUEBA-18.png')} />
             {this.state.errorMessage &&
               <Text style={{ color: 'red' }}>
                 {this.state.errorMessage}
