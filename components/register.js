@@ -4,7 +4,7 @@ import {
   listenOrientationChange as op,
   removeOrientationListener as rp
 } from 'react-native-responsive-screen'
-import { DatePicker, Picker } from 'native-base'
+import { DatePicker, Picker ,Item} from 'native-base'
 import moment from 'moment'
 import Toast from 'react-native-simple-toast';
 import React, { Component, PureComponent } from 'react';
@@ -32,8 +32,10 @@ import axios from 'axios';
 import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { NavigationActions, ScrollView } from 'react-navigation'
 
+
 const  ind =
 <View> <ActivityIndicator size="large" color="white" />  </View>
+
 
 
 
@@ -82,12 +84,70 @@ export default class LoginView extends PureComponent {
         tipodocumentoescogido:""
  
       },
-      parentc:false
-    
-
+      parentc:false,
+      ll:ageStudent
 
 
     }
+
+
+  var ageStudent =
+ <View>
+  <View style={styles.inputContainer}>
+  <Picker
+  mode="dialog"
+  iosIcon={<Icon name="arrow-down" style={styles.iconregister} />}
+  style={styles.picker}
+  placeholder="asignaturas"
+  placeholderStyle={{ color: "#bfc6ea" }}
+  placeholderIconColor="#007aff"
+  selectedValue={this.state.selected2}
+  onValueChange={this.onValueChange2.bind(this)}
+>
+
+  {this.state.TypesDocument.map((item, index) => {
+    return (
+      <Picker.Item label={item} value={item} key={index} />
+    )
+  })}
+
+</Picker>
+</View>
+
+<View style={styles.inputContainer}>
+
+      <TextInput style={styles.inputs}
+        placeholder="N u m e r o  d o c u m e n t o  a c u d i e n t e"
+        keyboardType="number-pad"
+        underlineColorAndroid='transparent'
+        onChangeText={(email) => this.setState({ email })} />
+</View>
+  
+<View style={styles.inputContainer}>
+
+<TextInput style={styles.inputs}
+placeholder="N o m b r e  a c u d i e n t e"
+underlineColorAndroid='transparent'
+onChangeText={(email) => this.setState({ email })} />
+</View>
+<View style={styles.inputContainer}>
+
+<TextInput style={styles.inputs}
+placeholder="N u m e r o  d e  c e l u l a r   a c u d i e n t e"
+keyboardType="number-pad"
+underlineColorAndroid='transparent'
+onChangeText={(email) => this.setState({ email })} />
+</View>
+
+<View style={styles.inputContainer}>
+
+<TextInput style={styles.inputs}
+placeholder="C o r r e o   e l e c t r o n i c o  a c u d i e n t e "
+underlineColorAndroid='transparent'
+onChangeText={(email) => this.setState({ email })} />
+</View>
+
+</View>
 
   }
 
@@ -179,6 +239,10 @@ export default class LoginView extends PureComponent {
 
   }
 
+
+  componentWillUpdate(){
+    this.state.parentc
+  }
   typeTeacher = async (value) => {
     
 
@@ -372,95 +436,43 @@ export default class LoginView extends PureComponent {
 
   onValueChange2(value) {
     this.setState({
-      tipodocumentoescogido: value,
-      parentc:true
+      tipodocumentoescogido: value
     });
     console.log(value);
 
   }
 
+  
 
 
 
-  ageStudent() {
-    var {fecha,parentc} = this.state
+
+
+    onDateChange(value) {
+      this.setState({fecha:value})
+
+      var {fecha,parentc,ll} = this.state
                 
-    var yearStudent= moment(fecha).get('year')
-    var anioActual = moment().get('year')
-
- 
-     // fecha del sistema
-     var fechaActual = new Date();
-     var diaActual = fechaActual.getDate();
-     var mesActual = (fechaActual.getMonth() + 1);
-     var anioActual = fechaActual.getFullYear();
-    if (parentc) {
-     if (anioActual - parseInt(yearStudent) < 18) {
-        return( <View>
-          <View style={styles.inputContainer}>
-          <Picker
-          mode="dialog"
-          iosIcon={<Icon name="arrow-down" style={styles.iconregister} />}
-          style={styles.picker}
-          placeholder="asignaturas"
-          placeholderStyle={{ color: "#bfc6ea" }}
-          placeholderIconColor="#007aff"
-          selectedValue={this.state.selected2}
-          onValueChange={this.onValueChange2.bind(this)}
-        >
-    
-          {this.state.TypesDocument.map((item, index) => {
-            return (
-              <Picker.Item label={item} value={item} key={index} />
-            )
-          })}
-    
-        </Picker>
-        </View>
-    
-        <View style={styles.inputContainer}>
-    
-              <TextInput style={styles.inputs}
-                placeholder="N u m e r o  d o c u m e n t o  a c u d i e n t e"
-                keyboardType="number-pad"
-                underlineColorAndroid='transparent'
-                onChangeText={(email) => this.setState({ email })} />
-        </View>
-          
-        <View style={styles.inputContainer}>
-    
-      <TextInput style={styles.inputs}
-        placeholder="N o m b r e  a c u d i e n t e"
-        underlineColorAndroid='transparent'
-        onChangeText={(email) => this.setState({ email })} />
-      </View>
-      <View style={styles.inputContainer}>
-    
-      <TextInput style={styles.inputs}
-        placeholder="N u m e r o  d e  c e l u l a r   a c u d i e n t e"
-        keyboardType="number-pad"
-        underlineColorAndroid='transparent'
-        onChangeText={(email) => this.setState({ email })} />
-      </View>
-    
-      <View style={styles.inputContainer}>
-    
-    <TextInput style={styles.inputs}
-      placeholder="C o r r e o   e l e c t r o n i c o  a c u d i e n t e "
-      underlineColorAndroid='transparent'
-      onChangeText={(email) => this.setState({ email })} />
-    </View>
-    
-        </View>)
-       
-     }else{
-       this.setState({parent:false})
-       
-     }
-    }else{
-      this.setState({parentc:false})
-    } 
+      var yearStudent= moment(fecha).format('YYYY-MM-DD')
+  
+      console.log(yearStudent);
+      
+   
+       // fecha del sistema
+       var fechaActual = new Date();
+       var diaActual = fechaActual.getDate();
+       var mesActual = (fechaActual.getMonth() + 1);
+       var anioActual = fechaActual.getFullYear();
+       if (anioActual - parseInt(yearStudent) < 18) {
+        this.setState({
+        parentc:Toast.show("Debes ser mayor de edad para registrarte")
+      });
+      
+  
     }
+  }
+  
+
 
   firstRoute = () => (
 
@@ -530,22 +542,17 @@ export default class LoginView extends PureComponent {
               placeHolderText="DD/MM/YYYY"
               textStyle={{ color: "#fff" }}
               placeHolderTextStyle={{ color: "#d3d3d3" }}
-              onDateChange={(date) => this.setState({fecha:date })}
+              onDateChange={(date) =>this.onDateChange(date)}
               disabled={false}
             />
           </View>
-        {this.state.parentc
-          ?this.ageStudent()
-          :console.log("no es true")
-          }
-
         <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }} >
             <TouchableNativeFeedback style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.HandleRegisterStudent()}>
               <Text style={styles.loginText}>REGISTRARME</Text>
             </TouchableNativeFeedback>
           </View>
             
-              {this.state.Loading}
+             
               
 
         </ScrollView>
@@ -566,24 +573,18 @@ export default class LoginView extends PureComponent {
         <ScrollView>
 
           <View style={styles.inputContainer}>
-
+          
             <Picker
-              mode="dialog"
-              iosIcon={<Icon name="add-circle"   style={styles.iconregister} />}
+              note
+              mode="dropdown"
               style={styles.picker}
-              placeholder="asignaturas"
               placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
               selectedValue={this.state.selected2}
               onValueChange={this.onValueChange2.bind(this)}
             >
-
-              {this.state.TypesDocument.map((item, index) => {
-                return (
-                  <Picker.Item label={item} value={item} key={index} />
-                )
-              })}
-
+                  <Picker.Item label="Cedula extranjeria" value="cedula extranjeria"  />
+                  <Picker.Item label="Cedula ciudadania" value="cedula ciudadania"  />
+                  <Picker.Item label="pasaporte" value="pasaporte"  />
             </Picker>
 
           </View>
@@ -649,8 +650,6 @@ export default class LoginView extends PureComponent {
               <Text style={styles.loginText}>REGISTRARME</Text>
             </TouchableNativeFeedback> 
           </View>
-             
-              {this.state.Loading}
               
                
         </ScrollView>
@@ -660,18 +659,11 @@ export default class LoginView extends PureComponent {
 
 
   render() {
-
-
-
-
-
-
-
     return (
 
 
       <ImageBackground source={require('../assets/chica.jpg')} style={styles.container} >
-
+          {this.state.Loading}
         <View style={styles.container}>
           <View style={styles.top} >
             <Image style={{ height: "90%", width: "57%" }} source={require('../assets/PRUEBA-18.png')} />
@@ -680,7 +672,6 @@ export default class LoginView extends PureComponent {
                 {this.state.errorMessage}
               </Text>}
           </View>
-
           <View style={styles.botton} >
 
             <TabView
@@ -708,12 +699,8 @@ export default class LoginView extends PureComponent {
               initialLayout={{ width: Dimensions.get('window').width }}
             />
 
-
+               
           </View>
-
-
-
-
 
         </View>
 

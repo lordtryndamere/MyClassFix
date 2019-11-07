@@ -20,6 +20,7 @@ import {
   TouchableHighlight,
   ImageBackground,
   TouchableOpacity,
+  TouchableNativeFeedback,
   Image,
   Linking,
   KeyboardAvoidingView,
@@ -207,9 +208,9 @@ componentDidMount(){
             <Text style={styles.text2}>Puedes registrarte aqui abajo</Text>
         </TouchableHighlight>
 
-        <TouchableOpacity  style={[styles.buttonContainer, styles.registerbutton]} onPress={() => this.NavigateRegister()}>
+        <TouchableNativeFeedback  style={[styles.buttonContainer, styles.registerbutton2]} onPress={() => this.NavigateRegister()}>
           <Text style={styles.loginText}>REGISTRATE</Text>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
       </SafeAreaView>
       </KeyboardAvoidingView>
       </PaperProvider>

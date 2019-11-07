@@ -91,7 +91,7 @@ export default class ReservasClase extends Component {
                     firebase.database().ref(`/teachers/${key}/newCalendar/week/${llave}`).once('value', snapshot => {
 
                         if (snapshot.val().status != undefined && snapshot.val().status != null && snapshot.val().status == 1  ) {
-                            var date = moment(snapshot.val().date).format('YYYY/MM/DD - LT')
+                            var date = moment(snapshot.val().date).locale('es').format('YYYY/MM/DD - LT')
                             Dates.push(date)
                         }
     
@@ -145,7 +145,7 @@ export default class ReservasClase extends Component {
                     />
                 </View>
 
-                <View style={styles.centerContent}>
+                {/* <View style={styles.centerContent}>
                     <Calendar
                         // the list of items that have to be displayed in agenda. If you want to render item as empty date
                         // the value of date key kas to be an empty array []. If there exists no value for date key it is
@@ -239,7 +239,7 @@ export default class ReservasClase extends Component {
                         }}
                     />
 
-                </View>
+                </View> */}
                 <View style={styles.bottoncontent}>
                     
 
@@ -247,7 +247,7 @@ export default class ReservasClase extends Component {
                             if (this.state.calendar.length >= 1 && this.state.calendar != undefined) {
                                 return (<View >
                                     <View style={styles.containertext} >  
-                                        <Text style={styles.reservastext2} > { moment(day.dateString).format('MMMM')} {moment(day.dateString).format('D')}  </Text>
+                                        <Text style={styles.reservastext2} > { moment(day.dateString).locale('es').format('MMMM')} {moment(day.dateString).locale('es').format('D')}  </Text>
                                         <Text style={styles.textclases} > Clases disponibles </Text>   
                                     </View>
                                   
